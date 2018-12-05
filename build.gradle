@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'de.lukaskoerfer'
+version '0.1'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api 'org.simpleframework:simple-xml:2.7.1'
+    testCompile 'junit:junit:4.12'
+}
+
+wrapper {
+    gradleVersion = 5.0
+    distributionType = Wrapper.DistributionType.ALL
+}
