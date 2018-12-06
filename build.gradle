@@ -10,11 +10,11 @@ repositories {
 }
 
 dependencies {
-    api 'org.simpleframework:simple-xml:2.7.1'
+    compile 'org.simpleframework:simple-xml:2.7.1'
     testCompile 'junit:junit:4.12'
 }
 
 wrapper {
-    gradleVersion = 5.0
+    gradleVersion = '4.10.3'
     distributionType = Wrapper.DistributionType.ALL
 }
