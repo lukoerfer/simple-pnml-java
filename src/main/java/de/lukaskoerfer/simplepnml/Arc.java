@@ -5,15 +5,18 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root
-public class Transition {
+public class Arc {
 
     @Attribute
     private String id;
 
-    @Element(required = false)
-    private Label name;
+    @Attribute
+    private String source;
+
+    @Attribute
+    private String target;
 
     @Element(required = false)
-    private Graphics graphics;
+    private Label inscription;
 
 }
