@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.Getter;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.Root;
@@ -21,6 +22,7 @@ import java.util.List;
 public class PNML {
 
     @ElementList(required = false, inline = true)
+    @Getter
     private List<Net> nets = new ArrayList<>();
      
     public void write(OutputStream target) throws Exception {

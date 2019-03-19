@@ -11,7 +11,8 @@ repositories {
 
 dependencies {
     compile 'org.simpleframework:simple-xml:2.7.1'
-    testCompile 'junit:junit:4.12'
+    compileOnly 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
 }
 
 wrapper {

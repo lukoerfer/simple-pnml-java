@@ -1,6 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-public interface NetElement {
+public interface Identifiable {
 
     String getId();
 
