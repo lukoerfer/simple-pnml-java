@@ -9,7 +9,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root
-@Builder
 @NoArgsConstructor
 public class Place implements Connectable {
 

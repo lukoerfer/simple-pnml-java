@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Root
-@Builder
 @NoArgsConstructor
 public class Net implements Identifiable {
 
