@@ -1,6 +1,5 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,17 +16,33 @@ public class Arc implements Identifiable {
     private String id;
 
     @Attribute
-    @Getter @Setter
+    @Getter
     private String source;
 
     @Attribute
-    @Getter @Setter
+    @Getter
     private String target;
 
     @Element(required = false)
     @Getter @Setter
     private Label inscription;
 
+    public void setSource(String source) {
+        this.source = source;
+    }
+    
+    public void setSource(Connectable source) {
+        this.source = source.getId();
+    }
+    
+    public void setTarget(String target) {
+        this.target = target;
+    }
+    
+    public void setTarget(Connectable target) {
+        this.target = target.getId();
+    }
+    
     public void connect(Connectable source, Connectable target) {
         this.source = source.getId();
         this.target = target.getId();

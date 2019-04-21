@@ -1,6 +1,5 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,14 +15,20 @@ public class Graphics {
     @Element(required = false)
     @Getter @Setter
     private Coordinates offset;
-
-    public Graphics absolute(int x, int y) {
+    
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public static Graphics absolute(int x, int y) {
         Graphics graphics = new Graphics();
         graphics.setPosition(new Coordinates(x, y));
         return graphics;
     }
 
-    public Graphics relative(int x, int y) {
+    public static Graphics relative(int x, int y) {
         Graphics graphics = new Graphics();
         graphics.setOffset(new Coordinates(x, y));
         return graphics;

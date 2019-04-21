@@ -13,6 +13,7 @@ dependencies {
     compile 'org.simpleframework:simple-xml:2.7.1'
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
+    testCompile 'junit:junit:4.12'
 }
 
 wrapper {

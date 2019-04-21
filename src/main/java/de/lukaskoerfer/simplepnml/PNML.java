@@ -15,6 +15,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "pnml")
@@ -24,7 +25,32 @@ public class PNML {
     @ElementList(required = false, inline = true)
     @Getter
     private List<Net> nets = new ArrayList<>();
-     
+
+    public static PNML create() {
+        return new PNML();
+    }
+
+    public static PNML read(InputStream source) throws Exception {
+        return buildSerializer().read(PNML.class, source);
+    }
+
+    public static PNML read(Reader source) throws Exception {
+        return buildSerializer().read(PNML.class, source);
+    }
+    
+    public static PNML read(File source) throws Exception {
+        return buildSerializer().read(PNML.class, source);
+    }
+    
+    public static PNML read(String source) throws Exception {
+        return buildSerializer().read(PNML.class, source);
+    }
+
+    public PNML withNets(Net... nets) {
+        this.nets.addAll(Arrays.asList(nets));
+        return this;
+    }
+
     public void write(OutputStream target) throws Exception {
     	buildSerializer().write(this, target);
     }
@@ -42,22 +68,6 @@ public class PNML {
     		write(stream);
     		return new String(stream.toByteArray(), StandardCharsets.UTF_8);
     	}
-    }
-
-    public static PNML read(InputStream source) throws Exception {
-        return buildSerializer().read(PNML.class, source);
-    }
-
-    public static PNML read(Reader source) throws Exception {
-        return buildSerializer().read(PNML.class, source);
-    }
-    
-    public static PNML read(File source) throws Exception {
-        return buildSerializer().read(PNML.class, source);
-    }
-    
-    public static PNML read(String source) throws Exception {
-        return buildSerializer().read(PNML.class, source);
     }
     
     protected static Serializer buildSerializer() {
