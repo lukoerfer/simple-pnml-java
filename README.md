@@ -1,1 +1,1 @@
-# SimplePNML for Java
+# SimplePNML for JVM
