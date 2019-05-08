@@ -25,6 +25,13 @@ public class Transition implements Connectable {
     @Getter @Setter
     private Graphics graphics;
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param graphics
+     * @return
+     */
     public static Transition create(String id, Label name, Graphics graphics) {
         Transition transition = new Transition();
         transition.setId(id != null ? id : UUID.randomUUID().toString());

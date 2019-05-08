@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.simpleframework.xml.Element;
 
+/**
+ *
+ */
 @NoArgsConstructor
 public class Label {
 

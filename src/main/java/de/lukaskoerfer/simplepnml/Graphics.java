@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.simpleframework.xml.Element;
 
+/**
+ *
+ */
 @NoArgsConstructor
 public class Graphics {
 
@@ -28,6 +31,12 @@ public class Graphics {
         return graphics;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public static Graphics relative(int x, int y) {
         Graphics graphics = new Graphics();
         graphics.setOffset(new Coordinates(x, y));
