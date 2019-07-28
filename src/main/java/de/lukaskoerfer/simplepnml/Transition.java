@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Root
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Transition implements Connectable {
 
     @Attribute

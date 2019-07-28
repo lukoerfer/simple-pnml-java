@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -12,6 +9,7 @@ import java.util.UUID;
 
 @Root
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Place implements Connectable {
 
     @Attribute

@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import org.simpleframework.xml.Element;
  *
  */
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Graphics {
 
     @Element(required = false)

@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.UUID;
  */
 @Root
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Arc implements Identifiable {
 
     @Attribute
@@ -32,9 +34,20 @@ public class Arc implements Identifiable {
     @Getter @Setter
     private Label inscription;
 
+    public static Arc create() {
+        return create(null);
+    }
+
+    public static Arc create(String id) {
+        return create(id, null, null, null);
+    }
+
     public static Arc create(String id, Connectable source, Connectable target, Label inscription) {
+        if (id == null || id.trim().length() < 1) {
+            id = UUID.randomUUID().toString();
+        }
         Arc arc = new Arc();
-        arc.setId(id != null ? id : UUID.randomUUID().toString());
+        arc.setId(id);
         arc.setSource(source);
         arc.setTarget(target);
         arc.setInscription(inscription);

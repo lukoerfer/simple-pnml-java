@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Namespace;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Root(name = "pnml")
 @Namespace(reference = "http://www.pnml.org/version-2009/grammar/pnml")
+@EqualsAndHashCode
 public class PNML {
 
     @ElementList(required = false, inline = true)
