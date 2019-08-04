@@ -1,9 +1,11 @@
 language: java
 jdk:
   - oraclejdk8
-install: true
+matrix:
+  include:
+    - os: linux
+      dist: trusty
 branches:
   only:
     - master
-os:
-  - linux
+install: true
