@@ -35,8 +35,16 @@ public class Net implements Identifiable {
     @Getter
     private List<Page> pages = new ArrayList<>();
 
+    public static Net create() {
+        return create((String) null);
+    }
+
     public static Net create(String id) {
         return create(id, null, null);
+    }
+
+    public static Net create(Label name) {
+        return create(null, null, name);
     }
 
     public static Net create(String id, String type) {
@@ -44,8 +52,9 @@ public class Net implements Identifiable {
     }
 
     public static Net create(String id, String type, Label name) {
+        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Net net = new Net();
-        net.setId(id != null ? id : UUID.randomUUID().toString());
+        net.setId(id);
         net.setType(type);
         net.setName(name);
         return net;

@@ -43,9 +43,22 @@ public class Page implements Identifiable {
     @Getter
     private List<Arc> arcs = new ArrayList<>();
 
+    public static Page create() {
+        return create((String) null);
+    }
+
+    public static Page create(String id) {
+        return create(id, null);
+    }
+
+    public static Page create(Label name) {
+        return create(null, name);
+    }
+
     public static Page create(String id, Label name) {
+        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Page page = new Page();
-        page.setId(id != null ? id : UUID.randomUUID().toString());
+        page.setId(id);
         page.setName(name);
         return page;
     }

@@ -29,14 +29,42 @@ public class Transition implements Connectable {
 
     /**
      *
+     * @return
+     */
+    public static Transition create() {
+        return create(null);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public static Transition create(String id) {
+        return create(id, null, null);
+    }
+
+    /**
+     *
+     * @param name
+     * @param graphics
+     * @return
+     */
+    public static Transition create(Label name, Graphics graphics) {
+        return create(null, name, graphics);
+    }
+
+    /**
+     *
      * @param id
      * @param name
      * @param graphics
      * @return
      */
     public static Transition create(String id, Label name, Graphics graphics) {
+        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Transition transition = new Transition();
-        transition.setId(id != null ? id : UUID.randomUUID().toString());
+        transition.setId(id);
         transition.setName(name);
         transition.setGraphics(graphics);
         return transition;

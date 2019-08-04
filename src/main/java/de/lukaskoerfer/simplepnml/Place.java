@@ -28,9 +28,22 @@ public class Place implements Connectable {
     @Getter @Setter
     private Label initialMarking;
 
+    public static Place create() {
+        return create(null);
+    }
+
+    public static Place create(String id) {
+        return create(id, null, null, null);
+    }
+
+    public static Place create(Label name, Graphics graphics, Label initialMarking) {
+        return create(null, name, graphics, initialMarking);
+    }
+
     public static Place create(String id, Label name, Graphics graphics, Label initialMarking) {
+        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Place place = new Place();
-        place.setId(id != null ? id : UUID.randomUUID().toString());
+        place.setId(id);
         place.setName(name);
         place.setGraphics(graphics);
         place.setInitialMarking(initialMarking);

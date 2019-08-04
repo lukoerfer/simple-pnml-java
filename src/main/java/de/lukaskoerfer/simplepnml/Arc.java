@@ -42,10 +42,12 @@ public class Arc implements Identifiable {
         return create(id, null, null, null);
     }
 
+    public static Arc create(Connectable source, Connectable target, Label inscription) {
+        return create(null, source, target, inscription);
+    }
+
     public static Arc create(String id, Connectable source, Connectable target, Label inscription) {
-        if (id == null || id.trim().length() < 1) {
-            id = UUID.randomUUID().toString();
-        }
+        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Arc arc = new Arc();
         arc.setId(id);
         arc.setSource(source);
