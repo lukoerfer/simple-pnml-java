@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Coordinates {
+public class Dimension {
 
     @XmlAttribute
     @Getter @Setter

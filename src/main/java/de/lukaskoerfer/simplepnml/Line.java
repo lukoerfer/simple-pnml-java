@@ -2,21 +2,27 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Coordinates {
+public class Line {
 
     @XmlAttribute
     @Getter @Setter
-    private int x;
+    private LineShape shape;
 
     @XmlAttribute
     @Getter @Setter
-    private int y;
+    private String color;
+
+    @XmlAttribute
+    @Getter @Setter
+    private double width;
+
+    @XmlAttribute
+    @Getter @Setter
+    private LineStyle style;
 
 }

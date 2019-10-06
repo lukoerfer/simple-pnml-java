@@ -4,44 +4,45 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@Root
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Page implements Identifiable {
 
-    @Attribute
+    @XmlAttribute(required = true)
     @Getter @Setter
     private String id;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
     private Label name;
 
-    @ElementList(required = false, inline = true)
+    @XmlElement
     @Getter
     private List<Page> pages = new ArrayList<>();
 
-    @ElementList(required = false, inline = true)
+    @XmlElement
     @Getter
     private List<Place> places = new ArrayList<>();
 
-    @ElementList(required = false, inline = true)
+    @XmlElement
     @Getter
     private List<Transition> transitions = new ArrayList<>();
 
-    @ElementList(required = false, inline = true)
+    @XmlElement
     @Getter
     private List<Arc> arcs = new ArrayList<>();
+
+    @XmlElement
+    @Getter
+    private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
     public static Page create() {
         return create((String) null);

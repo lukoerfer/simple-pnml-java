@@ -4,33 +4,30 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
+import javax.xml.bind.annotation.*;
 import java.util.UUID;
 
 /**
  *
  */
-@Root
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Arc implements Identifiable {
 
-    @Attribute
+    @XmlAttribute
     @Getter @Setter
     private String id;
 
-    @Attribute
+    @XmlAttribute
     @Getter
     private String source;
 
-    @Attribute
+    @XmlAttribute
     @Getter
     private String target;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
     private Label inscription;
 

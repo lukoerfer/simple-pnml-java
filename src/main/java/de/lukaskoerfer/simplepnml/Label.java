@@ -4,7 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.simpleframework.xml.Element;
+
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -13,32 +14,12 @@ import org.simpleframework.xml.Element;
 @EqualsAndHashCode
 public class Label {
 
-    @Element
+    @XmlElement
     @Getter @Setter
     private String text;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
-    private Graphics graphics;
-
-    public static Label simple(String text) {
-        Label label = new Label();
-        label.setText(text);
-        return label;
-    }
-
-    public static Label absolute(int x, int y, String text) {
-        Label label = new Label();
-        label.setGraphics(Graphics.absolute(x, y));
-        label.setText(text);
-        return label;
-    }
-
-    public static Label relative(int x, int y, String text) {
-        Label label = new Label();
-        label.setGraphics(Graphics.relative(x, y));
-        label.setText(text);
-        return label;
-    }
+    private NodeGraphics graphics;
 
 }

@@ -2,26 +2,25 @@ package de.lukaskoerfer.simplepnml;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
-import org.simpleframework.xml.core.Persister;
 
+import javax.xml.bind.JAXBContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PNMLTest {
+class DocumentTest {
 
     @Test
     void equalsAfterSerialization() throws Exception {
         EasyRandom random = new EasyRandom();
-        PNML input = random.nextObject(PNML.class);
-        Persister persister = new Persister();
+        Document input = random.nextObject(Document.class);
+        JAXBContext context = JAXBContext.newInstance(Document.class);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        persister.write(input, out);
+        context.createMarshaller().marshal(input, out);
         ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-        PNML output = persister.read(PNML.class, in);
+        Document output = (Document) context.createUnmarshaller().unmarshal(in);
         assertEquals(input, output);
     }
-
 
 }

@@ -1,32 +1,36 @@
 package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@Root
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Place implements Connectable {
 
-    @Attribute
+    @XmlAttribute(required = true)
     @Getter @Setter
     private String id;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
     private Label name;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
-    private Graphics graphics;
+    private NodeGraphics graphics;
 
-    @Element(required = false)
+    @XmlElement
     @Getter @Setter
     private Label initialMarking;
+
+    @XmlElement
+    @Getter
+    private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
     public static Place create() {
         return create(null);
@@ -36,11 +40,11 @@ public class Place implements Connectable {
         return create(id, null, null, null);
     }
 
-    public static Place create(Label name, Graphics graphics, Label initialMarking) {
+    public static Place create(Label name, NodeGraphics graphics, Label initialMarking) {
         return create(null, name, graphics, initialMarking);
     }
 
-    public static Place create(String id, Label name, Graphics graphics, Label initialMarking) {
+    public static Place create(String id, Label name, NodeGraphics graphics, Label initialMarking) {
         id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Place place = new Place();
         place.setId(id);

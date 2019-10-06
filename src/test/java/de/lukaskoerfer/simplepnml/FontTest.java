@@ -1,6 +1,5 @@
 package de.lukaskoerfer.simplepnml;
 
-class LabelTest {
-
+class FontTest {
 
 }
