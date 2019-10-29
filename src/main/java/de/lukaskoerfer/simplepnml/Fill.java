@@ -3,9 +3,9 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.net.URI;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 public class Fill {
 
@@ -19,10 +19,20 @@ public class Fill {
 
     @XmlAttribute
     @Getter @Setter
-    private GradientRotation rotation;
+    private GradientRotation gradientRotation;
 
     @XmlAttribute
     @Getter @Setter
-    private String image;
+    private URI image;
+
+    public Fill(String color, String gradientColor, GradientRotation gradientRotation) {
+        setColor(color);
+        setGradientColor(gradientColor);
+        setGradientRotation(gradientRotation);
+    }
+
+    public Fill(URI image) {
+        setImage(image);
+    }
 
 }

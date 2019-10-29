@@ -11,7 +11,6 @@ import java.util.UUID;
 /**
  *
  */
-@NoArgsConstructor
 @EqualsAndHashCode
 public class Arc implements Identifiable {
 
@@ -27,30 +26,31 @@ public class Arc implements Identifiable {
     @Getter
     private String target;
 
+    @XmlElement(name = "graphics")
+    @Getter @Setter
+    private Edge graphic;
+
     @XmlElement
     @Getter @Setter
     private Label inscription;
 
-    public static Arc create() {
-        return create(null);
+    public Arc() {
+        this(null);
     }
 
-    public static Arc create(String id) {
-        return create(id, null, null, null);
+    public Arc(String id) {
+        this(id, null, null);
     }
 
-    public static Arc create(Connectable source, Connectable target, Label inscription) {
-        return create(null, source, target, inscription);
+    public Arc(String id, Connectable source, Connectable target) {
+        this(id, source, target, null, null);
     }
 
-    public static Arc create(String id, Connectable source, Connectable target, Label inscription) {
-        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
-        Arc arc = new Arc();
-        arc.setId(id);
-        arc.setSource(source);
-        arc.setTarget(target);
-        arc.setInscription(inscription);
-        return arc;
+    public Arc(String id, Connectable source, Connectable target, Label inscription, Edge graphic) {
+        setSource(source);
+        setTarget(target);
+        setInscription(inscription);
+        setGraphic(graphic);
     }
 
     /**
@@ -66,9 +66,8 @@ public class Arc implements Identifiable {
      * @param source
      */
     public void setSource(Connectable source) {
-        if (source != null) {
-            this.source = source.getId();
-        }
+        String sourceId = (source != null) ? source.getId() : null;
+        setSource(sourceId);
     }
 
     /**
@@ -84,13 +83,12 @@ public class Arc implements Identifiable {
      * @param target
      */
     public void setTarget(Connectable target) {
-        if (target != null) {
-            this.target = target.getId();
-        }
+        String targetId = (target != null) ? target.getId() : null;
+        setTarget(targetId);
     }
 
     /**
-     *
+     * Sets both the source and the target
      * @param source
      * @param target
      */
@@ -99,4 +97,23 @@ public class Arc implements Identifiable {
         setTarget(target);
     }
 
+    public Arc withSource(String source) {
+        setSource(source);
+        return this;
+    }
+
+    public Arc withSource(Connectable source) {
+        setSource(source);
+        return this;
+    }
+
+    public Arc withTarget(String target) {
+        setTarget(target);
+        return this;
+    }
+
+    public Arc withTarget(Connectable target) {
+        setTarget(target);
+        return this;
+    }
 }

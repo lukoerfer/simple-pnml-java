@@ -2,7 +2,6 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -12,9 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@NoArgsConstructor
 @EqualsAndHashCode
 public class Net implements Identifiable {
+
+    /**
+     *
+     */
+    public static final String PLACE_TRANSITION_NET_TYPE = "";
 
     @XmlAttribute(required = true)
     @Getter @Setter
@@ -36,33 +39,41 @@ public class Net implements Identifiable {
     @Getter
     private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
-    public static Net create() {
-        return create((String) null);
+    public Net() {
+        this(null, null, null);
     }
 
-    public static Net create(String id) {
-        return create(id, null, null);
+    public Net(String id) {
+        this(id, null, null);
     }
 
-    public static Net create(Label name) {
-        return create(null, null, name);
+    public Net(String id, String type) {
+        this(id, type, null);
     }
 
-    public static Net create(String id, String type) {
-        return create(id, type, null);
+    public Net(String id, String type, Label name) {
+        setId(StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id);
+        setType(StringUtil.isEmptyOrWhitespace(type) ? PLACE_TRANSITION_NET_TYPE : type);
+        setName(name);
     }
 
-    public static Net create(String id, String type, Label name) {
-        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
-        Net net = new Net();
-        net.setId(id);
-        net.setType(type);
-        net.setName(name);
-        return net;
+    public Net withName(Label name) {
+        setName(name);
+        return this;
+    }
+
+    public Net withName(String name) {
+        setName(new Label(name));
+        return this;
     }
 
     public Net withPages(Page... pages) {
         this.pages.addAll(Arrays.asList(pages));
+        return this;
+    }
+
+    public Net withToolSpecific(ToolSpecific... toolSpecifics) {
+        this.toolSpecific.addAll(Arrays.asList(toolSpecifics));
         return this;
     }
 

@@ -22,7 +22,7 @@ public class Place implements Connectable {
 
     @XmlElement
     @Getter @Setter
-    private NodeGraphics graphics;
+    private Node graphics;
 
     @XmlElement
     @Getter @Setter
@@ -40,11 +40,11 @@ public class Place implements Connectable {
         return create(id, null, null, null);
     }
 
-    public static Place create(Label name, NodeGraphics graphics, Label initialMarking) {
+    public static Place create(Label name, Node graphics, Label initialMarking) {
         return create(null, name, graphics, initialMarking);
     }
 
-    public static Place create(String id, Label name, NodeGraphics graphics, Label initialMarking) {
+    public static Place create(String id, Label name, Node graphics, Label initialMarking) {
         id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Place place = new Place();
         place.setId(id);

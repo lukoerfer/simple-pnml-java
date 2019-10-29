@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -44,24 +43,27 @@ public class Page implements Identifiable {
     @Getter
     private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
-    public static Page create() {
-        return create((String) null);
+    public Page(String id) {
+        this(id, null);
     }
 
-    public static Page create(String id) {
-        return create(id, null);
+    public Page(Label name) {
+        this(null, name);
     }
 
-    public static Page create(Label name) {
-        return create(null, name);
+    public Page(String id, Label name) {
+        setId(id);
+        setName(name);
     }
 
-    public static Page create(String id, Label name) {
-        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
-        Page page = new Page();
-        page.setId(id);
-        page.setName(name);
-        return page;
+    public Page withName(String name) {
+        setName(new Label(name));
+        return this;
+    }
+
+    public Page withName(Label name) {
+        setName(name);
+        return this;
     }
 
     public Page withPages(Page... pages) {

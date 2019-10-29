@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class AnnotationGraphics {
+public class Annotation {
 
     @XmlElement
     @Getter @Setter

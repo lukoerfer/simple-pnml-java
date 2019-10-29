@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -11,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
  *
  */
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class Label {
 
@@ -20,6 +18,17 @@ public class Label {
 
     @XmlElement
     @Getter @Setter
-    private NodeGraphics graphics;
+    private Node graphics;
+
+    public Label(String text) {
+        setText(text);
+    }
+
+    public Label withGraphic(Node graphic) {
+        setGraphics(graphic);
+        return this;
+    }
+
+
 
 }

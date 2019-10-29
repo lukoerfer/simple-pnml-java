@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class EdgeGraphics {
+public class Edge {
 
     @XmlElement
     @Getter

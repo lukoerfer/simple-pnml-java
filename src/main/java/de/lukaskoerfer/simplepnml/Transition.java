@@ -25,7 +25,7 @@ public class Transition implements Connectable {
 
     @XmlElement
     @Getter @Setter
-    private NodeGraphics graphics;
+    private Node graphics;
 
     @XmlElement
     @Getter
@@ -54,7 +54,7 @@ public class Transition implements Connectable {
      * @param graphics
      * @return
      */
-    public static Transition create(Label name, NodeGraphics graphics) {
+    public static Transition create(Label name, Node graphics) {
         return create(null, name, graphics);
     }
 
@@ -65,7 +65,7 @@ public class Transition implements Connectable {
      * @param graphics
      * @return
      */
-    public static Transition create(String id, Label name, NodeGraphics graphics) {
+    public static Transition create(String id, Label name, Node graphics) {
         id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
         Transition transition = new Transition();
         transition.setId(id);
