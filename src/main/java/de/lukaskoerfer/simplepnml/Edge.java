@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,5 +19,9 @@ public class Edge {
     @XmlElement
     @Getter @Setter
     private Line line;
+
+    public Edge(Coordinates... positions) {
+        this.positions = Arrays.asList(positions);
+    }
 
 }

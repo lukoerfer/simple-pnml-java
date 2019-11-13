@@ -9,14 +9,10 @@ import javax.xml.bind.annotation.*;
 import java.util.UUID;
 
 /**
- *
+ * Describes a PNML arc
  */
-@EqualsAndHashCode
-public class Arc implements Identifiable {
-
-    @XmlAttribute
-    @Getter @Setter
-    private String id;
+@EqualsAndHashCode(callSuper = true)
+public class Arc extends Identifiable {
 
     @XmlAttribute
     @Getter
@@ -26,9 +22,9 @@ public class Arc implements Identifiable {
     @Getter
     private String target;
 
-    @XmlElement(name = "graphics")
+    @XmlElement
     @Getter @Setter
-    private Edge graphic;
+    private Edge graphics;
 
     @XmlElement
     @Getter @Setter
@@ -47,10 +43,11 @@ public class Arc implements Identifiable {
     }
 
     public Arc(String id, Connectable source, Connectable target, Label inscription, Edge graphic) {
+        setId(id);
         setSource(source);
         setTarget(target);
         setInscription(inscription);
-        setGraphic(graphic);
+        setGraphics(graphic);
     }
 
     /**
@@ -113,6 +110,18 @@ public class Arc implements Identifiable {
     }
 
     public Arc withTarget(Connectable target) {
+        setTarget(target);
+        return this;
+    }
+
+    public Arc connecting(String source, String target) {
+        setSource(source);
+        setTarget(target);
+        return this;
+    }
+
+    public Arc connecting(Connectable source, Connectable target) {
+        setSource(source);
         setTarget(target);
         return this;
     }

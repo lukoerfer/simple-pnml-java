@@ -1,8 +1,9 @@
 package de.lukaskoerfer.simplepnml;
 
-/**
- *
- */
-public interface Connectable extends Identifiable {
+import lombok.EqualsAndHashCode;
 
-}
+/**
+ * Marks all elements that can be connected via arcs
+ */
+@EqualsAndHashCode(callSuper = true)
+public abstract class Connectable extends Identifiable { }

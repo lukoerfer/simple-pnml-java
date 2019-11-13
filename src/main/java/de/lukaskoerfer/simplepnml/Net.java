@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@EqualsAndHashCode
-public class Net implements Identifiable {
+@EqualsAndHashCode(callSuper = true)
+public class Net extends Identifiable {
 
     /**
      *

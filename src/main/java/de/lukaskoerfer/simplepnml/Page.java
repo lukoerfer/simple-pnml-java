@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Page implements Identifiable {
+@EqualsAndHashCode(callSuper = true)
+public class Page extends Identifiable {
 
     @XmlAttribute(required = true)
     @Getter @Setter

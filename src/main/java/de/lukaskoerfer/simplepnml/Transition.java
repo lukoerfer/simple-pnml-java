@@ -2,22 +2,14 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Transition implements Connectable {
-
-    @XmlAttribute(required = true)
-    @Getter @Setter
-    private String id;
+@EqualsAndHashCode(callSuper = true)
+public class Transition extends Connectable {
 
     @XmlElement
     @Getter @Setter
@@ -31,47 +23,32 @@ public class Transition implements Connectable {
     @Getter
     private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
-    /**
-     *
-     * @return
-     */
-    public static Transition create() {
-        return create(null);
+    public Transition() {
+        this(null);
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public static Transition create(String id) {
-        return create(id, null, null);
+    public Transition(String id) {
+        setId(id);
     }
 
-    /**
-     *
-     * @param name
-     * @param graphics
-     * @return
-     */
-    public static Transition create(Label name, Node graphics) {
-        return create(null, name, graphics);
+    public Transition withName(String name) {
+        setName(new Label(name));
+        return this;
     }
 
-    /**
-     *
-     * @param id
-     * @param name
-     * @param graphics
-     * @return
-     */
-    public static Transition create(String id, Label name, Node graphics) {
-        id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
-        Transition transition = new Transition();
-        transition.setId(id);
-        transition.setName(name);
-        transition.setGraphics(graphics);
-        return transition;
+    public Transition withName(Label name) {
+        setName(name);
+        return this;
+    }
+
+    public Transition withGraphics(Node graphics) {
+        setGraphics(graphics);
+        return this;
+    }
+
+    public Transition withGraphics(double x, double y, double width, double height) {
+        setGraphics(new Node(x, y, width, height));
+        return this;
     }
 
 }

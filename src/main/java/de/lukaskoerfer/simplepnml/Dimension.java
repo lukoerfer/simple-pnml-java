@@ -2,21 +2,51 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
-@NoArgsConstructor
-@AllArgsConstructor
+/**
+ * Describes dimension information (size) of a graphical element
+ */
 @EqualsAndHashCode
 public class Dimension {
 
-    @XmlAttribute
+    /**
+     * --- GETTER ---
+     * Gets the length in X direction
+     * @return The length in X direction
+     * --- SETTER ---
+     * Sets the length in X direction
+     * @param width The length in X direction
+     */
+    @XmlAttribute(name = "x")
     @Getter @Setter
-    private int x;
+    private double width;
 
-    @XmlAttribute
+    /**
+     * --- GETTER ---
+     * Gets the length in Y direction
+     * @return The length in Y direction
+     * --- SETTER ---
+     * Sets the length in Y direction
+     * @param height The length in Y direction
+     */
+    @XmlAttribute(name = "y")
     @Getter @Setter
-    private int y;
+    private double height;
+
+    /**
+     * Creates an empty dimension information
+     */
+    public Dimension() { }
+
+    /**
+     * Creates a new dimension information
+     * @param width The length in X direction
+     * @param height The length in Y direction
+     */
+    public Dimension(double width, double height) {
+        setWidth(width);
+        setHeight(height);
+    }
 
 }

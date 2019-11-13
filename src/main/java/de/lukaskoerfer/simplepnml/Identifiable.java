@@ -1,10 +1,32 @@
 package de.lukaskoerfer.simplepnml;
 
-/**
- *
- */
-public interface Identifiable {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-    String getId();
+import javax.xml.bind.annotation.XmlAttribute;
+import java.util.UUID;
+
+/**
+ * Encapsulates PNML elements that can be identified
+ */
+@EqualsAndHashCode
+public abstract class Identifiable {
+
+    /**
+     * -- GETTER --
+     * Gets the identifier
+     * @return The identifier
+     */
+    @XmlAttribute(required = true)
+    @Getter
+    private String id;
+
+    /**
+     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id The identifier
+     */
+    public void setId(String id) {
+        this.id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
+    }
 
 }

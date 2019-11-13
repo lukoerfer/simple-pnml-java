@@ -34,8 +34,24 @@ public class Node {
      * @param x
      * @param y
      */
-    public Node(int x, int y) {
+    public Node(double x, double y) {
         setPosition(new Coordinates(x, y));
+    }
+
+    public Node(double x, double y, Fill fill) {
+        setPosition(new Coordinates(x, y));
+        setFill(fill);
+    }
+
+    public Node(double x, double y, Line line) {
+        setPosition(new Coordinates(x, y));
+        setLine(line);
+    }
+
+    public Node(double x, double y, Fill fill, Line line) {
+        setPosition(new Coordinates(x, y));
+        setFill(fill);
+        setLine(line);
     }
 
     /**
@@ -45,35 +61,54 @@ public class Node {
      * @param width
      * @param height
      */
-    public Node(int x, int y, int width, int height) {
+    public Node(double x, double y, double width, double height) {
         setPosition(new Coordinates(x, y));
         setSize(new Dimension(width, height));
     }
 
+    public Node(double x, double y, double width, double height, Fill fill) {
+        setPosition(new Coordinates(x, y));
+        setSize(new Dimension(width, height));
+        setFill(fill);
+    }
+
+    public Node(double x, double y, double width, double height, Line line) {
+        setPosition(new Coordinates(x, y));
+        setSize(new Dimension(width, height));
+        setLine(line);
+    }
+
+    public Node(double x, double y, double width, double height, Fill fill, Line line) {
+        setPosition(new Coordinates(x, y));
+        setSize(new Dimension(width, height));
+        setFill(fill);
+        setLine(line);
+    }
+
     /**
-     * Sets the position in a fluent style
+     * Sets the position
      * @param x
      * @param y
      * @return A reference to itself
      */
-    public Node atPosition(int x, int y) {
+    public Node atPosition(double x, double y) {
         setPosition(new Coordinates(x, y));
         return this;
     }
 
     /**
-     * Sets the size in a fluent style
+     * Sets the size
      * @param width
      * @param height
      * @return A reference to itself
      */
-    public Node ofSize(int width, int height) {
+    public Node ofSize(double width, double height) {
         setSize(new Dimension(width, height));
         return this;
     }
 
     /**
-     * Sets the fill in a fluent style
+     * Sets the fill
      * @param fill
      * @return A reference to itself
      */
@@ -83,7 +118,7 @@ public class Node {
     }
 
     /**
-     * Sets the fill in a fluent style
+     * Sets the fill
      * @param color
      * @param gradientColor
      * @param gradientRotation
@@ -95,7 +130,7 @@ public class Node {
     }
 
     /**
-     * Sets the fill to an image in a fluent style
+     * Sets the fill to an image
      * @param image
      * @return A reference to itself
      */
@@ -105,7 +140,7 @@ public class Node {
     }
 
     /**
-     * Sets the line in a fluent style
+     * Sets the line
      * @param line
      * @return A reference to itself
      */
@@ -115,7 +150,7 @@ public class Node {
     }
 
     /**
-     * Sets the line in a fluent style
+     * Sets the line
      * @param color
      * @param width
      * @param shape

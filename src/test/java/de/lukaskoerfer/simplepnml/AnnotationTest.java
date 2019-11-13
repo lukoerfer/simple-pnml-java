@@ -1,6 +1,7 @@
 package de.lukaskoerfer.simplepnml;
 
-class AnnotationGraphicsTest {
+class AnnotationTest {
+
 
 
 
