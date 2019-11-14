@@ -6,6 +6,8 @@ import lombok.Getter;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,16 @@ public class Document {
     @Getter
     private List<Net> nets = new ArrayList<>();
 
-    public String write() {
-        return PNML.write(this);
+    public Document write(OutputStream stream) {
+        return PNML.write(this, stream);
     }
 
-    public void write(File file) {
-        PNML.write(this, file);
+    public Document write(StringWriter str) {
+        return PNML.write(this, str);
+    }
+
+    public Document write(File file) {
+        return PNML.write(this, file);
     }
 
 }
