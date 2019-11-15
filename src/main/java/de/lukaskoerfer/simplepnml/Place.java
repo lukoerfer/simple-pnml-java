@@ -28,7 +28,11 @@ public class Place extends Connectable {
     private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
     public Place() {
+        this(null);
+    }
 
+    public Place(String id) {
+        setId(id);
     }
 
 }

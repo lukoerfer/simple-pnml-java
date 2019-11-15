@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NetTest {
 
+    static EasyRandom random = new EasyRandom();
+
     static Stream<String> ids() {
         return Stream.of(null, "", "   ", "test");
     }
@@ -18,7 +20,7 @@ class NetTest {
     @ParameterizedTest
     @MethodSource("ids")
     void createAssignsValidId(String id) {
-        Net net = Net.create(id);
+        Net net = new Net(id);
         assertNotNull(net.getId());
         assertTrue(net.getId().length() > 0);
         assertTrue(net.getId().trim().length() > 0);
@@ -26,7 +28,6 @@ class NetTest {
 
     @Test
     void withPagesAddsPages() {
-        EasyRandom random = new EasyRandom();
         Page page1 = random.nextObject(Page.class), page2 = random.nextObject(Page.class);
         Net net = new Net().withPages(page1, page2);
         assertEquals(2, net.getPages().size());

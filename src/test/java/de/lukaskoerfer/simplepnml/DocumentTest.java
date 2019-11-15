@@ -11,9 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DocumentTest {
 
+    static EasyRandom random = new EasyRandom();
+
     @Test
     void equalsAfterSerialization() throws Exception {
-        EasyRandom random = new EasyRandom();
         Document input = random.nextObject(Document.class);
         JAXBContext context = JAXBContext.newInstance(Document.class);
         ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +12,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ArcTest {
+
+    static EasyRandom random = new EasyRandom();
 
     static Stream<String> ids() {
         return Stream.of(null, "", "   ", "test");
@@ -27,32 +30,36 @@ class ArcTest {
 
     @Test
     void canConnect() {
+        String sourceId = random.nextObject(String.class),
+            targetId = random.nextObject(String.class);
         Arc arc = new Arc();
         Connectable source = mock(Connectable.class);
-        when(source.getId()).thenReturn("source");
+        when(source.getId()).thenReturn(sourceId);
         Connectable target = mock(Connectable.class);
-        when(target.getId()).thenReturn("target");
+        when(target.getId()).thenReturn(targetId);
         arc.connect(source, target);
-        assertEquals("source", arc.getSource());
-        assertEquals("target", arc.getTarget());
+        assertEquals(sourceId, arc.getSource());
+        assertEquals(targetId, arc.getTarget());
     }
 
     @Test
     void canSetSource() {
+        String sourceId = random.nextObject(String.class);
         Arc arc = new Arc();
         Connectable source = mock(Connectable.class);
-        when(source.getId()).thenReturn("source");
+        when(source.getId()).thenReturn(sourceId);
         arc.setSource(source);
-        assertEquals("source", arc.getSource());
+        assertEquals(sourceId, arc.getSource());
     }
 
     @Test
     void canSetTarget() {
+        String targetId = random.nextObject(String.class);
         Arc arc = new Arc();
         Connectable target = mock(Connectable.class);
-        when(target.getId()).thenReturn("target");
+        when(target.getId()).thenReturn(targetId);
         arc.setTarget(target);
-        assertEquals("target", arc.getTarget());
+        assertEquals(targetId, arc.getTarget());
     }
 
 }

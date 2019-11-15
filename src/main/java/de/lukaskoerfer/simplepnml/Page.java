@@ -2,10 +2,8 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +11,6 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 public class Page extends Identifiable {
-
-    @XmlAttribute(required = true)
-    @Getter @Setter
-    private String id;
 
     @XmlElement
     @Getter @Setter
@@ -42,12 +36,12 @@ public class Page extends Identifiable {
     @Getter
     private List<ToolSpecific> toolSpecific = new ArrayList<>();
 
-    public Page(String id) {
-        this(id, null);
+    public Page() {
+        this(null);
     }
 
-    public Page(Label name) {
-        this(null, name);
+    public Page(String id) {
+        this(id, null);
     }
 
     public Page(String id, Label name) {

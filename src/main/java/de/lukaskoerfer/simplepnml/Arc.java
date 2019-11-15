@@ -2,11 +2,10 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.xml.bind.annotation.*;
-import java.util.UUID;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Describes a PNML arc
