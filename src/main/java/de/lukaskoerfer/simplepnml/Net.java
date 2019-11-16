@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 public class Net extends Identifiable {
@@ -20,11 +19,7 @@ public class Net extends Identifiable {
     public static final String PLACE_TRANSITION_NET_TYPE = "";
 
     @XmlAttribute(required = true)
-    @Getter @Setter
-    private String id;
-
-    @XmlAttribute(required = true)
-    @Getter @Setter
+    @Getter
     private String type;
 
     @XmlElement
@@ -37,7 +32,7 @@ public class Net extends Identifiable {
 
     @XmlElement
     @Getter
-    private List<ToolSpecific> toolSpecific = new ArrayList<>();
+    private List<ToolData> toolData = new ArrayList<>();
 
     public Net() {
         this(null, null, null);
@@ -52,9 +47,13 @@ public class Net extends Identifiable {
     }
 
     public Net(String id, String type, Label name) {
-        setId(StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id);
-        setType(StringUtil.isEmptyOrWhitespace(type) ? PLACE_TRANSITION_NET_TYPE : type);
+        setId(id);
+        setType(type);
         setName(name);
+    }
+
+    public void setType(String type) {
+        this.type = StringUtil.isEmptyOrWhitespace(type) ? PLACE_TRANSITION_NET_TYPE : type;
     }
 
     public Net withName(Label name) {
@@ -72,8 +71,8 @@ public class Net extends Identifiable {
         return this;
     }
 
-    public Net withToolSpecific(ToolSpecific... toolSpecifics) {
-        this.toolSpecific.addAll(Arrays.asList(toolSpecifics));
+    public Net withToolData(ToolData... toolData) {
+        this.toolData.addAll(Arrays.asList(toolData));
         return this;
     }
 

@@ -9,11 +9,12 @@ import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToolSpecific {
+public class ToolData {
 
     @XmlAttribute
     @Getter @Setter
@@ -25,6 +26,12 @@ public class ToolSpecific {
 
     @XmlAnyElement
     @Getter
-    private List<Element> nodes = new ArrayList<>();
+    private List<Element> content = new ArrayList<>();
+
+    public ToolData(String tool, String version, Element... content) {
+        setTool(tool);
+        setVersion(version);
+        this.content = Arrays.asList(content);
+    }
 
 }

@@ -34,7 +34,7 @@ public class Page extends Identifiable {
 
     @XmlElement
     @Getter
-    private List<ToolSpecific> toolSpecific = new ArrayList<>();
+    private List<ToolData> toolData = new ArrayList<>();
 
     public Page() {
         this(null);

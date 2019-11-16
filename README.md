@@ -1,4 +1,8 @@
 # SimplePNML for JVM
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/lukoerfer/simple-pnml-jvm/blob/master/LICENSE)
+[![Build](https://img.shields.io/travis/lukoerfer/simple-pnml-jvm)](https://travis-ci.org/lukoerfer/simple-pnml-jvm)
+[![Coverage](https://img.shields.io/coveralls/github/lukoerfer/simple-pnml-jvm)](https://coveralls.io/github/lukoerfer/simple-pnml-jvm?branch=master)
+
 Simple JVM implementation of the Petri Net Markup Language (PNML), limited to Place-Transition-(PT)-Nets
 
 > Check out [SimplePNML for .NET](https://github.com/lukoerfer/simple-pnml-dotnet) to handle PNML files from .NET languages like C# and VB.NET!

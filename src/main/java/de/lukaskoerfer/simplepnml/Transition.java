@@ -21,7 +21,7 @@ public class Transition extends Connectable {
 
     @XmlElement
     @Getter
-    private List<ToolSpecific> toolSpecific = new ArrayList<>();
+    private List<ToolData> toolData = new ArrayList<>();
 
     public Transition() {
         this(null);
