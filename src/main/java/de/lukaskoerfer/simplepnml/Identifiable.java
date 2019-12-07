@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import java.util.UUID;
 
 /**
- * Encapsulates PNML elements that can be identified
+ * Encapsulates elements in place/transition nets that can be identified
  */
 @EqualsAndHashCode
 public abstract class Identifiable {
@@ -23,7 +23,7 @@ public abstract class Identifiable {
 
     /**
      * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id The identifier
+     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public void setId(String id) {
         this.id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;

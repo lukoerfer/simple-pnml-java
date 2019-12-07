@@ -3,12 +3,14 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
- * Describes dimension information (size) of a graphical element
+ * Describes the size of a graphical element in two dimensions
  */
 @EqualsAndHashCode
-public class Dimension {
+public class Size implements Collectable {
 
     /**
      * --- GETTER ---
@@ -37,16 +39,20 @@ public class Dimension {
     /**
      * Creates an empty dimension information
      */
-    public Dimension() { }
+    public Size() { }
 
     /**
      * Creates a new dimension information
      * @param width The length in X direction
      * @param height The length in Y direction
      */
-    public Dimension(double width, double height) {
+    public Size(double width, double height) {
         setWidth(width);
         setHeight(height);
     }
 
+    @Override
+    public Stream<Collectable> collect() {
+        return Stream.of(this);
+    }
 }

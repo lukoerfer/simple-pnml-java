@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CoordinatesTest {
+class PositionTest {
 
     static EasyRandom random = new EasyRandom();
 
     @Test
     void canCreate() {
         double x = random.nextDouble(), y = random.nextDouble();
-        Coordinates coordinates = new Coordinates(x, y);
-        assertEquals(x, coordinates.getX());
-        assertEquals(y, coordinates.getY());
+        Position position = new Position(x, y);
+        assertEquals(x, position.getX());
+        assertEquals(y, position.getY());
     }
 
 }

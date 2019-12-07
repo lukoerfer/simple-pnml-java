@@ -1,14 +1,18 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
- * Stores coordinates in two dimensions
+ *
  */
 @EqualsAndHashCode
-public class Coordinates {
+public class Offset implements Collectable {
 
     /**
      * -- GETTER --
@@ -19,7 +23,8 @@ public class Coordinates {
      * @param x The position in X direction
      */
     @XmlAttribute
-    @Getter @Setter
+    @Getter
+    @Setter
     private double x;
 
     /**
@@ -37,17 +42,20 @@ public class Coordinates {
     /**
      * Creates an empty set of coordinates
      */
-    public Coordinates() {
-
-    }
+    public Offset() { }
 
     /**
      * Creates a new set of coordinates
      * @param x The position in X direction
      * @param y The position in Y direction
      */
-    public Coordinates(double x, double y) {
+    public Offset(double x, double y) {
         setX(x);
         setY(y);
+    }
+
+    @Override
+    public Stream<Collectable> collect() {
+        return Stream.of(this);
     }
 }
