@@ -65,103 +65,15 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
     }
 
     /**
-     * Creates a new transition
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     * @param name A label containing the name
-     */
-    public Transition(String id, Label name) {
-        setId(id);
-        setName(name);
-    }
-
-    /**
-     * Sets the name of this transition
-     * @param name A string containing the name
-     * @return A reference to this transition
-     */
-    public Transition withName(String name) {
-        setName(new Label(name));
-        return this;
-    }
-
-    /**
-     * Sets the name of this transition
-     * @param name A label containing the name
-     * @return A reference to this transition
-     */
-    public Transition withName(Label name) {
-        setName(name);
-        return this;
-    }
-
-    /**
-     * Sets the graphics of this transition
-     * @param graphics A graphics description for a node element
-     * @return A reference to this transition
-     */
-    public Transition withGraphics(Node graphics) {
-        setGraphics(graphics);
-        return this;
-    }
-
-    /**
-     *
-     * @param x
-     * @param y
+     * Collects the child elements of this transition recursively
      * @return
      */
-    public Transition withGraphics(double x, double y) {
-        setGraphics(new Node(x, y));
-        return this;
-    }
-
-    /**
-     *
-     * @param x
-     * @param y
-     * @param fill
-     * @param line
-     * @return
-     */
-    public Transition withGraphics(double x, double y, Fill fill, Line line) {
-        setGraphics(new Node(x, y, fill, line));
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this transition
-     * @param x The position in X direction
-     * @param y The position in Y direction
-     * @param width The length in X direction
-     * @param height The length in Y direction
-     * @return A reference to this transition
-     */
-    public Transition withGraphics(double x, double y, double width, double height) {
-        setGraphics(new Node(x, y, width, height));
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this transition
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     * @param fill
-     * @param line
-     * @return
-     */
-    public Transition withGraphics(double x, double y, double width, double height, Fill fill, Line line) {
-        setGraphics(new Node(x, y, width, height, fill, line));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(name)
-            .collect(graphics)
-            .collect(toolData)
+            .collect(getName())
+            .collect(getGraphics())
+            .collect(getToolData())
             .build();
     }
 }

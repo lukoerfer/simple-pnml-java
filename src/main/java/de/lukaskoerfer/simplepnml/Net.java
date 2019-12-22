@@ -73,7 +73,7 @@ public class Net extends Identifiable implements Named, Collectable {
      * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public Net(String id) {
-        this(id, null, null);
+        this(id, null);
     }
 
     /**
@@ -82,19 +82,8 @@ public class Net extends Identifiable implements Named, Collectable {
      * @param type
      */
     public Net(String id, String type) {
-        this(id, type, null);
-    }
-
-    /**
-     * Creates a new net
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     * @param type
-     * @param name
-     */
-    public Net(String id, String type, Label name) {
         setId(id);
         setType(type);
-        setName(name);
     }
 
     /**
@@ -106,51 +95,15 @@ public class Net extends Identifiable implements Named, Collectable {
     }
 
     /**
-     * Sets the name of the net
-     * @param name A label containing the name
-     * @return A reference to itself
+     *
+     * @return
      */
-    public Net withName(Label name) {
-        setName(name);
-        return this;
-    }
-
-    /**
-     * Sets the name of the net
-     * @param name A string containing the name
-     * @return A reference to itself
-     */
-    public Net withName(String name) {
-        setName(new Label(name));
-        return this;
-    }
-
-    /**
-     * Adds pages to the net
-     * @param pages A list of pages
-     * @return A reference to itself
-     */
-    public Net withPages(Page... pages) {
-        getPages().addAll(Arrays.asList(pages));
-        return this;
-    }
-
-    /**
-     * Adds tool data definitions to the net
-     * @param toolData
-     * @return A reference to itself
-     */
-    public Net withToolData(ToolData... toolData) {
-        getToolData().addAll(Arrays.asList(toolData));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(name)
-            .collect(pages)
-            .collect(toolData)
+            .collect(getName())
+            .collect(getPages())
+            .collect(getToolData())
             .build();
     }
 }

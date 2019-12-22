@@ -26,11 +26,4 @@ class NetTest {
         assertTrue(net.getId().trim().length() > 0);
     }
 
-    @Test
-    void withPagesAddsPages() {
-        Page page1 = random.nextObject(Page.class), page2 = random.nextObject(Page.class);
-        Net net = new Net().withPages(page1, page2);
-        assertEquals(2, net.getPages().size());
-    }
-
 }

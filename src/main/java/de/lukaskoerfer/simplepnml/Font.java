@@ -103,26 +103,9 @@ public class Font implements Collectable {
     public Font() { }
 
     /**
-     * Creates a new font
-     * @param family The font family
-     * @param style The font style
-     * @param weight The font weight
-     * @param size The font size
-     * @param decoration The font decoration
-     * @param align The font alignment
-     * @param rotation The font rotation
+     *
+     * @return
      */
-    public Font(String family, String style, String weight, String size,
-                FontDecoration decoration, FontAlign align, double rotation) {
-        setFamily(family);
-        setStyle(style);
-        setWeight(weight);
-        setSize(size);
-        setDecoration(decoration);
-        setAlign(align);
-        setRotation(rotation);
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);

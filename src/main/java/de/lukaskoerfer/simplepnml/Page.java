@@ -86,98 +86,22 @@ public class Page extends Identifiable implements Collectable, Named {
      * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public Page(String id) {
-        this(id, null);
-    }
-
-    /**
-     * Creates a new page
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     * @param name A label containing the name
-     */
-    public Page(String id, Label name) {
         setId(id);
-        setName(name);
     }
 
     /**
      *
-     * @param action
      * @return
      */
-    public Page with(Consumer<Page> action) {
-        action.accept(this);
-        return this;
-    }
-
-    /**
-     * Sets the name of the page
-     * @param name A string containing the name
-     * @return A reference to this page
-     */
-    public Page withName(String name) {
-        setName(new Label(name));
-        return this;
-    }
-
-    /**
-     * Sets the name of the page
-     * @param name A label containing the name
-     * @return A reference to this page
-     */
-    public Page withName(Label name) {
-        setName(name);
-        return this;
-    }
-
-    /**
-     * Adds sub-pages to the page
-     * @param pages A list of pages
-     * @return A reference to this page
-     */
-    public Page withPages(Page... pages) {
-        this.pages.addAll(Arrays.asList(pages));
-        return this;
-    }
-
-    /**
-     * Adds places to the page
-     * @param places A list of places
-     * @return A reference to this page
-     */
-    public Page withPlaces(Place... places) {
-        this.places.addAll(Arrays.asList(places));
-        return this;
-    }
-
-    /**
-     * Adds transitions to the page
-     * @param transitions A list of transitions
-     * @return A reference to this page
-     */
-    public Page withTransitions(Transition... transitions) {
-        this.transitions.addAll(Arrays.asList(transitions));
-        return this;
-    }
-
-    /**
-     * Adds arcs to the page
-     * @param arcs A list of arcs
-     * @return A reference to this page
-     */
-    public Page withArcs(Arc... arcs) {
-        this.arcs.addAll(Arrays.asList(arcs));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(name)
-            .collect(pages)
-            .collect(places)
-            .collect(transitions)
-            .collect(arcs)
-            .collect(toolData)
+            .collect(getName())
+            .collect(getPages())
+            .collect(getPlaces())
+            .collect(getTransitions())
+            .collect(getArcs())
+            .collect(getToolData())
             .build();
     }
 }

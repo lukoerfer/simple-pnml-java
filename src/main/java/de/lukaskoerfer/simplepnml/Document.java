@@ -48,29 +48,13 @@ public class Document implements Collectable {
     }
 
     /**
-     *
-     * @param transformation
+     * Collects the child elements of this document recursively
      * @return
      */
-    public Document apply(Consumer<Document> transformation) {
-        transformation.accept(this);
-        return this;
-    }
-
-    /**
-     * Adds nets to this document
-     * @param nets
-     * @return A reference to itself
-     */
-    public Document withNets(Net... nets) {
-        getNets().addAll(Arrays.asList(nets));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(nets)
+            .collect(getNets())
             .build();
     }
 

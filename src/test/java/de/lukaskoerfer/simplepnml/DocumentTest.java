@@ -35,16 +35,4 @@ class DocumentTest {
         assertEquals(input, output);
     }
 
-    @Test
-    void canModifyOnTheFly() {
-        PNML.read(new File("D:\\Development\\simple-pnml-java\\src\\test\\resources\\example.pnml"))
-            .write(System.out)
-            .apply(document -> {
-               document.collect()
-                   .flatMap(ofType(Net.class))
-                   .forEach(net -> net.setName(null));
-            })
-            .write(System.out);
-    }
-
 }

@@ -56,57 +56,9 @@ public class ToolData implements Collectable {
     public ToolData() {}
 
     /**
-     * Creates new tool-specific data
-     * @param tool
+     * Collects the child elements of this tool data element recursively
+     * @return
      */
-    public ToolData(String tool) {
-        setTool(tool);
-    }
-
-    /**
-     * Creates new tool-specific data
-     * @param tool The tool name
-     * @param version The tool version
-     * @param content
-     */
-    public ToolData(String tool, String version, Element... content) {
-        setTool(tool);
-        setVersion(version);
-        this.content = Arrays.asList(content);
-    }
-
-    /**
-     * Sets the tool name of this tool-specific data
-     * @param tool The tool name
-     * @return A reference to this tool-specific data
-     */
-    public ToolData forTool(String tool) {
-        setTool(tool);
-        return this;
-    }
-
-    /**
-     * Sets the tool name and version of this tool-specific data
-     * @param tool The tool name
-     * @param version The tool version
-     * @return A reference to this tool-specific data
-     */
-    public ToolData forTool(String tool, String version) {
-        setTool(tool);
-        setVersion(version);
-        return this;
-    }
-
-    /**
-     * Adds content to this tool-specific data
-     * @param content
-     * @return A reference to this tool-specific data
-     */
-    public ToolData withContent(Element... content) {
-        getContent().addAll(Arrays.asList(content));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);

@@ -73,130 +73,16 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
     }
 
     /**
-     * Sets the initial marking of the place
-     * @param initialMarking A label containing the initial marking
+     *
+     * @return
      */
-    public void setInitialMarking(Label initialMarking) {
-        this.initialMarking = initialMarking;
-    }
-
-    /**
-     * Sets the initial marking of this place
-     * @param initialMarking The initial marking
-     */
-    public void setInitialMarking(int initialMarking) {
-        setInitialMarking(new Label(initialMarking));
-    }
-
-    /**
-     * Sets the name of this place
-     * @param name A string containing the name
-     * @return A reference to this place
-     */
-    public Place withName(String name) {
-        setName(new Label(name));
-        return this;
-    }
-
-    /**
-     * Sets the name of this place
-     * @param name A label containing the name
-     * @return A reference to this place
-     */
-    public Place withName(Label name) {
-        setName(name);
-        return this;
-    }
-
-    /**
-     * Sets the graphics of this place
-     * @param graphics A graphics description for a node element
-     * @return A reference to this place
-     */
-    public Place withGraphics(Node graphics) {
-        setGraphics(graphics);
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this place
-     * @param x The position in X direction
-     * @param y The position in Y direction
-     * @return A reference to this place
-     */
-    public Place withGraphics(double x, double y) {
-        setGraphics(new Node(x, y));
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this place
-     * @param x The position in X direction
-     * @param y The position in Y direction
-     * @param fill The fill of the graphical representation
-     * @param line The line of the graphical representation
-     * @return A reference to this place
-     */
-    public Place withGraphics(double x, double y, Fill fill, Line line) {
-        setGraphics(new Node(x, y, fill, line));
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this place
-     * @param x The position in X direction
-     * @param y The position in Y direction
-     * @param width The length in X direction
-     * @param height The length in Y direction
-     * @return A reference to this place
-     */
-    public Place withGraphics(double x, double y, double width, double height) {
-        setGraphics(new Node(x, y, width, height));
-        return this;
-    }
-
-    /**
-     * Defines the graphics of this place
-     * @param x The position in X direction
-     * @param y The position in Y direction
-     * @param width The length in X direction
-     * @param height The length in Y direction
-     * @param fill The fill of the graphical representation
-     * @param line The line of the graphical representation
-     * @return A reference to this place
-     */
-    public Place withGraphics(double x, double y, double width, double height, Fill fill, Line line) {
-        setGraphics(new Node(x, y, width, height, fill, line));
-        return this;
-    }
-
-    /**
-     * Sets the initial marking of this place
-     * @param initialMarking The initial marking
-     * @return A reference to this place
-     */
-    public Place withInitialMarking(int initialMarking) {
-        setInitialMarking(initialMarking);
-        return this;
-    }
-
-    /**
-     * Sets the initial marking of this place
-     * @param initialMarking A label containing the initial marking
-     * @return A reference to this place
-     */
-    public Place withInitialMarking(Label initialMarking) {
-        setInitialMarking(initialMarking);
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(name)
-            .collect(graphics)
-            .collect(initialMarking)
-            .collect(toolData)
+            .collect(getName())
+            .collect(getGraphics())
+            .collect(getInitialMarking())
+            .collect(getToolData())
             .build();
     }
 }

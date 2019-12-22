@@ -42,41 +42,14 @@ public class Edge implements Collectable, Lined {
     public Edge() {}
 
     /**
-     * Creates a new edge
-     * @param positions
+     *
+     * @return
      */
-    public Edge(Position... positions) {
-        this.positions = Arrays.asList(positions);
-    }
-
-    /**
-     * Sets the line style of the edge
-     * @param line A line description
-     * @return A reference to this graphical edge
-     */
-    public Edge withLine(Line line) {
-        setLine(line);
-        return this;
-    }
-
-    /**
-     * Defines the line style of the edge
-     * @param color The line color
-     * @param width The line width
-     * @param shape The line shape
-     * @param style The line style
-     * @return A reference to this graphical edge
-     */
-    public Edge withLine(String color, double width, LineShape shape, LineStyle style) {
-        setLine(new Line(color, width, shape, style));
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(positions)
-            .collect(line)
+            .collect(getPositions())
+            .collect(getLine())
             .build();
     }
 }

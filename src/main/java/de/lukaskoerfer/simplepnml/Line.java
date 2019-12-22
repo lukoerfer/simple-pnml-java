@@ -63,80 +63,12 @@ public class Line implements Collectable {
     /**
      * Creates a new line
      */
-    public Line() {}
-
-    /**
-     * Creates a new line
-     * @param color
-     */
-    public Line(String color) {
-        setColor(color);
-    }
-
-    /**
-     * Creates a new line
-     * @param color
-     * @param width
-     */
-    public Line(String color, double width) {
-        setColor(color);
-        setWidth(width);
-    }
-
-    /**
-     * Creates a new line
-     * @param color
-     * @param width
-     * @param shape
-     * @param style
-     */
-    public Line(String color, double width, LineShape shape, LineStyle style) {
-        setColor(color);
-        setWidth(width);
-        setShape(shape);
-        setStyle(style);
-    }
+    public Line() { }
 
     /**
      *
-     * @param color
      * @return
      */
-    public Line withColor(String color) {
-        setColor(color);
-        return this;
-    }
-
-    /**
-     * Sets the line width
-     * @param width
-     * @return
-     */
-    public Line withWidth(double width) {
-        setWidth(width);
-        return this;
-    }
-
-    /**
-     *
-     * @param shape
-     * @return
-     */
-    public Line withShape(LineShape shape) {
-        setShape(shape);
-        return this;
-    }
-
-    /**
-     *
-     * @param style
-     * @return
-     */
-    public Line withStyle(LineStyle style) {
-        setStyle(style);
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);

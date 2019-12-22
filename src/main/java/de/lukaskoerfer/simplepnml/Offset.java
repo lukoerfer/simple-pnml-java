@@ -54,6 +54,10 @@ public class Offset implements Collectable {
         setY(y);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);

@@ -64,36 +64,12 @@ public class Fill implements Collectable {
     /**
      * Creates a new fill
      */
-    public Fill() {}
+    public Fill() { }
 
     /**
-     * Creates a new fill
-     * @param color The fill color
+     *
+     * @return
      */
-    public Fill(String color) {
-        setColor(color);
-    }
-
-    /**
-     * Creates a new fill
-     * @param color The fill color
-     * @param gradientColor The gradient color
-     * @param gradientRotation The gradient rotation
-     */
-    public Fill(String color, String gradientColor, GradientRotation gradientRotation) {
-        setColor(color);
-        setGradientColor(gradientColor);
-        setGradientRotation(gradientRotation);
-    }
-
-    /**
-     * Creates a new image fill
-     * @param image An URI pointing to the fill image
-     */
-    public Fill(URI image) {
-        setImage(image);
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);

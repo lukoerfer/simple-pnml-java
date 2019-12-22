@@ -1,8 +1,5 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;

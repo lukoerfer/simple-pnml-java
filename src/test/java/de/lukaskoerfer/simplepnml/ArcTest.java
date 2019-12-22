@@ -28,38 +28,4 @@ class ArcTest {
         assertTrue(arc.getId().trim().length() > 0);
     }
 
-    @Test
-    void canConnect() {
-        String sourceId = random.nextObject(String.class),
-            targetId = random.nextObject(String.class);
-        Arc arc = new Arc();
-        Connectable source = mock(Connectable.class);
-        when(source.getId()).thenReturn(sourceId);
-        Connectable target = mock(Connectable.class);
-        when(target.getId()).thenReturn(targetId);
-        arc.connect(source, target);
-        assertEquals(sourceId, arc.getSource());
-        assertEquals(targetId, arc.getTarget());
-    }
-
-    @Test
-    void canSetSource() {
-        String sourceId = random.nextObject(String.class);
-        Arc arc = new Arc();
-        Connectable source = mock(Connectable.class);
-        when(source.getId()).thenReturn(sourceId);
-        arc.setSource(source);
-        assertEquals(sourceId, arc.getSource());
-    }
-
-    @Test
-    void canSetTarget() {
-        String targetId = random.nextObject(String.class);
-        Arc arc = new Arc();
-        Connectable target = mock(Connectable.class);
-        when(target.getId()).thenReturn(targetId);
-        arc.setTarget(target);
-        assertEquals(targetId, arc.getTarget());
-    }
-
 }

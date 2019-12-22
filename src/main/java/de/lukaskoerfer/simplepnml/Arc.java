@@ -132,95 +132,11 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
         setTarget(targetId);
     }
 
-    /**
-     * Sets both the source and the target of this arc
-     * @param source A string containing the identifier of the source of this arc
-     * @param target A string containing the identifier of the target of this arc
-     */
-    public void connect(String source, String target) {
-        setSource(source);
-        setTarget(target);
-    }
-
-    /**
-     * Sets both the source and the target of this arc
-     * @param source The source element of this arc
-     * @param target The target element of this arc
-     */
-    public void connect(Connectable source, Connectable target) {
-        setSource(source);
-        setTarget(target);
-    }
-
-    /**
-     * Sets the source of this arc
-     * @param source A string containing the identifier of the source of this arc
-     * @return A reference to this arc
-     */
-    public Arc withSource(String source) {
-        setSource(source);
-        return this;
-    }
-
-    /**
-     * Sets the source of this arc
-     * @param source The source element of this arc
-     * @return A reference to this arc
-     */
-    public Arc withSource(Connectable source) {
-        setSource(source);
-        return this;
-    }
-
-    /**
-     * Sets the target of this arc
-     * @param target A string containing the identifier of the target of this arc
-     * @return A reference to this arc
-     */
-    public Arc withTarget(String target) {
-        setTarget(target);
-        return this;
-    }
-
-    /**
-     * Sets the target of this arc
-     * @param target The target element of this arc
-     * @return A reference to this arc
-     */
-    public Arc withTarget(Connectable target) {
-        setTarget(target);
-        return this;
-    }
-
-    /**
-     * Sets both the source and the target of this arc
-     * @param source A string containing the identifier of the source of this arc
-     * @param target A string containing the identifier of the target of this arc
-     * @return A reference to this arc
-     */
-    public Arc connecting(String source, String target) {
-        setSource(source);
-        setTarget(target);
-        return this;
-    }
-
-    /**
-     * Sets both the source and the target of this arc
-     * @param source The source element of this arc
-     * @param target The source element of this arc
-     * @return A reference to this arc
-     */
-    public Arc connecting(Connectable source, Connectable target) {
-        setSource(source);
-        setTarget(target);
-        return this;
-    }
-
     @Override
     public Stream<Collectable> collect() {
         return Collector.create(this)
-            .collect(graphics)
-            .collect(inscription)
+            .collect(getGraphics())
+            .collect(getInscription())
             .build();
     }
 }
