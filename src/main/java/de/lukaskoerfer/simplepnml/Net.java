@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,6 +13,7 @@ import java.util.stream.Stream;
  * Represents a place/transition net
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 public class Net extends Identifiable implements Named, Collectable {
 
@@ -29,8 +27,8 @@ public class Net extends Identifiable implements Named, Collectable {
      * Gets the net type
      * @return
      */
-    @XmlAttribute(required = true)
     @Getter
+    @XmlAttribute(required = true)
     private String type;
 
     /**
@@ -41,8 +39,8 @@ public class Net extends Identifiable implements Named, Collectable {
      * Sets the label containing the name
      * @param name A label containing the name
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Label name;
 
     /**
@@ -50,8 +48,9 @@ public class Net extends Identifiable implements Named, Collectable {
      * Gets the pages of the net
      * @return A list of pages
      */
-    @XmlElement
     @Getter
+    @Builder.Default
+    @XmlElement
     private List<Page> pages = new ArrayList<>();
 
     /**
@@ -59,8 +58,9 @@ public class Net extends Identifiable implements Named, Collectable {
      * Gets tool-specific data related to the net
      * @return A list of tool data definitions
      */
-    @XmlElement
     @Getter
+    @Builder.Default
+    @XmlElement
     private List<ToolData> toolData = new ArrayList<>();
 
     /**

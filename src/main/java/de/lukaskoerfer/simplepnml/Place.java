@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.stream.Stream;
  * Represents a place in a place/transition net
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 public class Place extends Connectable implements Collectable, Named, NodeElement {
 
@@ -25,8 +23,8 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      * Sets the name of this place
      * @param name A label containing the name
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Label name;
 
     /**
@@ -37,8 +35,8 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      * Sets the graphics of this place
      * @param graphics A graphics description for a node element
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Node graphics;
 
     /**
@@ -46,8 +44,8 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      * Gets the initial marking of this place
      * @return A label containing the initial marking
      */
+    @Getter @Setter
     @XmlElement
-    @Getter
     private Label initialMarking;
 
     /**
@@ -55,9 +53,9 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      * Gets a list containing tool-specific data
      * @return A list of tool-specific data
      */
+    @Getter @Setter
     @XmlElement
-    @Getter
-    private List<ToolData> toolData = new ArrayList<>();
+    private List<ToolData> toolData;
 
     /**
      * Creates a new place using a random identifier
@@ -72,6 +70,7 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      */
     public Place(String id) {
         setId(id);
+        setToolData(new ArrayList<>());
     }
 
     /**

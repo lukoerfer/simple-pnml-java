@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.net.URI;
@@ -13,6 +10,7 @@ import java.util.stream.Stream;
  * Describes the graphics of a node element
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Node implements Collectable, Lined, Filled {
 
@@ -24,8 +22,9 @@ public class Node implements Collectable, Lined, Filled {
      * Sets the position of this graphical node
      * @param position
      */
-    @XmlElement(name = "position", required = true)
     @Getter @Setter
+    @Builder.Default
+    @XmlElement(name = "position", required = true)
     private Position position = new Position();
 
     /**
@@ -36,8 +35,8 @@ public class Node implements Collectable, Lined, Filled {
      * Sets the size of this graphical node
      * @param size
      */
-    @XmlElement(name = "dimension")
     @Getter @Setter
+    @XmlElement(name = "dimension")
     private Size size;
 
     /**
@@ -48,8 +47,8 @@ public class Node implements Collectable, Lined, Filled {
      * Sets the fill of this graphical node
      * @param fill
      */
-    @XmlElement(name = "fill")
     @Getter @Setter
+    @XmlElement(name = "fill")
     private Fill fill;
 
     /**
@@ -61,8 +60,8 @@ public class Node implements Collectable, Lined, Filled {
      * ts the line of this graphical node
      * @param line
      */
-    @XmlElement(name = "line")
     @Getter @Setter
+    @XmlElement(name = "line")
     private Line line;
 
     /**

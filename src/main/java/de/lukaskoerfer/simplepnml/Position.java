@@ -20,8 +20,8 @@ public class Position implements Collectable {
      * Sets the position in X direction
      * @param x The position in X direction
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private double x;
 
     /**
@@ -32,8 +32,8 @@ public class Position implements Collectable {
      * Sets the position in Y direction
      * @param y The position in Y direction
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private double y;
 
     /**

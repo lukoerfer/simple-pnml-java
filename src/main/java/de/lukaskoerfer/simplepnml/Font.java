@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.stream.Stream;
@@ -12,6 +9,7 @@ import java.util.stream.Stream;
  * Specifies a font
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Font implements Collectable {
 
@@ -23,8 +21,8 @@ public class Font implements Collectable {
      * Sets the font family
      * @param family A string containing a font family in CSS
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String family;
 
     /**
@@ -35,8 +33,8 @@ public class Font implements Collectable {
      * Sets the font style
      * @param style A string containing a font style in CSS
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String style;
 
     /**
@@ -47,8 +45,8 @@ public class Font implements Collectable {
      * Sets the font weight
      * @param weight A string containing a font weight in CSS
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String weight;
 
     /**
@@ -59,8 +57,8 @@ public class Font implements Collectable {
      * Sets the font size
      * @param size A string containing a font size in CSS
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String size;
 
     /**
@@ -71,8 +69,8 @@ public class Font implements Collectable {
      * Sets the font decoration
      * @param decoration A font decoration
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private FontDecoration decoration;
 
     /**
@@ -83,8 +81,8 @@ public class Font implements Collectable {
      * Sets the font alignment
      * @param align A font alignment
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private FontAlign align;
 
     /**
@@ -95,8 +93,8 @@ public class Font implements Collectable {
      * Sets the font rotation
      * @param rotation A font rotation
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private double rotation;
 
     /**

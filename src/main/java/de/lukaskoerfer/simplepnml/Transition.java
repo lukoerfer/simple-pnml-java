@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ import java.util.stream.Stream;
  * Represents a transition in a place/transition net
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 public class Transition extends Connectable implements Collectable, Named, NodeElement {
 
@@ -26,8 +24,8 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
      * Sets the name of this transition
      * @param name A label containing the name
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Label name;
 
     /**
@@ -38,8 +36,8 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
      * Sets the graphics of this transition
      * @param graphics A graphics description
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Node graphics;
 
     /**
@@ -47,9 +45,9 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
      * Gets a list containing tool-specific data
      * @return A list of tool-specific data
      */
+    @Getter @Setter
     @XmlElement
-    @Getter
-    private List<ToolData> toolData = new ArrayList<>();
+    private List<ToolData> toolData;
 
     /**
      * Creates a new transition using a random identifier
@@ -64,6 +62,7 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
      */
     public Transition(String id) {
         setId(id);
+        setToolData(new ArrayList<>());
     }
 
     /**

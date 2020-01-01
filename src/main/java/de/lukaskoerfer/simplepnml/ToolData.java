@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -18,6 +15,7 @@ import java.util.stream.Stream;
  * Describes tool-specific data
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class ToolData implements Collectable {
 
@@ -29,8 +27,8 @@ public class ToolData implements Collectable {
      * Sets the name of the tool
      * @param tool The name
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String tool;
 
     /**
@@ -41,8 +39,8 @@ public class ToolData implements Collectable {
      * Sets the version of the tool
      * @param version The version
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String version;
 
     /**
@@ -50,14 +48,17 @@ public class ToolData implements Collectable {
      * Gets a list of
      * @return
      */
+    @Getter @Setter
+    @Singular
     @XmlAnyElement
-    @Getter
-    private List<Element> content = new ArrayList<>();
+    private List<Element> contents;
 
     /**
      * Creates new tool-specific data
      */
-    public ToolData() {}
+    public ToolData() {
+        setContents(new ArrayList<>());
+    }
 
     /**
      * Collects the child elements of this tool data element recursively

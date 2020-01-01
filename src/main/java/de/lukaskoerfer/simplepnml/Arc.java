@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,6 +11,7 @@ import java.util.stream.Stream;
  * Represents an arc in a place/transition net
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 public class Arc extends Identifiable implements Collectable, EdgeElement {
 
@@ -22,8 +20,8 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * Gets the identifier of the source of this arc
      * @return A string containing the identifier
      */
-    @XmlAttribute
     @Getter
+    @XmlAttribute
     private String source;
 
     /**
@@ -31,8 +29,8 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * Gets the identifier of the target of this arc
      * @return A string containing the identifier
      */
-    @XmlAttribute
     @Getter
+    @XmlAttribute
     private String target;
 
     /**
@@ -43,8 +41,8 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * Sets how to visualize this arc
      * @param graphics The graphics of this arc
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Edge graphics;
 
     /**
@@ -55,8 +53,9 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * Sets the inscription of this arc
      * @param inscription A label containing the inscription
      */
-    @XmlElement
+
     @Getter @Setter
+    @XmlElement
     private Label inscription;
 
     /**

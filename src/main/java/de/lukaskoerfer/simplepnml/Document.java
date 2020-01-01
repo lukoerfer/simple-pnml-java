@@ -16,9 +16,10 @@ import java.util.stream.Stream;
 /**
  * Container for place/transition nets (in PNML)
  */
-@XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
+@XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
 public class Document implements Collectable {
 
     /**
@@ -26,8 +27,9 @@ public class Document implements Collectable {
      * Gets the nets in this document
      * @return A list of nets
      */
-    @XmlElement(name = "net")
     @Getter @Setter
+    @Builder.Default
+    @XmlElement(name = "net")
     private List<Net> nets = new ArrayList<>();
 
     /**

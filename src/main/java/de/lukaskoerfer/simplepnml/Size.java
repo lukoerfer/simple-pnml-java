@@ -20,8 +20,8 @@ public class Size implements Collectable {
      * Sets the length in X direction
      * @param width The length in X direction
      */
-    @XmlAttribute(name = "x")
     @Getter @Setter
+    @XmlAttribute(name = "x")
     private double width;
 
     /**
@@ -32,8 +32,8 @@ public class Size implements Collectable {
      * Sets the length in Y direction
      * @param height The length in Y direction
      */
-    @XmlAttribute(name = "y")
     @Getter @Setter
+    @XmlAttribute(name = "y")
     private double height;
 
     /**

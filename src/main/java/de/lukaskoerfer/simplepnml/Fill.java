@@ -11,6 +11,7 @@ import java.util.stream.Stream;
  * Describes the fill of a graphical element
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Fill implements Collectable {
 
@@ -22,8 +23,8 @@ public class Fill implements Collectable {
      * Sets the fill color
      * @param color A string describing a color
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String color;
 
     /**
@@ -34,8 +35,8 @@ public class Fill implements Collectable {
      * Sets the gradient color
      * @param gradientColor A string describing a color
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String gradientColor;
 
     /**
@@ -46,8 +47,8 @@ public class Fill implements Collectable {
      * Sets the gradient rotation
      * @param gradientRotation A gradient rotation
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private GradientRotation gradientRotation;
 
     /**
@@ -58,8 +59,8 @@ public class Fill implements Collectable {
      * Sets the fill image
      * @param image An URI pointing to the fill image
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private URI image;
 
     /**

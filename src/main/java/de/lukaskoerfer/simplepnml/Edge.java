@@ -13,6 +13,7 @@ import java.util.stream.Stream;
  * Describes the graphics of an edge element
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Edge implements Collectable, Lined {
 
@@ -21,8 +22,9 @@ public class Edge implements Collectable, Lined {
      * Gets a list containing the points that define this edge
      * @return A list of points
      */
-    @XmlElement
     @Getter
+    @Builder.Default
+    @XmlElement
     private List<Position> positions = new ArrayList<>();
 
     /**
@@ -33,8 +35,8 @@ public class Edge implements Collectable, Lined {
      * Sets the line style of this edge
      * @param line A line description
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Line line;
 
     /**

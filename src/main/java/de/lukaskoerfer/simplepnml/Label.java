@@ -10,6 +10,7 @@ import java.util.stream.Stream;
  * Describes a text at a specific position
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Label implements Collectable, AnnotationElement {
 
@@ -21,8 +22,8 @@ public class Label implements Collectable, AnnotationElement {
      * Sets the text of this label
      * @param text The text
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private String text;
 
     /**
@@ -33,8 +34,8 @@ public class Label implements Collectable, AnnotationElement {
      * Sets the graphics of this label
      * @param graphics The graphics description
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Annotation graphics;
 
     /**

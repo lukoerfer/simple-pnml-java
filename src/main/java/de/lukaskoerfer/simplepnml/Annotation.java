@@ -11,6 +11,7 @@ import java.util.stream.Stream;
  * Describes the graphics of an annotation element
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Annotation implements Collectable, Filled, Lined {
 
@@ -22,8 +23,9 @@ public class Annotation implements Collectable, Filled, Lined {
      * Sets the offsets of this annotation graphics
      * @param offset A set of relative coordinates
      */
-    @XmlElement
     @Getter @Setter
+    @Builder.Default
+    @XmlElement(name = "offset")
     private Position offset = new Position();
 
     /**
@@ -34,8 +36,8 @@ public class Annotation implements Collectable, Filled, Lined {
      * Sets the fill of this annotation graphics
      * @param fill
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement(name = "fill")
     private Fill fill;
 
     /**
@@ -46,8 +48,8 @@ public class Annotation implements Collectable, Filled, Lined {
      * Sets the line of this annotation graphics
      * @param line
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement(name = "line")
     private Line line;
 
     /**
@@ -58,8 +60,8 @@ public class Annotation implements Collectable, Filled, Lined {
      * Sets the font of this annotation graphics
      * @param font
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement(name = "font")
     private Font font;
 
     /**

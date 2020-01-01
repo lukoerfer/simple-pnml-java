@@ -10,6 +10,7 @@ import java.util.stream.Stream;
  * Describes a graphical line element
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Line implements Collectable {
 
@@ -21,8 +22,8 @@ public class Line implements Collectable {
      * Sets the line color
      * @param color
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private String color;
 
     /**
@@ -33,8 +34,8 @@ public class Line implements Collectable {
      * Sets the line width
      * @param width
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private double width;
 
     /**
@@ -45,8 +46,8 @@ public class Line implements Collectable {
      * Sets the line shape
      * @param shape
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private LineShape shape;
 
     /**
@@ -57,8 +58,8 @@ public class Line implements Collectable {
      * Sets the line style
      * @param style
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private LineStyle style;
 
     /**

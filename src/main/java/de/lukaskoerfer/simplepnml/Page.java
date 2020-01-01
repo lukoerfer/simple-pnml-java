@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.stream.Stream;
  * Represents a page of a place/transition net
  */
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 public class Page extends Identifiable implements Collectable, Named {
 
@@ -27,8 +25,8 @@ public class Page extends Identifiable implements Collectable, Named {
      * Sets the name of the page
      * @param name A label containing the name
      */
-    @XmlElement
     @Getter @Setter
+    @XmlElement
     private Label name;
 
     /**
@@ -36,45 +34,49 @@ public class Page extends Identifiable implements Collectable, Named {
      * Gets the list of sub-pages of this page
      * @return A list of pages
      */
+    @Getter @Setter
+    @Singular
     @XmlElement
-    @Getter
-    private List<Page> pages = new ArrayList<>();
+    private List<Page> pages;
 
     /**
      * -- GETTER --
      * Gets the list of places on this page
      * @return A list of places
      */
+    @Getter @Setter
+    @Singular
     @XmlElement
-    @Getter
-    private List<Place> places = new ArrayList<>();
+    private List<Place> places;
 
     /**
      * -- GETTER --
      * Gets the list of transitions on this page
      * @return A list of transitions
      */
+    @Getter @Setter
+    @Singular
     @XmlElement
-    @Getter
-    private List<Transition> transitions = new ArrayList<>();
+    private List<Transition> transitions;
 
     /**
      * -- GETTER --
      * Gets the list of arcs on this page
      * @return A list of arcs
      */
+    @Getter @Setter
+    @Singular
     @XmlElement
-    @Getter
-    private List<Arc> arcs = new ArrayList<>();
+    private List<Arc> arcs;
 
     /**
      * -- GETTER --
      * Gets the list of tool data related to this page
      * @return A list of tool data definitions
      */
+    @Getter @Setter
     @XmlElement
-    @Getter
-    private List<ToolData> toolData = new ArrayList<>();
+    private List<ToolData> toolData;
 
     /**
      * Creates a new page using a random identifier
@@ -89,6 +91,11 @@ public class Page extends Identifiable implements Collectable, Named {
      */
     public Page(String id) {
         setId(id);
+        setPages(new ArrayList<>());
+        setPlaces(new ArrayList<>());
+        setTransitions(new ArrayList<>());
+        setArcs(new ArrayList<>());
+        setToolData(new ArrayList<>());
     }
 
     /**

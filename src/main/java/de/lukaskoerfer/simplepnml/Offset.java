@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 /**
  *
  */
-@Builder
 @EqualsAndHashCode
 public class Offset implements Collectable {
 
@@ -24,9 +23,8 @@ public class Offset implements Collectable {
      * Sets the position in X direction
      * @param x The position in X direction
      */
+    @Getter @Setter
     @XmlAttribute
-    @Getter
-    @Setter
     private double x;
 
     /**
@@ -37,8 +35,8 @@ public class Offset implements Collectable {
      * Sets the position in Y direction
      * @param y The position in Y direction
      */
-    @XmlAttribute
     @Getter @Setter
+    @XmlAttribute
     private double y;
 
     /**
