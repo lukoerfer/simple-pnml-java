@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 /**
  * Describes a text at a specific position
  */
+@Builder
 @EqualsAndHashCode
 public class Label implements Collectable, AnnotationElement {
 

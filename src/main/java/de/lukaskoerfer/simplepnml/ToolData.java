@@ -1,5 +1,7 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +17,8 @@ import java.util.stream.Stream;
 /**
  * Describes tool-specific data
  */
+@Builder
+@EqualsAndHashCode
 public class ToolData implements Collectable {
 
     /**

@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 /**
  * Describes the graphics of an edge element
  */
+@Builder
 @EqualsAndHashCode
 public class Edge implements Collectable, Lined {
 

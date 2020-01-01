@@ -22,7 +22,5 @@ class PageTest {
     void createAssignsValidId(String id) {
         Page page = new Page(id);
         assertNotNull(page.getId());
-        assertTrue(page.getId().length() > 0);
-        assertTrue(page.getId().trim().length() > 0);
     }
 }

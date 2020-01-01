@@ -24,8 +24,6 @@ class ArcTest {
     void createAssignsValidId(String id) {
         Arc arc = new Arc(id);
         assertNotNull(arc.getId());
-        assertTrue(arc.getId().length() > 0);
-        assertTrue(arc.getId().trim().length() > 0);
     }
 
 }

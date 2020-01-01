@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 /**
  * Describes the graphics of an annotation element
  */
+@Builder
 @EqualsAndHashCode
 public class Annotation implements Collectable, Filled, Lined {
 

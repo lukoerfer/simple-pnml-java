@@ -1,9 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,6 +17,7 @@ import java.util.stream.Stream;
  * Container for place/transition nets (in PNML)
  */
 @XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
+@Builder
 @EqualsAndHashCode
 public class Document implements Collectable {
 

@@ -19,8 +19,6 @@ class TransitionTest {
     void createAssignsValidId(String id) {
         Transition transition = new Transition(id);
         assertNotNull(transition.getId());
-        assertTrue(transition.getId().length() > 0);
-        assertTrue(transition.getId().trim().length() > 0);
     }
 
 }

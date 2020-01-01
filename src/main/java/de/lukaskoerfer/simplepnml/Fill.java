@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 /**
  * Describes the fill of a graphical element
  */
+@Builder
 @EqualsAndHashCode
 public class Fill implements Collectable {
 

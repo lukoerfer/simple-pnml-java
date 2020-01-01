@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 /**
  * Describes a graphical line element
  */
+@Builder
 @EqualsAndHashCode
 public class Line implements Collectable {
 

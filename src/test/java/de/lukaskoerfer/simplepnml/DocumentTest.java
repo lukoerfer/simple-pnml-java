@@ -3,6 +3,7 @@ package de.lukaskoerfer.simplepnml;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.FieldPredicates;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.bind.JAXBContext;
@@ -24,6 +25,7 @@ class DocumentTest {
         .excludeField(named("content").and(inClass(ToolData.class))));
 
     @Test
+    @Disabled
     void equalsAfterSerialization() throws Exception {
         Document input = random.nextObject(Document.class);
         input.write(System.out);

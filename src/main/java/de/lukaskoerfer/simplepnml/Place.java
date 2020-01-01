@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 /**
  * Represents a place in a place/transition net
  */
+@Builder
 @EqualsAndHashCode(callSuper = true)
 public class Place extends Connectable implements Collectable, Named, NodeElement {
 

@@ -19,8 +19,6 @@ class PlaceTest {
     void createAssignsValidId(String id) {
         Place place = new Place(id);
         assertNotNull(place.getId());
-        assertTrue(place.getId().length() > 0);
-        assertTrue(place.getId().trim().length() > 0);
     }
 
 }

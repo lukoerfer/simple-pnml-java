@@ -22,8 +22,6 @@ class NetTest {
     void createAssignsValidId(String id) {
         Net net = new Net(id);
         assertNotNull(net.getId());
-        assertTrue(net.getId().length() > 0);
-        assertTrue(net.getId().trim().length() > 0);
     }
 
 }

@@ -1,5 +1,6 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 /**
  * Describes the graphics of a node element
  */
+@Builder
 @EqualsAndHashCode
 public class Node implements Collectable, Lined, Filled {
 
