@@ -70,33 +70,7 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public Arc(String id) {
-        this(id, null, null);
-    }
-
-    /**
-     * Creates a new arc
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     * @param source The source element of this arc
-     * @param target The target element of this arc
-     */
-    public Arc(String id, Connectable source, Connectable target) {
-        this(id, source, target, null, null);
-    }
-
-    /**
-     * Creates a new arc
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     * @param source The source element of this arc
-     * @param target The target element of this arc
-     * @param graphics The graphics of this arc
-     * @param inscription A label containing the inscription
-     */
-    public Arc(String id, Connectable source, Connectable target, Edge graphics, Label inscription) {
         setId(id);
-        setSource(source);
-        setTarget(target);
-        setGraphics(graphics);
-        setInscription(inscription);
     }
 
     /**
