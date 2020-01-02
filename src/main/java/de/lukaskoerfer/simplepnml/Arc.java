@@ -1,10 +1,12 @@
 package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
+import lombok.experimental.Tolerate;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.function.Consumer;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -12,25 +14,40 @@ import java.util.stream.Stream;
  */
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
-public class Arc extends Identifiable implements Collectable, EdgeElement {
+@EqualsAndHashCode
+public class Arc implements Identifiable, Collectable, Edge {
+
+    /**
+     * -- GETTER --
+     * Gets the identifier
+     * @return The identifier
+     */
+    @Getter
+    @XmlAttribute(name = "id", required = true)
+    private String id;
 
     /**
      * -- GETTER --
      * Gets the identifier of the source of this arc
      * @return A string containing the identifier
+     * -- SETTER --
+     * Sets the source of this arc
+     * @param source A string containing the identifier of the source of this arc
      */
-    @Getter
-    @XmlAttribute
+    @Getter @Setter
+    @XmlAttribute(name = "source")
     private String source;
 
     /**
      * -- GETTER --
      * Gets the identifier of the target of this arc
      * @return A string containing the identifier
+     * -- SETTER --
+     * Sets the target of this arc
+     * @param target A string containing the identifier of the target of this arc
      */
-    @Getter
-    @XmlAttribute
+    @Getter @Setter
+    @XmlAttribute(name = "target")
     private String target;
 
     /**
@@ -42,8 +59,8 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * @param graphics The graphics of this arc
      */
     @Getter @Setter
-    @XmlElement
-    private Edge graphics;
+    @XmlElement(name = "graphics")
+    private EdgeGraphics graphics;
 
     /**
      * -- GETTER --
@@ -53,10 +70,18 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
      * Sets the inscription of this arc
      * @param inscription A label containing the inscription
      */
+    @Getter @Setter
+    @XmlElement(name = "inscription")
+    private Label inscription;
 
+    /**
+     * -- GETTER --
+     * Gets a list containing tool-specific data
+     * @return A list of tool-specific data
+     */
     @Getter @Setter
     @XmlElement
-    private Label inscription;
+    private List<ToolData> toolData;
 
     /**
      * Creates a new arc using a random identifier
@@ -65,26 +90,24 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
         this(null);
     }
 
-    /**
-     * Creates a new arc
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
     public Arc(String id) {
         setId(id);
     }
 
     /**
-     * Sets the source of this arc
-     * @param source A string containing the identifier of the source of this arc
+     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
-    public void setSource(String source) {
-        this.source = source;
+    public void setId(String id) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
     }
+
 
     /**
      * Sets the source of this arc
      * @param source The source element of this arc
      */
+    @Tolerate
     public void setSource(Connectable source) {
         String sourceId = (source != null) ? source.getId() : null;
         setSource(sourceId);
@@ -92,16 +115,9 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
 
     /**
      * Sets the target of this arc
-     * @param target A string containing the identifier of the target of this arc
-     */
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    /**
-     * Sets the target of this arc
      * @param target The target element of this arc
      */
+    @Tolerate
     public void setTarget(Connectable target) {
         String targetId = (target != null) ? target.getId() : null;
         setTarget(targetId);
@@ -112,6 +128,7 @@ public class Arc extends Identifiable implements Collectable, EdgeElement {
         return Collector.create(this)
             .collect(getGraphics())
             .collect(getInscription())
+            .collect(getToolData())
             .build();
     }
 }

@@ -3,7 +3,6 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +11,7 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class Label implements Collectable, AnnotationElement {
+public class Label implements Collectable, Annotation {
 
     /**
      * -- GETTER --
@@ -23,7 +22,7 @@ public class Label implements Collectable, AnnotationElement {
      * @param text The text
      */
     @Getter @Setter
-    @XmlElement
+    @XmlElement(name = "text")
     private String text;
 
     /**
@@ -35,8 +34,8 @@ public class Label implements Collectable, AnnotationElement {
      * @param graphics The graphics description
      */
     @Getter @Setter
-    @XmlElement
-    private Annotation graphics;
+    @XmlElement(name = "graphics")
+    private AnnotationGraphics graphics;
 
     /**
      * Creates an empty label

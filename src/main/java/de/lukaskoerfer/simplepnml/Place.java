@@ -2,18 +2,28 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
  * Represents a place in a place/transition net
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
-public class Place extends Connectable implements Collectable, Named, NodeElement {
+@EqualsAndHashCode
+public class Place implements Connectable, Collectable, Named, Node {
+
+    /**
+     * -- GETTER --
+     * Gets the identifier
+     * @return The identifier
+     */
+    @Getter
+    @XmlAttribute(required = true)
+    private String id;
 
     /**
      * -- GETTER --
@@ -37,7 +47,7 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
      */
     @Getter @Setter
     @XmlElement
-    private Node graphics;
+    private NodeGraphics graphics;
 
     /**
      * -- GETTER --
@@ -71,6 +81,23 @@ public class Place extends Connectable implements Collectable, Named, NodeElemen
     public Place(String id) {
         setId(id);
         setToolData(new ArrayList<>());
+    }
+
+    // Internal constructor for builder
+    private Place(String id, Label name, NodeGraphics graphics, Label initialMarking, List<ToolData> toolData) {
+        setId(id);
+        setName(name);
+        setGraphics(graphics);
+        setInitialMarking(initialMarking);
+        setToolData(new ArrayList<>(toolData));
+    }
+
+    /**
+     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
+     */
+    public void setId(String id) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
     }
 
     /**

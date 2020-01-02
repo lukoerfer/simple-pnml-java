@@ -1,21 +1,21 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Describes tool-specific data
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class ToolData implements Collectable {
 
@@ -28,7 +28,7 @@ public class ToolData implements Collectable {
      * @param tool The name
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "tool")
     private String tool;
 
     /**
@@ -40,7 +40,7 @@ public class ToolData implements Collectable {
      * @param version The version
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "version")
     private String version;
 
     /**
@@ -50,14 +50,21 @@ public class ToolData implements Collectable {
      */
     @Getter @Setter
     @Singular
-    @XmlAnyElement
-    private List<Element> contents;
+    @XmlAnyElement(lax = true)
+    private List<Object> contents;
 
     /**
      * Creates new tool-specific data
      */
     public ToolData() {
         setContents(new ArrayList<>());
+    }
+
+    // Internal constructor for builder
+    private ToolData(String tool, String version, List<Object> contents) {
+        setTool(tool);
+        setVersion(version);
+        setContents(new ArrayList<>(contents));
     }
 
     /**

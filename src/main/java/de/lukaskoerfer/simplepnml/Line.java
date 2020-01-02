@@ -23,7 +23,7 @@ public class Line implements Collectable {
      * @param color
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     private String color;
 
     /**
@@ -35,7 +35,7 @@ public class Line implements Collectable {
      * @param width
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "width")
     private double width;
 
     /**
@@ -47,7 +47,7 @@ public class Line implements Collectable {
      * @param shape
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "shape")
     private LineShape shape;
 
     /**
@@ -59,7 +59,7 @@ public class Line implements Collectable {
      * @param style
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "style")
     private LineStyle style;
 
     /**

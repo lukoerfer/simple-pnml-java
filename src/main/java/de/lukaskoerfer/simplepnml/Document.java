@@ -17,7 +17,6 @@ import java.util.stream.Stream;
  * Container for place/transition nets (in PNML)
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
 public class Document implements Collectable {
@@ -28,23 +27,20 @@ public class Document implements Collectable {
      * @return A list of nets
      */
     @Getter @Setter
-    @Builder.Default
+    @Singular
     @XmlElement(name = "net")
-    private List<Net> nets = new ArrayList<>();
+    private List<Net> nets;
 
     /**
      * Creates a new PNML document
      */
-    public Document() {}
+    public Document() {
+        setNets(new ArrayList<>());
+    }
 
-    /**
-     * Creates a new PNML document
-     * @param net
-     * @param nets
-     */
-    public Document(Net net, Net... nets) {
-        getNets().add(net);
-        getNets().addAll(Arrays.asList(nets));
+    // Internal constructor for builder
+    private Document(List<Net> nets) {
+        setNets(new ArrayList<>(nets));
     }
 
     /**

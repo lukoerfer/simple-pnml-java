@@ -1,20 +1,32 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.UUID;
 import java.util.stream.Stream;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a transition in a place/transition net
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
-public class Transition extends Connectable implements Collectable, Named, NodeElement {
+@EqualsAndHashCode
+public class Transition implements Connectable, Collectable, Named, Node {
+
+    /**
+     * -- GETTER --
+     * Gets the identifier
+     * @return The identifier
+     */
+    @Getter
+    @XmlAttribute(required = true)
+    private String id;
 
     /**
      * -- GETTER --
@@ -38,7 +50,7 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
      */
     @Getter @Setter
     @XmlElement
-    private Node graphics;
+    private NodeGraphics graphics;
 
     /**
      * -- GETTER --
@@ -50,7 +62,7 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
     private List<ToolData> toolData;
 
     /**
-     * Creates a new transition using a random identifier
+     * Creates a new transition with a random identifier
      */
     public Transition() {
         this(null);
@@ -58,11 +70,26 @@ public class Transition extends Connectable implements Collectable, Named, NodeE
 
     /**
      * Creates a new transition
-     * @param id An unique identifier, defaults to an UUID if null, empty or whitespace
      */
     public Transition(String id) {
         setId(id);
         setToolData(new ArrayList<>());
+    }
+
+    // Internal constructor for builder
+    private Transition(String id, Label name, NodeGraphics graphics, List<ToolData> toolData) {
+        setId(id);
+        setName(name);
+        setGraphics(graphics);
+        setToolData(new ArrayList<>(toolData));
+    }
+
+    /**
+     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
+     */
+    public void setId(String id) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
     }
 
     /**

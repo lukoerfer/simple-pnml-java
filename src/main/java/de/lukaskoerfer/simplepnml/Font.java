@@ -22,7 +22,7 @@ public class Font implements Collectable {
      * @param family A string containing a font family in CSS
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "family")
     private String family;
 
     /**
@@ -34,7 +34,7 @@ public class Font implements Collectable {
      * @param style A string containing a font style in CSS
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "style")
     private String style;
 
     /**
@@ -46,7 +46,7 @@ public class Font implements Collectable {
      * @param weight A string containing a font weight in CSS
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "weight")
     private String weight;
 
     /**
@@ -58,7 +58,7 @@ public class Font implements Collectable {
      * @param size A string containing a font size in CSS
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "size")
     private String size;
 
     /**
@@ -70,7 +70,7 @@ public class Font implements Collectable {
      * @param decoration A font decoration
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "decoration")
     private FontDecoration decoration;
 
     /**
@@ -82,7 +82,7 @@ public class Font implements Collectable {
      * @param align A font alignment
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "align")
     private FontAlign align;
 
     /**
@@ -94,7 +94,7 @@ public class Font implements Collectable {
      * @param rotation A font rotation
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "rotation")
     private double rotation;
 
     /**

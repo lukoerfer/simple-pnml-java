@@ -22,13 +22,11 @@ class DocumentTest {
         .overrideDefaultInitialization(true)
         .collectionSizeRange(1, 2)
         .excludeField(named("pages").and(inClass(Page.class)))
-        .excludeField(named("content").and(inClass(ToolData.class))));
+        .excludeField(named("contents").and(inClass(ToolData.class))));
 
     @Test
-    @Disabled
     void equalsAfterSerialization() throws Exception {
         Document input = random.nextObject(Document.class);
-        input.write(System.out);
         JAXBContext context = JAXBContext.newInstance(Document.class);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         context.createMarshaller().marshal(input, out);

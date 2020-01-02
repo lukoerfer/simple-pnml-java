@@ -24,7 +24,7 @@ public class Fill implements Collectable {
      * @param color A string describing a color
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "color")
     private String color;
 
     /**
@@ -36,7 +36,7 @@ public class Fill implements Collectable {
      * @param gradientColor A string describing a color
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "gradient-color")
     private String gradientColor;
 
     /**
@@ -48,7 +48,7 @@ public class Fill implements Collectable {
      * @param gradientRotation A gradient rotation
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "gradient-rotation")
     private GradientRotation gradientRotation;
 
     /**
@@ -60,7 +60,7 @@ public class Fill implements Collectable {
      * @param image An URI pointing to the fill image
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "image")
     private URI image;
 
     /**

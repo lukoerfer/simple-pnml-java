@@ -2,20 +2,28 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
  * Represents a page of a place/transition net
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
-public class Page extends Identifiable implements Collectable, Named {
+@EqualsAndHashCode
+public class Page implements Identifiable, Collectable, Named {
+
+    /**
+     * -- GETTER --
+     * Gets the identifier
+     * @return The identifier
+     */
+    @Getter
+    @XmlAttribute(required = true)
+    private String id;
 
     /**
      * -- GETTER --
@@ -96,6 +104,25 @@ public class Page extends Identifiable implements Collectable, Named {
         setTransitions(new ArrayList<>());
         setArcs(new ArrayList<>());
         setToolData(new ArrayList<>());
+    }
+
+    // Internal constructor for builder
+    private Page(String id, Label name, List<Page> pages, List<Place> places, List<Transition> transitions, List<Arc> arcs, List<ToolData> toolData) {
+        setId(id);
+        setName(name);
+        setPages(new ArrayList<>(pages));
+        setPlaces(new ArrayList<>(places));
+        setTransitions(new ArrayList<>(transitions));
+        setArcs(new ArrayList<>(arcs));
+        setToolData(new ArrayList<>(toolData));
+    }
+
+    /**
+     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
+     */
+    public void setId(String id) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
     }
 
     /**

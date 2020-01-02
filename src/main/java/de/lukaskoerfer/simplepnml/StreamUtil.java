@@ -1,9 +1,9 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class StreamUtil {

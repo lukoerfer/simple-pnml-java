@@ -9,24 +9,10 @@ import java.util.UUID;
 /**
  * Encapsulates elements in place/transition nets that can be identified
  */
-@EqualsAndHashCode
-public abstract class Identifiable {
+public interface Identifiable {
 
-    /**
-     * -- GETTER --
-     * Gets the identifier
-     * @return The identifier
-     */
-    @XmlAttribute(required = true)
-    @Getter
-    private String id;
+    String getId();
 
-    /**
-     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
-    public void setId(String id) {
-        this.id = StringUtil.isEmptyOrWhitespace(id) ? UUID.randomUUID().toString() : id;
-    }
+    void setId(String id);
 
 }
