@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'de.lukaskoerfer'
-version '0.1'
+version '1.0.0'
 
 repositories {
     jcenter()
@@ -27,12 +27,20 @@ generateLombokConfig.enabled = false
 
 test {
     useJUnitPlatform()
-    finalizedBy 'jacocoTestReport'
 }
 
 jacocoTestReport {
+    dependsOn test
     reports.xml.enabled true
-    finalizedBy 'coveralls'
+}
+
+coveralls {
+    saveAsFile true
+    sendToCoveralls false
+}
+
+tasks.coveralls.doFirst {
+    println new File(".").toURI()
 }
 
 javadoc {
