@@ -9,6 +9,10 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @XmlEnum
 public enum GradientRotation {
     /**
+     *
+     */
+    NONE,
+    /**
      * Vertical rotation
      */
     @XmlEnumValue("vertical")

@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
+import lombok.*;
 
 /**
  * Describes tool-specific data
@@ -48,6 +44,7 @@ public class ToolData implements Collectable {
      * Gets a list of
      * @return
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlAnyElement(lax = true)

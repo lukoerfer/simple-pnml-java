@@ -33,9 +33,11 @@ public class Place implements Connectable, Collectable, Named, Node {
      * Sets the name of this place
      * @param name A label containing the name
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
-    private Label name;
+    @Builder.Default
+    @XmlElement(name = "name")
+    private Label name = new Label();
 
     /**
      * -- GETTER --
@@ -45,25 +47,31 @@ public class Place implements Connectable, Collectable, Named, Node {
      * Sets the graphics of this place
      * @param graphics A graphics description for a node element
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
-    private NodeGraphics graphics;
+    @Builder.Default
+    @XmlElement(name = "graphics")
+    private NodeGraphics graphics = new NodeGraphics();
 
     /**
      * -- GETTER --
      * Gets the initial marking of this place
      * @return A label containing the initial marking
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
-    private Label initialMarking;
+    @Builder.Default
+    @XmlElement(name = "initialMarking")
+    private Label initialMarking = new Label();
 
     /**
      * -- GETTER --
      * Gets a list containing tool-specific data
      * @return A list of tool-specific data
      */
+    @NonNull
     @Getter @Setter
+    @Singular("data")
     @XmlElement
     private List<ToolData> toolData;
 

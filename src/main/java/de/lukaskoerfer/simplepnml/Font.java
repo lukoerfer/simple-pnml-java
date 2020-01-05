@@ -69,9 +69,11 @@ public class Font implements Collectable {
      * Sets the font decoration
      * @param decoration A font decoration
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "decoration")
-    private FontDecoration decoration;
+    private FontDecoration decoration = FontDecoration.NONE;
 
     /**
      * -- GETTER --
@@ -81,9 +83,11 @@ public class Font implements Collectable {
      * Sets the font alignment
      * @param align A font alignment
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "align")
-    private FontAlign align;
+    private FontAlign align = FontAlign.LEFT;
 
     /**
      * -- GETTER --

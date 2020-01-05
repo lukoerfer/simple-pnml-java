@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Represents a transition in a place/transition net
@@ -36,9 +33,11 @@ public class Transition implements Connectable, Collectable, Named, Node {
      * Sets the name of this transition
      * @param name A label containing the name
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
-    private Label name;
+    @Builder.Default
+    @XmlElement(name = "name")
+    private Label name = new Label();
 
     /**
      * -- GETTER --
@@ -48,17 +47,21 @@ public class Transition implements Connectable, Collectable, Named, Node {
      * Sets the graphics of this transition
      * @param graphics A graphics description
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
-    private NodeGraphics graphics;
+    @Builder.Default
+    @XmlElement(name = "graphics")
+    private NodeGraphics graphics = new NodeGraphics();
 
     /**
      * -- GETTER --
      * Gets a list containing tool-specific data
      * @return A list of tool-specific data
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
+    @Singular("data")
+    @XmlElement(name = "toolSpecific")
     private List<ToolData> toolData;
 
     /**

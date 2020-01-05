@@ -47,15 +47,18 @@ public class Net implements Identifiable, Named, Collectable {
      * Sets the label containing the name
      * @param name A label containing the name
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "name")
-    private Label name;
+    private Label name = new Label();
 
     /**
      * -- GETTER --
      * Gets the pages of the net
      * @return A list of pages
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement(name = "page")
@@ -66,6 +69,7 @@ public class Net implements Identifiable, Named, Collectable {
      * Gets tool-specific data related to the net
      * @return A list of tool data definitions
      */
+    @NonNull
     @Getter @Setter
     @Singular("data")
     @XmlElement(name = "toolspecific")

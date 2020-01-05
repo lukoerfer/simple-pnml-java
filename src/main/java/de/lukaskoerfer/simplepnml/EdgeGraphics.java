@@ -21,6 +21,7 @@ public class EdgeGraphics implements Collectable, Lined {
      * Gets a list containing the points that define this edge
      * @return A list of points
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement(name = "position")
@@ -34,9 +35,11 @@ public class EdgeGraphics implements Collectable, Lined {
      * Sets the line style of this edge
      * @param line A line description
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "line")
-    private Line line;
+    private Line line = new Line();
 
     /**
      * Creates a new edge

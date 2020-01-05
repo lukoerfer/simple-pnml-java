@@ -33,15 +33,18 @@ public class Page implements Identifiable, Collectable, Named {
      * Sets the name of the page
      * @param name A label containing the name
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement
-    private Label name;
+    private Label name = new Label();
 
     /**
      * -- GETTER --
      * Gets the list of sub-pages of this page
      * @return A list of pages
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement
@@ -52,6 +55,7 @@ public class Page implements Identifiable, Collectable, Named {
      * Gets the list of places on this page
      * @return A list of places
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement
@@ -62,6 +66,7 @@ public class Page implements Identifiable, Collectable, Named {
      * Gets the list of transitions on this page
      * @return A list of transitions
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement
@@ -72,6 +77,7 @@ public class Page implements Identifiable, Collectable, Named {
      * Gets the list of arcs on this page
      * @return A list of arcs
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement
@@ -82,7 +88,9 @@ public class Page implements Identifiable, Collectable, Named {
      * Gets the list of tool data related to this page
      * @return A list of tool data definitions
      */
+    @NonNull
     @Getter @Setter
+    @Singular("data")
     @XmlElement
     private List<ToolData> toolData;
 

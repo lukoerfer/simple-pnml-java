@@ -26,6 +26,7 @@ public class Document implements Collectable {
      * Gets the nets in this document
      * @return A list of nets
      */
+    @NonNull
     @Getter @Setter
     @Singular
     @XmlElement(name = "net")

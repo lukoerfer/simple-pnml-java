@@ -33,9 +33,11 @@ public class Label implements Collectable, Annotation {
      * Sets the graphics of this label
      * @param graphics The graphics description
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "graphics")
-    private AnnotationGraphics graphics;
+    private AnnotationGraphics graphics = new AnnotationGraphics();
 
     /**
      * Creates an empty label

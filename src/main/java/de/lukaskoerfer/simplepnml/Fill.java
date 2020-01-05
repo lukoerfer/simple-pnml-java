@@ -48,8 +48,9 @@ public class Fill implements Collectable {
      * @param gradientRotation A gradient rotation
      */
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "gradient-rotation")
-    private GradientRotation gradientRotation;
+    private GradientRotation gradientRotation = GradientRotation.NONE;
 
     /**
      * -- GETTER --
@@ -61,7 +62,7 @@ public class Fill implements Collectable {
      */
     @Getter @Setter
     @XmlAttribute(name = "image")
-    private URI image;
+    private String image;
 
     /**
      * Creates a new fill

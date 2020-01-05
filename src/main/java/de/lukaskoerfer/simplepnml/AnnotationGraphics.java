@@ -3,8 +3,6 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
-import java.net.URI;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -23,6 +21,7 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
      * Sets the offsets of this annotation graphics
      * @param offset A set of relative coordinates
      */
+    @NonNull
     @Getter @Setter
     @Builder.Default
     @XmlElement(name = "offset")
@@ -36,9 +35,11 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
      * Sets the fill of this annotation graphics
      * @param fill
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "fill")
-    private Fill fill;
+    private Fill fill = new Fill();
 
     /**
      * -- GETTER --
@@ -48,9 +49,11 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
      * Sets the line of this annotation graphics
      * @param line
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "line")
-    private Line line;
+    private Line line = new Line();
 
     /**
      * -- GETTER --
@@ -60,9 +63,11 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
      * Sets the font of this annotation graphics
      * @param font
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "font")
-    private Font font;
+    private Font font = new Font();
 
     /**
      * Creates a new annotation graphics

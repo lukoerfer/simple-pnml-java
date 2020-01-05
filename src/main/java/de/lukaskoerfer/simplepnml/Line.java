@@ -46,9 +46,11 @@ public class Line implements Collectable {
      * Sets the line shape
      * @param shape
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "shape")
-    private LineShape shape;
+    private LineShape shape = LineShape.LINE;
 
     /**
      * -- GETTER --
@@ -58,9 +60,11 @@ public class Line implements Collectable {
      * Sets the line style
      * @param style
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "style")
-    private LineStyle style;
+    private LineStyle style = LineStyle.SOLID;
 
     /**
      * Creates a new line

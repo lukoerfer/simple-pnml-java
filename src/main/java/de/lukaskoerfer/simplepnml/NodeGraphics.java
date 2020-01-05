@@ -22,6 +22,7 @@ public class NodeGraphics implements Collectable, Lined, Filled {
      * Sets the position of this graphical node
      * @param position
      */
+    @NonNull
     @Getter @Setter
     @Builder.Default
     @XmlElement(name = "position", required = true)
@@ -35,9 +36,11 @@ public class NodeGraphics implements Collectable, Lined, Filled {
      * Sets the size of this graphical node
      * @param size
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "dimension")
-    private Size size;
+    private Size size = new Size();
 
     /**
      * -- GETTER --
@@ -47,9 +50,11 @@ public class NodeGraphics implements Collectable, Lined, Filled {
      * Sets the fill of this graphical node
      * @param fill
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "fill")
-    private Fill fill;
+    private Fill fill = new Fill();
 
     /**
      * -- GETTER --
@@ -60,9 +65,11 @@ public class NodeGraphics implements Collectable, Lined, Filled {
      * ts the line of this graphical node
      * @param line
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "line")
-    private Line line;
+    private Line line = new Line();
 
     /**
      * Creates a new graphical node

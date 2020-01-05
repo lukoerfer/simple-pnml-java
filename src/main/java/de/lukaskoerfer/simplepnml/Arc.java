@@ -5,6 +5,7 @@ import lombok.experimental.Tolerate;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -13,7 +14,6 @@ import java.util.stream.Stream;
  * Represents an arc in a place/transition net
  */
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Arc implements Identifiable, Collectable, Edge {
 
@@ -58,9 +58,11 @@ public class Arc implements Identifiable, Collectable, Edge {
      * Sets how to visualize this arc
      * @param graphics The graphics of this arc
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "graphics")
-    private EdgeGraphics graphics;
+    private EdgeGraphics graphics = new EdgeGraphics();
 
     /**
      * -- GETTER --
@@ -70,17 +72,21 @@ public class Arc implements Identifiable, Collectable, Edge {
      * Sets the inscription of this arc
      * @param inscription A label containing the inscription
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlElement(name = "inscription")
-    private Label inscription;
+    private Label inscription = new Label();
 
     /**
      * -- GETTER --
      * Gets a list containing tool-specific data
      * @return A list of tool-specific data
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement
+    @Singular("data")
+    @XmlElement(name = "toolSpecific")
     private List<ToolData> toolData;
 
     /**
@@ -90,8 +96,23 @@ public class Arc implements Identifiable, Collectable, Edge {
         this(null);
     }
 
+    /**
+     *
+     * @param id
+     */
     public Arc(String id) {
         setId(id);
+        setToolData(new ArrayList<>());
+    }
+
+    // Internal constructor for builder
+    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolData> toolData) {
+        setId(id);
+        setSource(source);
+        setTarget(target);
+        setGraphics(graphics);
+        setInscription(inscription);
+        setToolData(new ArrayList<>(toolData));
     }
 
     /**
