@@ -24,7 +24,7 @@ public class Offset implements Collectable {
      * @param x The position in X direction
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "x", required = true)
     private double x;
 
     /**
@@ -36,7 +36,7 @@ public class Offset implements Collectable {
      * @param y The position in Y direction
      */
     @Getter @Setter
-    @XmlAttribute
+    @XmlAttribute(name = "y", required = true)
     private double y;
 
     /**

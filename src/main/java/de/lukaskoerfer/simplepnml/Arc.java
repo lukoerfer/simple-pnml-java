@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -61,7 +62,6 @@ public class Arc implements Identifiable, Collectable, Edge {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "graphics")
     private EdgeGraphics graphics = new EdgeGraphics();
 
     /**
@@ -75,7 +75,6 @@ public class Arc implements Identifiable, Collectable, Edge {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "inscription")
     private Label inscription = new Label();
 
     /**
@@ -87,7 +86,7 @@ public class Arc implements Identifiable, Collectable, Edge {
     @Getter @Setter
     @Singular("data")
     @XmlElement(name = "toolSpecific")
-    private List<ToolData> toolData;
+    private List<ToolSpecific> toolData;
 
     /**
      * Creates a new arc using a random identifier
@@ -106,7 +105,7 @@ public class Arc implements Identifiable, Collectable, Edge {
     }
 
     // Internal constructor for builder
-    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolData> toolData) {
+    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolSpecific> toolData) {
         setId(id);
         setSource(source);
         setTarget(target);
@@ -152,4 +151,23 @@ public class Arc implements Identifiable, Collectable, Edge {
             .collect(getToolData())
             .build();
     }
+
+    @XmlElement(name = "graphics")
+    private EdgeGraphics getGraphicsXml() {
+        return Objects.equals(getGraphics(), new EdgeGraphics()) ? null : getGraphics();
+    }
+
+    private void setGraphicsXml(EdgeGraphics graphics) {
+        setGraphics(graphics);
+    }
+
+    @XmlElement(name = "inscription")
+    private Label getInscriptionXml() {
+        return Objects.equals(getInscription(), new Label()) ? null : getInscription();
+    }
+
+    private void setInscriptionXml(Label inscription) {
+        setInscription(inscription);
+    }
+
 }

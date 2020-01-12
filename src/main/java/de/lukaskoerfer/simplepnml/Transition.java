@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -36,7 +37,6 @@ public class Transition implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "name")
     private Label name = new Label();
 
     /**
@@ -50,7 +50,6 @@ public class Transition implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "graphics")
     private NodeGraphics graphics = new NodeGraphics();
 
     /**
@@ -60,9 +59,9 @@ public class Transition implements Connectable, Collectable, Named, Node {
      */
     @NonNull
     @Getter @Setter
-    @Singular("data")
-    @XmlElement(name = "toolSpecific")
-    private List<ToolData> toolData;
+    @Singular("toolSpecific")
+    @XmlElement(name = "toolspecific")
+    private List<ToolSpecific> toolSpecificData;
 
     /**
      * Creates a new transition with a random identifier
@@ -76,15 +75,15 @@ public class Transition implements Connectable, Collectable, Named, Node {
      */
     public Transition(String id) {
         setId(id);
-        setToolData(new ArrayList<>());
+        setToolSpecificData(new ArrayList<>());
     }
 
     // Internal constructor for builder
-    private Transition(String id, Label name, NodeGraphics graphics, List<ToolData> toolData) {
+    private Transition(String id, Label name, NodeGraphics graphics, List<ToolSpecific> toolSpecificData) {
         setId(id);
         setName(name);
         setGraphics(graphics);
-        setToolData(new ArrayList<>(toolData));
+        setToolSpecificData(new ArrayList<>(toolSpecificData));
     }
 
     /**
@@ -104,7 +103,25 @@ public class Transition implements Connectable, Collectable, Named, Node {
         return Collector.create(this)
             .collect(getName())
             .collect(getGraphics())
-            .collect(getToolData())
+            .collect(getToolSpecificData())
             .build();
+    }
+
+    @XmlElement(name = "name")
+    private Label getNameXml() {
+        return Objects.equals(getName(), new Label()) ? null : getName();
+    }
+
+    private void setNameXml(Label name) {
+        setName(name);
+    }
+
+    @XmlElement(name = "graphics")
+    private NodeGraphics getGraphicsXml() {
+        return Objects.equals(getGraphics(), new NodeGraphics()) ? null : getGraphics();
+    }
+
+    private void setGraphicsXml(NodeGraphics graphics) {
+        setGraphics(graphics);
     }
 }

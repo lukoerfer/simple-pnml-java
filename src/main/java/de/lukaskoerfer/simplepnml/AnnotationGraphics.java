@@ -3,6 +3,7 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -24,7 +25,7 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "offset")
+    @XmlElement(name = "offset", required = true)
     private Position offset = new Position();
 
     /**
@@ -38,7 +39,6 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "fill")
     private Fill fill = new Fill();
 
     /**
@@ -52,7 +52,6 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "line")
     private Line line = new Line();
 
     /**
@@ -66,7 +65,6 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "font")
     private Font font = new Font();
 
     /**
@@ -86,5 +84,32 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
             .collect(getFont())
             .collect(getLine())
             .build();
+    }
+
+    @XmlElement(name = "fill")
+    private Fill getFillXml() {
+        return Objects.equals(getFill(), new Fill()) ? null : getFill();
+    }
+
+    private void setFillXml(Fill fill) {
+        setFill(fill);
+    }
+
+    @XmlElement(name = "line")
+    private Line getLineXml() {
+        return Objects.equals(getLine(), new Line()) ? null : getLine();
+    }
+
+    private void setLineXml(Line line) {
+        setLine(line);
+    }
+
+    @XmlElement(name = "font")
+    private Font getFontXml() {
+        return Objects.equals(getFont(), new Font()) ? null : getFont();
+    }
+
+    private void setFontXml(Font font) {
+        setFont(font);
     }
 }

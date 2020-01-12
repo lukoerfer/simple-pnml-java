@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -36,7 +37,6 @@ public class Place implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "name")
     private Label name = new Label();
 
     /**
@@ -50,7 +50,6 @@ public class Place implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "graphics")
     private NodeGraphics graphics = new NodeGraphics();
 
     /**
@@ -61,7 +60,6 @@ public class Place implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "initialMarking")
     private Label initialMarking = new Label();
 
     /**
@@ -71,9 +69,9 @@ public class Place implements Connectable, Collectable, Named, Node {
      */
     @NonNull
     @Getter @Setter
-    @Singular("data")
-    @XmlElement
-    private List<ToolData> toolData;
+    @Singular("toolSpecific")
+    @XmlElement(name = "toolspecific")
+    private List<ToolSpecific> toolSpecificData;
 
     /**
      * Creates a new place using a random identifier
@@ -88,16 +86,16 @@ public class Place implements Connectable, Collectable, Named, Node {
      */
     public Place(String id) {
         setId(id);
-        setToolData(new ArrayList<>());
+        setToolSpecificData(new ArrayList<>());
     }
 
     // Internal constructor for builder
-    private Place(String id, Label name, NodeGraphics graphics, Label initialMarking, List<ToolData> toolData) {
+    private Place(String id, Label name, NodeGraphics graphics, Label initialMarking, List<ToolSpecific> toolSpecificData) {
         setId(id);
         setName(name);
         setGraphics(graphics);
         setInitialMarking(initialMarking);
-        setToolData(new ArrayList<>(toolData));
+        setToolSpecificData(new ArrayList<>(toolSpecificData));
     }
 
     /**
@@ -118,7 +116,35 @@ public class Place implements Connectable, Collectable, Named, Node {
             .collect(getName())
             .collect(getGraphics())
             .collect(getInitialMarking())
-            .collect(getToolData())
+            .collect(getToolSpecificData())
             .build();
     }
+
+    @XmlElement(name = "name")
+    private Label getNameXml() {
+        return Objects.equals(getName(), new Label()) ? null : getName();
+    }
+
+    private void setNameXml(Label name) {
+        setName(name);
+    }
+
+    @XmlElement(name = "graphics")
+    private NodeGraphics getGraphicsXml() {
+        return Objects.equals(getGraphics(), new NodeGraphics()) ? null : getGraphics();
+    }
+
+    private void setGraphicsXml(NodeGraphics graphics) {
+        setGraphics(graphics);
+    }
+
+    @XmlElement(name = "initialMarking")
+    private Label getInitialMarkingXml() {
+        return Objects.equals(getInitialMarking(), new Label()) ? null : getInitialMarking();
+    }
+
+    private void setInitialMarkingXml(Label initialMarking) {
+        setInitialMarking(initialMarking);
+    }
+
 }

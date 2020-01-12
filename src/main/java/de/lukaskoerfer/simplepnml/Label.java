@@ -3,6 +3,7 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -21,9 +22,11 @@ public class Label implements Collectable, Annotation {
      * Sets the text of this label
      * @param text The text
      */
+    @NonNull
     @Getter @Setter
-    @XmlElement(name = "text")
-    private String text;
+    @Builder.Default
+    @XmlElement(name = "text", required = true)
+    private String text = "";
 
     /**
      * -- GETTER --
@@ -36,7 +39,6 @@ public class Label implements Collectable, Annotation {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "graphics")
     private AnnotationGraphics graphics = new AnnotationGraphics();
 
     /**
@@ -54,4 +56,14 @@ public class Label implements Collectable, Annotation {
             .collect(getGraphics())
             .build();
     }
+
+    @XmlElement(name = "graphics")
+    private AnnotationGraphics getGraphicsXml() {
+        return Objects.equals(getGraphics(), new AnnotationGraphics()) ? null : getGraphics();
+    }
+
+    private void setGraphicsXml(AnnotationGraphics graphics) {
+        setGraphics(graphics);
+    }
+
 }

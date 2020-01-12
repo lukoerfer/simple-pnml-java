@@ -13,7 +13,7 @@ import lombok.*;
  */
 @Builder
 @EqualsAndHashCode
-public class ToolData implements Collectable {
+public class ToolSpecific implements Collectable {
 
     /**
      * -- GETTER --
@@ -53,12 +53,12 @@ public class ToolData implements Collectable {
     /**
      * Creates new tool-specific data
      */
-    public ToolData() {
+    public ToolSpecific() {
         setContents(new ArrayList<>());
     }
 
     // Internal constructor for builder
-    private ToolData(String tool, String version, List<Object> contents) {
+    private ToolSpecific(String tool, String version, List<Object> contents) {
         setTool(tool);
         setVersion(version);
         setContents(new ArrayList<>(contents));

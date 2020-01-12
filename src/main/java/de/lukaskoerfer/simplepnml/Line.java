@@ -3,6 +3,7 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -35,7 +36,6 @@ public class Line implements Collectable {
      * @param width
      */
     @Getter @Setter
-    @XmlAttribute(name = "width")
     private double width;
 
     /**
@@ -49,7 +49,6 @@ public class Line implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlAttribute(name = "shape")
     private LineShape shape = LineShape.LINE;
 
     /**
@@ -63,7 +62,6 @@ public class Line implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlAttribute(name = "style")
     private LineStyle style = LineStyle.SOLID;
 
     /**
@@ -78,5 +76,32 @@ public class Line implements Collectable {
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
+    }
+
+    @XmlAttribute(name = "width")
+    private Double getWidthXml() {
+        return Objects.equals(getWidth(), 0.0) ? null : getWidth();
+    }
+
+    private void setWidthXml(Double width) {
+        setWidth(width != null ? width : 0.0);
+    }
+
+    @XmlAttribute(name = "shape")
+    private LineShape getShapeXml() {
+        return Objects.equals(getShape(), LineShape.LINE) ? null : getShape();
+    }
+
+    private void setShapeXml(LineShape shape) {
+        setShape(shape);
+    }
+
+    @XmlAttribute(name = "style")
+    private LineStyle getStyleXml() {
+        return Objects.equals(getStyle(), LineStyle.SOLID) ? null : getStyle();
+    }
+
+    private void setStyleXml(LineStyle style) {
+        setStyle(style);
     }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.net.URI;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -39,7 +40,6 @@ public class NodeGraphics implements Collectable, Lined, Filled {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "dimension")
     private Size size = new Size();
 
     /**
@@ -53,7 +53,6 @@ public class NodeGraphics implements Collectable, Lined, Filled {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "fill")
     private Fill fill = new Fill();
 
     /**
@@ -68,7 +67,6 @@ public class NodeGraphics implements Collectable, Lined, Filled {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "line")
     private Line line = new Line();
 
     /**
@@ -89,4 +87,32 @@ public class NodeGraphics implements Collectable, Lined, Filled {
             .collect(getLine())
             .build();
     }
+
+    @XmlElement(name = "dimension")
+    private Size getSizeXml() {
+        return Objects.equals(getSize(), new Size()) ? null : getSize();
+    }
+
+    private void setSizeXml(Size size) {
+        setSize(size);
+    }
+
+    @XmlElement(name = "fill")
+    private Fill getFillXml() {
+        return Objects.equals(getFill(), new Fill()) ? null : getFill();
+    }
+
+    private void setFillXml(Fill fill) {
+        setFill(fill);
+    }
+
+    @XmlElement(name = "line")
+    private Line getLineXml() {
+        return Objects.equals(getLine(), new Line()) ? null : getLine();
+    }
+
+    private void setLineXml(Line line) {
+        setLine(line);
+    }
+
 }

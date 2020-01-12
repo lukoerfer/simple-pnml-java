@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -50,7 +51,6 @@ public class Net implements Identifiable, Named, Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "name")
     private Label name = new Label();
 
     /**
@@ -71,9 +71,9 @@ public class Net implements Identifiable, Named, Collectable {
      */
     @NonNull
     @Getter @Setter
-    @Singular("data")
+    @Singular("toolSpecific")
     @XmlElement(name = "toolspecific")
-    private List<ToolData> toolData;
+    private List<ToolSpecific> toolSpecificData;
 
     /**
      * Creates a new net using a random identifier
@@ -99,16 +99,16 @@ public class Net implements Identifiable, Named, Collectable {
         setId(id);
         setType(type);
         setPages(new ArrayList<>());
-        setToolData(new ArrayList<>());
+        setToolSpecificData(new ArrayList<>());
     }
 
     // Internal constructor for builder
-    private Net(String id, String type, Label name, List<Page> pages, List<ToolData> toolData) {
+    private Net(String id, String type, Label name, List<Page> pages, List<ToolSpecific> toolSpecificData) {
         setId(id);
         setType(type);
         setName(name);
         setPages(new ArrayList<>(pages));
-        setToolData(new ArrayList<>(toolData));
+        setToolSpecificData(new ArrayList<>(toolSpecificData));
     }
 
     /**
@@ -136,7 +136,17 @@ public class Net implements Identifiable, Named, Collectable {
         return Collector.create(this)
             .collect(getName())
             .collect(getPages())
-            .collect(getToolData())
+            .collect(getToolSpecificData())
             .build();
     }
+
+    @XmlElement(name = "name")
+    private Label getNameXml() {
+        return Objects.equals(getName(), new Label()) ? null : getName();
+    }
+
+    private void setNameXml(Label name) {
+        setName(name);
+    }
+
 }

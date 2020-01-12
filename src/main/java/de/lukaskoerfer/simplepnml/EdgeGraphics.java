@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -38,7 +39,6 @@ public class EdgeGraphics implements Collectable, Lined {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement(name = "line")
     private Line line = new Line();
 
     /**
@@ -64,5 +64,14 @@ public class EdgeGraphics implements Collectable, Lined {
             .collect(getPositions())
             .collect(getLine())
             .build();
+    }
+
+    @XmlElement(name = "line")
+    private Line getLineXml() {
+        return Objects.equals(getLine(), new Line()) ? null : getLine();
+    }
+
+    private void setLineXml(Line line) {
+        setLine(line);
     }
 }

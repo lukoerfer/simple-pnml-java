@@ -3,6 +3,7 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -72,7 +73,6 @@ public class Font implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlAttribute(name = "decoration")
     private FontDecoration decoration = FontDecoration.NONE;
 
     /**
@@ -86,7 +86,6 @@ public class Font implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlAttribute(name = "align")
     private FontAlign align = FontAlign.LEFT;
 
     /**
@@ -98,7 +97,6 @@ public class Font implements Collectable {
      * @param rotation A font rotation
      */
     @Getter @Setter
-    @XmlAttribute(name = "rotation")
     private double rotation;
 
     /**
@@ -113,5 +111,32 @@ public class Font implements Collectable {
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
+    }
+
+    @XmlAttribute(name = "decoration")
+    private FontDecoration getDecorationXml() {
+        return Objects.equals(getDecoration(), FontDecoration.NONE) ? null : getDecoration();
+    }
+
+    private void setDecorationXml(FontDecoration decoration) {
+        setDecoration(decoration);
+    }
+
+    @XmlAttribute(name = "align")
+    private FontAlign getAlignXml() {
+        return Objects.equals(getAlign(), FontAlign.LEFT) ? null : getAlign();
+    }
+
+    private void setAlignXml(FontAlign align) {
+        setAlign(align);
+    }
+
+    @XmlAttribute(name = "rotation")
+    private Double getRotationXml() {
+        return Objects.equals(getRotation(), 0.0) ? null : getRotation();
+    }
+
+    private void setRotationXml(Double rotation) {
+        setRotation(rotation != null ? rotation : 0.0);
     }
 }

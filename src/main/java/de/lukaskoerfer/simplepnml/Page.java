@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -36,7 +37,6 @@ public class Page implements Identifiable, Collectable, Named {
     @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlElement
     private Label name = new Label();
 
     /**
@@ -47,7 +47,7 @@ public class Page implements Identifiable, Collectable, Named {
     @NonNull
     @Getter @Setter
     @Singular
-    @XmlElement
+    @XmlElement(name = "page")
     private List<Page> pages;
 
     /**
@@ -58,7 +58,7 @@ public class Page implements Identifiable, Collectable, Named {
     @NonNull
     @Getter @Setter
     @Singular
-    @XmlElement
+    @XmlElement(name = "place")
     private List<Place> places;
 
     /**
@@ -69,7 +69,7 @@ public class Page implements Identifiable, Collectable, Named {
     @NonNull
     @Getter @Setter
     @Singular
-    @XmlElement
+    @XmlElement(name = "transition")
     private List<Transition> transitions;
 
     /**
@@ -80,7 +80,7 @@ public class Page implements Identifiable, Collectable, Named {
     @NonNull
     @Getter @Setter
     @Singular
-    @XmlElement
+    @XmlElement(name = "arc")
     private List<Arc> arcs;
 
     /**
@@ -90,9 +90,9 @@ public class Page implements Identifiable, Collectable, Named {
      */
     @NonNull
     @Getter @Setter
-    @Singular("data")
-    @XmlElement
-    private List<ToolData> toolData;
+    @Singular("toolSpecific")
+    @XmlElement(name = "toolspecific")
+    private List<ToolSpecific> toolSpecificData;
 
     /**
      * Creates a new page using a random identifier
@@ -111,18 +111,18 @@ public class Page implements Identifiable, Collectable, Named {
         setPlaces(new ArrayList<>());
         setTransitions(new ArrayList<>());
         setArcs(new ArrayList<>());
-        setToolData(new ArrayList<>());
+        setToolSpecificData(new ArrayList<>());
     }
 
     // Internal constructor for builder
-    private Page(String id, Label name, List<Page> pages, List<Place> places, List<Transition> transitions, List<Arc> arcs, List<ToolData> toolData) {
+    private Page(String id, Label name, List<Page> pages, List<Place> places, List<Transition> transitions, List<Arc> arcs, List<ToolSpecific> toolSpecificData) {
         setId(id);
         setName(name);
         setPages(new ArrayList<>(pages));
         setPlaces(new ArrayList<>(places));
         setTransitions(new ArrayList<>(transitions));
         setArcs(new ArrayList<>(arcs));
-        setToolData(new ArrayList<>(toolData));
+        setToolSpecificData(new ArrayList<>(toolSpecificData));
     }
 
     /**
@@ -145,7 +145,16 @@ public class Page implements Identifiable, Collectable, Named {
             .collect(getPlaces())
             .collect(getTransitions())
             .collect(getArcs())
-            .collect(getToolData())
+            .collect(getToolSpecificData())
             .build();
+    }
+
+    @XmlElement(name = "name")
+    private Label getNameXml() {
+        return Objects.equals(getName(), new Label()) ? null : getName();
+    }
+
+    private void setNameXml(Label name) {
+        setName(name);
     }
 }

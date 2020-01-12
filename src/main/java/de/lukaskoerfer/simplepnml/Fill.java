@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import java.net.URI;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -47,9 +48,9 @@ public class Fill implements Collectable {
      * Sets the gradient rotation
      * @param gradientRotation A gradient rotation
      */
+    @NonNull
     @Getter @Setter
     @Builder.Default
-    @XmlAttribute(name = "gradient-rotation")
     private GradientRotation gradientRotation = GradientRotation.NONE;
 
     /**
@@ -76,5 +77,14 @@ public class Fill implements Collectable {
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
+    }
+
+    @XmlAttribute(name = "gradient-rotation")
+    private GradientRotation getGradientRotationXml() {
+        return Objects.equals(getGradientRotation(), GradientRotation.NONE) ? null : getGradientRotation();
+    }
+
+    private void setGradientRotationXml(GradientRotation rotation) {
+        setGradientRotation(rotation);
     }
 }
