@@ -2,6 +2,8 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
@@ -18,6 +20,7 @@ import java.util.stream.Stream;
  */
 @Builder
 @EqualsAndHashCode
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
 public class Document implements Collectable {
 
@@ -50,9 +53,9 @@ public class Document implements Collectable {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getNets())
-            .build();
+        return new Collector(this)
+            .include(nets)
+            .collect();
     }
 
     /**

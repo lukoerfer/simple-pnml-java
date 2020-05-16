@@ -15,4 +15,8 @@ public interface Identifiable {
 
     void setId(String id);
 
+    static String randomId() {
+        return UUID.randomUUID().toString();
+    }
+
 }

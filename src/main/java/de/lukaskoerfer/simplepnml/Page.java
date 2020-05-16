@@ -2,12 +2,13 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -15,15 +16,17 @@ import java.util.stream.Stream;
  */
 @Builder
 @EqualsAndHashCode
-public class Page implements Identifiable, Collectable, Named {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Page implements Identifiable, Collectable, Named, ToolExtendable {
 
     /**
      * -- GETTER --
      * Gets the identifier
      * @return The identifier
      */
-    @Getter
-    @XmlAttribute(required = true)
+    @NonNull
+    @Getter @Setter
+    @XmlAttribute(name = "id", required = true)
     private String id;
 
     /**
@@ -106,31 +109,24 @@ public class Page implements Identifiable, Collectable, Named {
      * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public Page(String id) {
-        setId(id);
-        setPages(new ArrayList<>());
-        setPlaces(new ArrayList<>());
-        setTransitions(new ArrayList<>());
-        setArcs(new ArrayList<>());
-        setToolSpecificData(new ArrayList<>());
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.pages = new ArrayList<>();
+        this.places = new ArrayList<>();
+        this.transitions = new ArrayList<>();
+        this.arcs = new ArrayList<>();
+        this.toolSpecificData = new ArrayList<>();
     }
 
     // Internal constructor for builder
+    @SuppressWarnings("unused")
     private Page(String id, Label name, List<Page> pages, List<Place> places, List<Transition> transitions, List<Arc> arcs, List<ToolSpecific> toolSpecificData) {
-        setId(id);
-        setName(name);
-        setPages(new ArrayList<>(pages));
-        setPlaces(new ArrayList<>(places));
-        setTransitions(new ArrayList<>(transitions));
-        setArcs(new ArrayList<>(arcs));
-        setToolSpecificData(new ArrayList<>(toolSpecificData));
-    }
-
-    /**
-     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
-    public void setId(String id) {
-        this.id = id != null ? id : UUID.randomUUID().toString();
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.name = name;
+        this.pages = new ArrayList<>(pages);
+        this.places = new ArrayList<>(places);
+        this.transitions = new ArrayList<>(transitions);
+        this.arcs = new ArrayList<>(arcs);
+        this.toolSpecificData = new ArrayList<>(toolSpecificData);
     }
 
     /**
@@ -139,22 +135,29 @@ public class Page implements Identifiable, Collectable, Named {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getName())
-            .collect(getPages())
-            .collect(getPlaces())
-            .collect(getTransitions())
-            .collect(getArcs())
-            .collect(getToolSpecificData())
-            .build();
+        return new Collector(this)
+            .include(name)
+            .include(pages)
+            .include(places)
+            .include(transitions)
+            .include(arcs)
+            .include(toolSpecificData)
+            .collect();
     }
 
-    @XmlElement(name = "name")
+    //region Internal serialization
+
+    @XmlAttribute(name = "name")
+    @SuppressWarnings("unused")
     private Label getNameXml() {
-        return Objects.equals(getName(), new Label()) ? null : getName();
+        return Defaults.requireNonDefault(getName());
     }
 
+    @SuppressWarnings("unused")
     private void setNameXml(Label name) {
         setName(name);
     }
+
+    //endregion
+
 }

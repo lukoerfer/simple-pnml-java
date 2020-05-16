@@ -2,12 +2,11 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -15,7 +14,8 @@ import java.util.stream.Stream;
  */
 @Builder
 @EqualsAndHashCode
-public class EdgeGraphics implements Collectable, Lined {
+@XmlAccessorType(XmlAccessType.NONE)
+public class EdgeGraphics implements Collectable, Defaults, Lined  {
 
     /**
      * -- GETTER --
@@ -60,18 +60,30 @@ public class EdgeGraphics implements Collectable, Lined {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getPositions())
-            .collect(getLine())
-            .build();
+        return new Collector(this)
+            .include(positions)
+            .include(line)
+            .collect();
     }
+
+    @Override
+    public boolean isDefault() {
+        return positions.isEmpty()
+            && line.isDefault();
+    }
+
+    //region Internal serialization
 
     @XmlElement(name = "line")
+    @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Objects.equals(getLine(), new Line()) ? null : getLine();
+        return Defaults.requireNonDefault(getLine());
     }
 
+    @SuppressWarnings("unused")
     private void setLineXml(Line line) {
         setLine(line);
     }
+
+    //endregion
 }

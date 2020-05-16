@@ -1,5 +1,7 @@
 package de.lukaskoerfer.simplepnml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import lombok.*;
  */
 @Builder
 @EqualsAndHashCode
+@XmlAccessorType(XmlAccessType.NONE)
 public class ToolSpecific implements Collectable {
 
     /**
@@ -54,14 +57,15 @@ public class ToolSpecific implements Collectable {
      * Creates new tool-specific data
      */
     public ToolSpecific() {
-        setContents(new ArrayList<>());
+        this.contents = new ArrayList<>();
     }
 
     // Internal constructor for builder
+    @SuppressWarnings("unused")
     private ToolSpecific(String tool, String version, List<Object> contents) {
-        setTool(tool);
-        setVersion(version);
-        setContents(new ArrayList<>(contents));
+        this.tool = tool;
+        this.version = version;
+        this.contents = new ArrayList<>(contents);
     }
 
     /**

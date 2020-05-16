@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported gradient rotations
  */
 @XmlEnum
-public enum GradientRotation {
+public enum GradientRotation implements Defaults {
     /**
      *
      */
@@ -26,5 +26,10 @@ public enum GradientRotation {
      * Diagonal rotation
      */
     @XmlEnumValue("diagonal")
-    DIAGONAL
+    DIAGONAL;
+
+    @Override
+    public boolean isDefault() {
+        return equals(NONE);
+    }
 }

@@ -2,12 +2,13 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
  */
 @Builder
 @EqualsAndHashCode
+@XmlAccessorType(XmlAccessType.NONE)
 public class Net implements Identifiable, Named, Collectable {
 
     /**
@@ -27,7 +29,8 @@ public class Net implements Identifiable, Named, Collectable {
      * Gets the identifier
      * @return The identifier
      */
-    @Getter
+    @NonNull
+    @Getter @Setter
     @XmlAttribute(name = "id", required = true)
     private String id;
 
@@ -36,7 +39,8 @@ public class Net implements Identifiable, Named, Collectable {
      * Gets the net type
      * @return
      */
-    @Getter
+    @NonNull
+    @Getter @Setter
     @XmlAttribute(name = "type", required = true)
     private String type;
 
@@ -51,6 +55,7 @@ public class Net implements Identifiable, Named, Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlElement(name = "name")
     private Label name = new Label();
 
     /**
@@ -96,35 +101,19 @@ public class Net implements Identifiable, Named, Collectable {
      * @param type
      */
     public Net(String id, String type) {
-        setId(id);
-        setType(type);
-        setPages(new ArrayList<>());
-        setToolSpecificData(new ArrayList<>());
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.type = Objects.requireNonNullElse(type, PLACE_TRANSITION_TYPE);
+        this.pages = new ArrayList<>();
+        this.toolSpecificData = new ArrayList<>();
     }
 
     // Internal constructor for builder
     private Net(String id, String type, Label name, List<Page> pages, List<ToolSpecific> toolSpecificData) {
-        setId(id);
-        setType(type);
-        setName(name);
-        setPages(new ArrayList<>(pages));
-        setToolSpecificData(new ArrayList<>(toolSpecificData));
-    }
-
-    /**
-     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
-    public void setId(String id) {
-        this.id = id != null ? id : UUID.randomUUID().toString();
-    }
-
-    /**
-     * Sets the type of this net, defaults to a Place-Transition (PT) net if null, empty or whitespace
-     * @param type A string containing a net type identifier
-     */
-    public void setType(String type) {
-        this.type = type != null ? type : PLACE_TRANSITION_TYPE;
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.type = Objects.requireNonNullElse(type, PLACE_TRANSITION_TYPE);
+        this.name = name;
+        this.pages = new ArrayList<>(pages);
+        this.toolSpecificData = new ArrayList<>(toolSpecificData);
     }
 
     /**
@@ -133,20 +122,11 @@ public class Net implements Identifiable, Named, Collectable {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getName())
-            .collect(getPages())
-            .collect(getToolSpecificData())
-            .build();
-    }
-
-    @XmlElement(name = "name")
-    private Label getNameXml() {
-        return Objects.equals(getName(), new Label()) ? null : getName();
-    }
-
-    private void setNameXml(Label name) {
-        setName(name);
+        return new Collector(this)
+            .include(name)
+            .include(pages)
+            .include(toolSpecificData)
+            .collect();
     }
 
 }

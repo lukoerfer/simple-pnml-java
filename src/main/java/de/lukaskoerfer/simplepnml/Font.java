@@ -2,8 +2,9 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +13,8 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class Font implements Collectable {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Font implements Collectable, Defaults {
 
     /**
      * -- GETTER --
@@ -22,9 +24,11 @@ public class Font implements Collectable {
      * Sets the font family
      * @param family A string containing a font family in CSS
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "family")
-    private String family;
+    private String family = "";
 
     /**
      * -- GETTER --
@@ -34,9 +38,11 @@ public class Font implements Collectable {
      * Sets the font style
      * @param style A string containing a font style in CSS
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "style")
-    private String style;
+    private String style = "";
 
     /**
      * -- GETTER --
@@ -46,9 +52,11 @@ public class Font implements Collectable {
      * Sets the font weight
      * @param weight A string containing a font weight in CSS
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "weight")
-    private String weight;
+    private String weight = "";
 
     /**
      * -- GETTER --
@@ -58,9 +66,11 @@ public class Font implements Collectable {
      * Sets the font size
      * @param size A string containing a font size in CSS
      */
+    @NonNull
     @Getter @Setter
+    @Builder.Default
     @XmlAttribute(name = "size")
-    private String size;
+    private String size = "";
 
     /**
      * -- GETTER --
@@ -73,6 +83,7 @@ public class Font implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlAttribute(name = "decoration")
     private FontDecoration decoration = FontDecoration.NONE;
 
     /**
@@ -86,6 +97,7 @@ public class Font implements Collectable {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlAttribute(name = "align")
     private FontAlign align = FontAlign.LEFT;
 
     /**
@@ -97,6 +109,7 @@ public class Font implements Collectable {
      * @param rotation A font rotation
      */
     @Getter @Setter
+    @XmlAttribute(name = "rotation")
     private double rotation;
 
     /**
@@ -113,30 +126,14 @@ public class Font implements Collectable {
         return Stream.of(this);
     }
 
-    @XmlAttribute(name = "decoration")
-    private FontDecoration getDecorationXml() {
-        return Objects.equals(getDecoration(), FontDecoration.NONE) ? null : getDecoration();
-    }
-
-    private void setDecorationXml(FontDecoration decoration) {
-        setDecoration(decoration);
-    }
-
-    @XmlAttribute(name = "align")
-    private FontAlign getAlignXml() {
-        return Objects.equals(getAlign(), FontAlign.LEFT) ? null : getAlign();
-    }
-
-    private void setAlignXml(FontAlign align) {
-        setAlign(align);
-    }
-
-    @XmlAttribute(name = "rotation")
-    private Double getRotationXml() {
-        return Objects.equals(getRotation(), 0.0) ? null : getRotation();
-    }
-
-    private void setRotationXml(Double rotation) {
-        setRotation(rotation != null ? rotation : 0.0);
+    @Override
+    public boolean isDefault() {
+        return family.isEmpty()
+            && style.isEmpty()
+            && weight.isEmpty()
+            && size.isEmpty()
+            && decoration.isDefault()
+            && align.isDefault()
+            && rotation == 0.0;
     }
 }

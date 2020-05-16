@@ -2,9 +2,9 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import java.net.URI;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class NodeGraphics implements Collectable, Lined, Filled {
+@XmlAccessorType(XmlAccessType.NONE)
+public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
 
     /**
      * -- GETTER --
@@ -80,39 +81,57 @@ public class NodeGraphics implements Collectable, Lined, Filled {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getPosition())
-            .collect(getSize())
-            .collect(getFill())
-            .collect(getLine())
-            .build();
+        return new Collector(this)
+            .include(position)
+            .include(size)
+            .include(fill)
+            .include(line)
+            .collect();
     }
+
+    @Override
+    public boolean isDefault() {
+        return position.isDefault()
+            && size.isDefault()
+            && fill.isDefault()
+            && line.isDefault();
+    }
+
+    //region Internal serialization
 
     @XmlElement(name = "dimension")
+    @SuppressWarnings("unused")
     private Size getSizeXml() {
-        return Objects.equals(getSize(), new Size()) ? null : getSize();
+        return Defaults.requireNonDefault(size);
     }
 
+    @SuppressWarnings("unused")
     private void setSizeXml(Size size) {
-        setSize(size);
+        this.size = size;
     }
 
     @XmlElement(name = "fill")
+    @SuppressWarnings("unused")
     private Fill getFillXml() {
-        return Objects.equals(getFill(), new Fill()) ? null : getFill();
+        return Defaults.requireNonDefault(fill);
     }
 
+    @SuppressWarnings("unused")
     private void setFillXml(Fill fill) {
-        setFill(fill);
+        this.fill = fill;
     }
 
     @XmlElement(name = "line")
+    @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Objects.equals(getLine(), new Line()) ? null : getLine();
+        return Defaults.requireNonDefault(line);
     }
 
+    @SuppressWarnings("unused")
     private void setLineXml(Line line) {
-        setLine(line);
+        this.line = line;
     }
+
+    //endregion
 
 }
