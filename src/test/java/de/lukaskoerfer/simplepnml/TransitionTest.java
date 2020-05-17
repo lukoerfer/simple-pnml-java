@@ -10,15 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TransitionTest {
 
-    static Stream<String> ids() {
-        return Stream.of(null, "", "   ", "test");
-    }
-
-    @ParameterizedTest
-    @MethodSource("ids")
-    void createAssignsValidId(String id) {
-        Transition transition = new Transition(id);
-        assertNotNull(transition.getId());
-    }
+    
 
 }

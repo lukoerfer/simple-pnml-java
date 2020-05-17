@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import lombok.*;
@@ -26,6 +27,7 @@ public class ToolSpecific implements Collectable {
      * Sets the name of the tool
      * @param tool The name
      */
+    @NonNull
     @Getter @Setter
     @XmlAttribute(name = "tool")
     private String tool;
@@ -38,6 +40,7 @@ public class ToolSpecific implements Collectable {
      * Sets the version of the tool
      * @param version The version
      */
+    @NonNull
     @Getter @Setter
     @XmlAttribute(name = "version")
     private String version;
@@ -56,15 +59,17 @@ public class ToolSpecific implements Collectable {
     /**
      * Creates new tool-specific data
      */
-    public ToolSpecific() {
+    public ToolSpecific(String tool, String version) {
+        this.tool = tool;
+        this.version = version;
         this.contents = new ArrayList<>();
     }
 
     // Internal constructor for builder
     @SuppressWarnings("unused")
     private ToolSpecific(String tool, String version, List<Object> contents) {
-        this.tool = tool;
-        this.version = version;
+        this.tool = Objects.requireNonNull(tool);
+        this.version = Objects.requireNonNull(version);
         this.contents = new ArrayList<>(contents);
     }
 
