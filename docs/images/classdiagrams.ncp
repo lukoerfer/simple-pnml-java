@@ -1,0 +1,130 @@
+<Project>
+  <Name>SimplePNML</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Logic</Name>
+    <Language>Java</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Arc</Name>
+        <Access>Public</Access>
+        <Location left="364" top="291" />
+        <Size width="162" height="148" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public String getSource()</Member>
+        <Member type="Method">public String getTarget()</Member>
+        <Member type="Method">public Edge getGraphics()</Member>
+        <Member type="Method">public Label getInscription()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Identifiable</Name>
+        <Access>Public</Access>
+        <Location left="588" top="227" />
+        <Size width="162" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public abstract string getId()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Connectable</Name>
+        <Access>Public</Access>
+        <Location left="588" top="412" />
+        <Size width="162" height="77" />
+        <Collapsed>True</Collapsed>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Document</Name>
+        <Access>Public</Access>
+        <Location left="64" top="52" />
+        <Size width="162" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public List&lt;Net&gt; getNets()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Transition</Name>
+        <Access>Public</Access>
+        <Location left="119" top="528" />
+        <Size width="205" height="131" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Label getName()</Member>
+        <Member type="Method">public Node getGraphics()</Member>
+        <Member type="Method">public List&lt;ToolData&gt; getToolData()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Place</Name>
+        <Access>Public</Access>
+        <Location left="364" top="528" />
+        <Size width="201" height="149" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Label getName()</Member>
+        <Member type="Method">public Node getGraphics()</Member>
+        <Member type="Method">public Label getInitialMarking()</Member>
+        <Member type="Method">public List&lt;ToolData&gt; getToolData()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Net</Name>
+        <Access>Public</Access>
+        <Location left="310" top="69" />
+        <Size width="199" height="146" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public String getType()</Member>
+        <Member type="Method">public Label getName()</Member>
+        <Member type="Method">public List&lt;Page&gt; getPages()</Member>
+        <Member type="Method">public List&lt;ToolData&gt; getToolData()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Page</Name>
+        <Access>Public</Access>
+        <Location left="64" top="256" />
+        <Size width="198" height="183" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Label getName()</Member>
+        <Member type="Method">public List&lt;Page&gt; getPages()</Member>
+        <Member type="Method">public List&lt;Place&gt; getPlaces()</Member>
+        <Member type="Method">public List&lt;Transition&gt; getTransitions()</Member>
+        <Member type="Method">public List&lt;Arc&gt; getArcs()</Member>
+        <Member type="Method">public List&lt;ToolData&gt; getToolData()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Label</Name>
+        <Access>Public</Access>
+        <Location left="622" top="528" />
+        <Size width="192" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public String getText()</Member>
+        <Member type="Method">public void setText(String text)</Member>
+        <Member type="Method">public Annotation getGraphics()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ToolData</Name>
+        <Access>Public</Access>
+        <Location left="622" top="685" />
+        <Size width="193" height="135" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public String getTool()</Member>
+        <Member type="Method">public String getVersion()</Member>
+        <Member type="Method">public List&lt;Element&gt; getContent()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="2" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Graphics</Name>
+    <Language>Java</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+</Project>
