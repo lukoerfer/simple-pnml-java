@@ -1,19 +1,20 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
  *
  */
 @EqualsAndHashCode
-public class Offset implements Collectable {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Offset implements Collectable, Defaults {
 
     /**
      * -- GETTER --
@@ -62,4 +63,11 @@ public class Offset implements Collectable {
     public Stream<Collectable> collect() {
         return Stream.of(this);
     }
+
+    @Override
+    public boolean isDefault() {
+        return x == 0.0
+            && y == 0.0;
+    }
+
 }

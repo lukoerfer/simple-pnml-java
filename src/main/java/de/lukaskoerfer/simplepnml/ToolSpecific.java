@@ -1,9 +1,12 @@
 package de.lukaskoerfer.simplepnml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import lombok.*;
@@ -13,6 +16,7 @@ import lombok.*;
  */
 @Builder
 @EqualsAndHashCode
+@XmlAccessorType(XmlAccessType.NONE)
 public class ToolSpecific implements Collectable {
 
     /**
@@ -23,6 +27,7 @@ public class ToolSpecific implements Collectable {
      * Sets the name of the tool
      * @param tool The name
      */
+    @NonNull
     @Getter @Setter
     @XmlAttribute(name = "tool")
     private String tool;
@@ -35,6 +40,7 @@ public class ToolSpecific implements Collectable {
      * Sets the version of the tool
      * @param version The version
      */
+    @NonNull
     @Getter @Setter
     @XmlAttribute(name = "version")
     private String version;
@@ -53,15 +59,18 @@ public class ToolSpecific implements Collectable {
     /**
      * Creates new tool-specific data
      */
-    public ToolSpecific() {
-        setContents(new ArrayList<>());
+    public ToolSpecific(String tool, String version) {
+        this.tool = tool;
+        this.version = version;
+        this.contents = new ArrayList<>();
     }
 
     // Internal constructor for builder
+    @SuppressWarnings("unused")
     private ToolSpecific(String tool, String version, List<Object> contents) {
-        setTool(tool);
-        setVersion(version);
-        setContents(new ArrayList<>(contents));
+        this.tool = Objects.requireNonNull(tool);
+        this.version = Objects.requireNonNull(version);
+        this.contents = new ArrayList<>(contents);
     }
 
     /**

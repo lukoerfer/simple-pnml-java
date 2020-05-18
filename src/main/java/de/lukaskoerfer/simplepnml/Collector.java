@@ -1,39 +1,36 @@
 package de.lukaskoerfer.simplepnml;
 
+import lombok.NonNull;
+
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+/**
+ *
+ */
 class Collector {
 
     private final Stream.Builder<Collectable> builder = Stream.builder();
 
-    private Collector(Collectable current) {
-        builder.add(current);
+    public Collector(@NonNull Collectable parent) {
+        builder.add(parent);
     }
 
-    public static Collector create(Collectable current) {
-        return new Collector(current);
-    }
-
-    public Collector collect(Collectable child) {
-        if (child != null) {
-            child.collect().forEach(builder::add);
-        }
+    public Collector include(@NonNull Collectable child) {
+        child.collect().forEach(builder::add);
         return this;
     }
 
-    public <T extends Collectable> Collector collect(Collection<T> children) {
-        if (children != null) {
-            children.stream()
-                .filter(Objects::nonNull)
-                .flatMap(Collectable::collect)
-                .forEach(builder::add);
-        }
+    public <T extends Collectable> Collector include(@NonNull Collection<T> children) {
+        children.stream()
+            .filter(Objects::nonNull)
+            .flatMap(Collectable::collect)
+            .forEach(builder::add);
         return this;
     }
 
-    public Stream<Collectable> build() {
+    public Stream<Collectable> collect() {
         return builder.build();
     }
 

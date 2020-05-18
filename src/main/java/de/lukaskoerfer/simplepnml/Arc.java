@@ -3,12 +3,13 @@ package de.lukaskoerfer.simplepnml;
 import lombok.*;
 import lombok.experimental.Tolerate;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -16,14 +17,19 @@ import java.util.stream.Stream;
  */
 @Builder
 @EqualsAndHashCode
-public class Arc implements Identifiable, Collectable, Edge {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
 
     /**
      * -- GETTER --
      * Gets the identifier
      * @return The identifier
+     * --- SETTER --
+     * Sets the source of this arc
+     * @param source A string containing the identifier of the source of this arc
      */
-    @Getter
+    @NonNull
+    @Getter @Setter
     @XmlAttribute(name = "id", required = true)
     private String id;
 
@@ -35,9 +41,11 @@ public class Arc implements Identifiable, Collectable, Edge {
      * Sets the source of this arc
      * @param source A string containing the identifier of the source of this arc
      */
+    @NonNull
     @Getter @Setter
-    @XmlAttribute(name = "source")
-    private String source;
+    @Builder.Default
+    @XmlAttribute(name = "source", required = true)
+    private String source = "";
 
     /**
      * -- GETTER --
@@ -47,9 +55,11 @@ public class Arc implements Identifiable, Collectable, Edge {
      * Sets the target of this arc
      * @param target A string containing the identifier of the target of this arc
      */
+    @NonNull
     @Getter @Setter
-    @XmlAttribute(name = "target")
-    private String target;
+    @Builder.Default
+    @XmlAttribute(name = "target", required = true)
+    private String target = "";
 
     /**
      * -- GETTER --
@@ -84,9 +94,9 @@ public class Arc implements Identifiable, Collectable, Edge {
      */
     @NonNull
     @Getter @Setter
-    @Singular("data")
+    @Singular("toolSpecific")
     @XmlElement(name = "toolSpecific")
-    private List<ToolSpecific> toolData;
+    private List<ToolSpecific> toolSpecificData;
 
     /**
      * Creates a new arc using a random identifier
@@ -100,28 +110,20 @@ public class Arc implements Identifiable, Collectable, Edge {
      * @param id
      */
     public Arc(String id) {
-        setId(id);
-        setToolData(new ArrayList<>());
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.toolSpecificData = new ArrayList<>();
     }
 
     // Internal constructor for builder
-    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolSpecific> toolData) {
-        setId(id);
-        setSource(source);
-        setTarget(target);
-        setGraphics(graphics);
-        setInscription(inscription);
-        setToolData(new ArrayList<>(toolData));
+    @SuppressWarnings("unused")
+    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolSpecific> toolSpecificData) {
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.source = source;
+        this.target = target;
+        this.graphics = graphics;
+        this.inscription = inscription;
+        this.toolSpecificData = new ArrayList<>(toolSpecificData);
     }
-
-    /**
-     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
-    public void setId(String id) {
-        this.id = id != null ? id : UUID.randomUUID().toString();
-    }
-
 
     /**
      * Sets the source of this arc
@@ -145,29 +147,37 @@ public class Arc implements Identifiable, Collectable, Edge {
 
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getGraphics())
-            .collect(getInscription())
-            .collect(getToolData())
-            .build();
+        return new Collector(this)
+            .include(graphics)
+            .include(inscription)
+            .include(toolSpecificData)
+            .collect();
     }
+
+    //region Internal serialization
 
     @XmlElement(name = "graphics")
+    @SuppressWarnings("unused")
     private EdgeGraphics getGraphicsXml() {
-        return Objects.equals(getGraphics(), new EdgeGraphics()) ? null : getGraphics();
+        return Defaults.requireNonDefault(graphics);
     }
 
+    @SuppressWarnings("unused")
     private void setGraphicsXml(EdgeGraphics graphics) {
-        setGraphics(graphics);
+        this.graphics = graphics;
     }
 
+    @SuppressWarnings("unused")
     @XmlElement(name = "inscription")
     private Label getInscriptionXml() {
-        return Objects.equals(getInscription(), new Label()) ? null : getInscription();
+        return Defaults.requireNonDefault(inscription);
     }
 
+    @SuppressWarnings("unused")
     private void setInscriptionXml(Label inscription) {
-        setInscription(inscription);
+        this.inscription = inscription;
     }
+
+    //endregion
 
 }

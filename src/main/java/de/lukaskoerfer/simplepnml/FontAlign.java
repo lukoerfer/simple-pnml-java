@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported font alignments
  */
 @XmlEnum
-public enum FontAlign {
+public enum FontAlign implements Defaults {
     /**
      * Align left
      */
@@ -22,5 +22,10 @@ public enum FontAlign {
      * Align right
      */
     @XmlEnumValue("right")
-    RIGHT
+    RIGHT;
+
+    @Override
+    public boolean isDefault() {
+        return equals(LEFT);
+    }
 }

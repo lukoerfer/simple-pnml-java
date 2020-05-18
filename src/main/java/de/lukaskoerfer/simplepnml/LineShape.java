@@ -3,13 +3,11 @@ package de.lukaskoerfer.simplepnml;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-import lombok.EqualsAndHashCode;
-
 /**
  * Defines the supported line shapes
  */
 @XmlEnum
-public enum LineShape {
+public enum LineShape implements Defaults {
     /**
      * Straight line
      */
@@ -19,5 +17,10 @@ public enum LineShape {
      * Curved line
      */
     @XmlEnumValue("curve")
-    CURVE
+    CURVE;
+
+    @Override
+    public boolean isDefault() {
+        return equals(LINE);
+    }
 }

@@ -34,7 +34,9 @@ class DocumentTest {
     @Test
     void manualSerialization() throws Exception {
         Document input = Document.builder()
-            .net(Net.builder().build())
+            .net(Net.builder()
+                    .page(Page.builder().arc(new Arc()).build())
+                    .build())
             .build();
         JAXBContext context = JAXBContext.newInstance(Document.class);
         context.createMarshaller().marshal(input, System.out);

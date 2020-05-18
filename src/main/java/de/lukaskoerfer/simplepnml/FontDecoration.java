@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported font decorations
  */
 @XmlEnum
-public enum FontDecoration {
+public enum FontDecoration implements Defaults {
     /**
      *
      */
@@ -26,5 +26,10 @@ public enum FontDecoration {
      * Strikethrough text
      */
     @XmlEnumValue("line-through")
-    LINE_THROUGH
+    LINE_THROUGH;
+
+    @Override
+    public boolean isDefault() {
+        return equals(NONE);
+    }
 }

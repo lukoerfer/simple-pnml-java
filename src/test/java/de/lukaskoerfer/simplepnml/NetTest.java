@@ -11,17 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NetTest {
 
-    static EasyRandom random = new EasyRandom();
 
-    static Stream<String> ids() {
-        return Stream.of(null, "", "   ", "test");
-    }
-
-    @ParameterizedTest
-    @MethodSource("ids")
-    void createAssignsValidId(String id) {
-        Net net = new Net(id);
-        assertNotNull(net.getId());
-    }
 
 }

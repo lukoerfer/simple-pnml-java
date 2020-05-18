@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported line styles
  */
 @XmlEnum
-public enum LineStyle {
+public enum LineStyle implements Defaults {
     /**
      * Solid line
      */
@@ -22,5 +22,10 @@ public enum LineStyle {
      * Dotted line
      */
     @XmlEnumValue("dot")
-    DOT
+    DOT;
+
+    @Override
+    public boolean isDefault() {
+        return equals(SOLID);
+    }
 }

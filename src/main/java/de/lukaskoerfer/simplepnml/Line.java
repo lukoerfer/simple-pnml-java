@@ -2,9 +2,9 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class Line implements Collectable {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Line implements Collectable, Defaults {
 
     /**
      * -- GETTER --
@@ -23,9 +24,10 @@ public class Line implements Collectable {
      * Sets the line color
      * @param color
      */
+    @NonNull
     @Getter @Setter
-    @XmlAttribute(name = "color")
-    private String color;
+    @Builder.Default
+    private String color = "";
 
     /**
      * -- GETTER --
@@ -78,30 +80,60 @@ public class Line implements Collectable {
         return Stream.of(this);
     }
 
-    @XmlAttribute(name = "width")
-    private Double getWidthXml() {
-        return Objects.equals(getWidth(), 0.0) ? null : getWidth();
+    @Override
+    public boolean isDefault() {
+        return getColor().isEmpty()
+            && getWidth() == 0.0
+            && getShape() == LineShape.LINE
+            && getStyle() == LineStyle.SOLID;
     }
 
-    private void setWidthXml(Double width) {
-        setWidth(width != null ? width : 0.0);
+    //region Internal serialization
+
+    @XmlAttribute(name = "color")
+    @SuppressWarnings("unused")
+    private String getColorXml() {
+        return Defaults.requireNonDefault(getColor());
+    }
+
+    @SuppressWarnings("unused")
+    private void setColorXml(String color) {
+        setColor(color);
+    }
+
+    @XmlAttribute(name = "width")
+    @SuppressWarnings("unused")
+    private Double getWidthXml() {
+        return Defaults.requireNonDefault(getWidth());
+    }
+
+    @SuppressWarnings("unused")
+    private void setWidthXml(Double value) {
+        setWidth(value);
     }
 
     @XmlAttribute(name = "shape")
+    @SuppressWarnings("unused")
     private LineShape getShapeXml() {
-        return Objects.equals(getShape(), LineShape.LINE) ? null : getShape();
+        return Defaults.requireNonDefault(getShape());
     }
 
+    @SuppressWarnings("unused")
     private void setShapeXml(LineShape shape) {
         setShape(shape);
     }
 
     @XmlAttribute(name = "style")
+    @SuppressWarnings("unused")
     private LineStyle getStyleXml() {
-        return Objects.equals(getStyle(), LineStyle.SOLID) ? null : getStyle();
+        return Defaults.requireNonDefault(getStyle());
     }
 
+    @SuppressWarnings("unused")
     private void setStyleXml(LineStyle style) {
         setStyle(style);
     }
+
+    //endregion
+
 }

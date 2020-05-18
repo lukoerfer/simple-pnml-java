@@ -1,24 +1,27 @@
 package de.lukaskoerfer.simplepnml;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LineTest {
 
-    void canCreateLine() {
+    @Test
+    void canCreate() {
         Line line = new Line();
-        line.setColor("red");
-        line.setShape(LineShape.CURVE);
-        line.setStyle(LineStyle.DOT);
-        line.setWidth(4.5);
+        assertTrue(line.isDefault());
+        assertEquals(1, line.collect().count());
     }
 
-    void canCreateLineFluently() {
+    @Test
+    void canCreateUsingBuilder() {
+        String color = "red";
         Line line = Line.builder()
             .color("red")
-            .shape(LineShape.LINE)
-            .style(LineStyle.SOLID)
-            .width(3.5)
             .build();
+        assertEquals(color, line.getColor());
+        assertFalse(line.isDefault());
+        assertEquals(1, line.collect().count());
     }
 
 }

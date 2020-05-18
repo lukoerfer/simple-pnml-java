@@ -1,11 +1,9 @@
 package de.lukaskoerfer.simplepnml;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import lombok.*;
@@ -15,15 +13,17 @@ import lombok.*;
  */
 @Builder
 @EqualsAndHashCode
-public class Transition implements Connectable, Collectable, Named, Node {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Transition implements Connectable, Collectable, Named, Node, ToolExtendable {
 
     /**
      * -- GETTER --
      * Gets the identifier
      * @return The identifier
      */
-    @Getter
-    @XmlAttribute(required = true)
+    @NonNull
+    @Getter @Setter
+    @XmlAttribute(name = "id", required = true)
     private String id;
 
     /**
@@ -37,6 +37,7 @@ public class Transition implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlTransient
     private Label name = new Label();
 
     /**
@@ -50,6 +51,7 @@ public class Transition implements Connectable, Collectable, Named, Node {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlTransient
     private NodeGraphics graphics = new NodeGraphics();
 
     /**
@@ -74,24 +76,17 @@ public class Transition implements Connectable, Collectable, Named, Node {
      * Creates a new transition
      */
     public Transition(String id) {
-        setId(id);
-        setToolSpecificData(new ArrayList<>());
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.toolSpecificData = new ArrayList<>();
     }
 
     // Internal constructor for builder
+    @SuppressWarnings("unused")
     private Transition(String id, Label name, NodeGraphics graphics, List<ToolSpecific> toolSpecificData) {
-        setId(id);
-        setName(name);
-        setGraphics(graphics);
-        setToolSpecificData(new ArrayList<>(toolSpecificData));
-    }
-
-    /**
-     * Sets the identifier, defaults to a random UUID if null, empty or whitespace
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
-     */
-    public void setId(String id) {
-        this.id = id != null ? id : UUID.randomUUID().toString();
+        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+        this.name = name;
+        this.graphics = graphics;
+        this.toolSpecificData = new ArrayList<>(toolSpecificData);
     }
 
     /**
@@ -100,28 +95,37 @@ public class Transition implements Connectable, Collectable, Named, Node {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getName())
-            .collect(getGraphics())
-            .collect(getToolSpecificData())
-            .build();
+        return new Collector(this)
+            .include(name)
+            .include(graphics)
+            .include(toolSpecificData)
+            .collect();
     }
+
+    //region Internal serialization
 
     @XmlElement(name = "name")
+    @SuppressWarnings("unused")
     private Label getNameXml() {
-        return Objects.equals(getName(), new Label()) ? null : getName();
+        return Defaults.requireNonDefault(name);
     }
 
+    @SuppressWarnings("unused")
     private void setNameXml(Label name) {
-        setName(name);
+        this.name = name;
     }
 
     @XmlElement(name = "graphics")
+    @SuppressWarnings("unused")
     private NodeGraphics getGraphicsXml() {
-        return Objects.equals(getGraphics(), new NodeGraphics()) ? null : getGraphics();
+        return Defaults.requireNonDefault(graphics);
     }
 
+    @SuppressWarnings("unused")
     private void setGraphicsXml(NodeGraphics graphics) {
-        setGraphics(graphics);
+        this.graphics = graphics;
     }
+
+    //endregion
+
 }

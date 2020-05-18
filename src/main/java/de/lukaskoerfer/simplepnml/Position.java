@@ -2,15 +2,17 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
  * Describes the position of a graphical element in two dimensions
  */
 @EqualsAndHashCode
-public class Position implements Collectable {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Position implements Collectable, Defaults {
 
     /**
      * -- GETTER --
@@ -47,12 +49,19 @@ public class Position implements Collectable {
      * @param y The position in Y direction
      */
     public Position(double x, double y) {
-        setX(x);
-        setY(y);
+        this.x = x;
+        this.y = y;
     }
 
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
     }
+
+    @Override
+    public boolean isDefault() {
+        return x == 0.0
+            && y == 0.0;
+    }
+
 }

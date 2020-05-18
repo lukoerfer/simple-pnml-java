@@ -10,15 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlaceTest {
 
-    static Stream<String> ids() {
-        return Stream.of(null, "", "   ", "test");
-    }
 
-    @ParameterizedTest
-    @MethodSource("ids")
-    void createAssignsValidId(String id) {
-        Place place = new Place(id);
-        assertNotNull(place.getId());
-    }
 
 }

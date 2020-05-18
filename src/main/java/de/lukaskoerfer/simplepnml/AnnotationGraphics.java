@@ -2,8 +2,9 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +13,8 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class AnnotationGraphics implements Collectable, Filled, Lined {
+@XmlAccessorType(XmlAccessType.NONE)
+public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined {
 
     /**
      * -- GETTER --
@@ -78,38 +80,57 @@ public class AnnotationGraphics implements Collectable, Filled, Lined {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getOffset())
-            .collect(getFill())
-            .collect(getFont())
-            .collect(getLine())
-            .build();
+        return new Collector(this)
+            .include(offset)
+            .include(fill)
+            .include(font)
+            .include(line)
+            .collect();
     }
+
+    @Override
+    public boolean isDefault() {
+        return offset.isDefault()
+            && fill.isDefault()
+            && line.isDefault()
+            && font.isDefault();
+    }
+
+    //region Internal serialization
 
     @XmlElement(name = "fill")
+    @SuppressWarnings("unused")
     private Fill getFillXml() {
-        return Objects.equals(getFill(), new Fill()) ? null : getFill();
+        return Defaults.requireNonDefault(fill);
     }
 
+    @SuppressWarnings("unused")
     private void setFillXml(Fill fill) {
-        setFill(fill);
+        this.fill = fill;
     }
 
     @XmlElement(name = "line")
+    @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Objects.equals(getLine(), new Line()) ? null : getLine();
+        return Defaults.requireNonDefault(line);
     }
 
+    @SuppressWarnings("unused")
     private void setLineXml(Line line) {
-        setLine(line);
+        this.line = line;
     }
 
     @XmlElement(name = "font")
+    @SuppressWarnings("unused")
     private Font getFontXml() {
-        return Objects.equals(getFont(), new Font()) ? null : getFont();
+        return Defaults.requireNonDefault(font);
     }
 
+    @SuppressWarnings("unused")
     private void setFontXml(Font font) {
-        setFont(font);
+        this.font = font;
     }
+
+    //endregion
+
 }

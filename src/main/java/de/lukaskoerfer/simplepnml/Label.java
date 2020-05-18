@@ -2,8 +2,9 @@ package de.lukaskoerfer.simplepnml;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +13,8 @@ import java.util.stream.Stream;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class Label implements Collectable, Annotation {
+@XmlAccessorType(XmlAccessType.NONE)
+public class Label implements Collectable, Defaults, Annotation {
 
     /**
      * -- GETTER --
@@ -39,6 +41,7 @@ public class Label implements Collectable, Annotation {
     @NonNull
     @Getter @Setter
     @Builder.Default
+    @XmlElement(name = "graphics")
     private AnnotationGraphics graphics = new AnnotationGraphics();
 
     /**
@@ -52,18 +55,15 @@ public class Label implements Collectable, Annotation {
      */
     @Override
     public Stream<Collectable> collect() {
-        return Collector.create(this)
-            .collect(getGraphics())
-            .build();
+        return new Collector(this)
+            .include(graphics)
+            .collect();
     }
 
-    @XmlElement(name = "graphics")
-    private AnnotationGraphics getGraphicsXml() {
-        return Objects.equals(getGraphics(), new AnnotationGraphics()) ? null : getGraphics();
-    }
-
-    private void setGraphicsXml(AnnotationGraphics graphics) {
-        setGraphics(graphics);
+    @Override
+    public boolean isDefault() {
+        return getText().isEmpty()
+            && getGraphics().isDefault();
     }
 
 }
