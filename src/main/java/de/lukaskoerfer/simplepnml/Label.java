@@ -5,44 +5,20 @@ import lombok.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.Objects;
 import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes a text at a specific position
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Label implements Collectable, Defaults, Annotation {
 
-    /**
-     * -- GETTER --
-     * Gets the text of this label
-     * @return The text
-     * -- SETTER --
-     * Sets the text of this label
-     * @param text The text
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlElement(name = "text", required = true)
     private String text = "";
-
-    /**
-     * -- GETTER --
-     * Gets the graphics of this label
-     * @return The graphics description
-     * -- SETTER --
-     * Sets the graphics of this label
-     * @param graphics The graphics description
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlElement(name = "graphics")
-    private AnnotationGraphics graphics = new AnnotationGraphics();
+    private AnnotationGraphics graphics;
 
     /**
      * Creates an empty label
@@ -51,12 +27,26 @@ public class Label implements Collectable, Defaults, Annotation {
 
     /**
      *
+     * @param text
+     */
+    public Label(String text) {
+        this.text = text;
+    }
+
+    @Builder
+    private Label(String text, AnnotationGraphics graphics) {
+        this.text = text;
+        this.graphics = graphics;
+    }
+
+    /**
+     *
      * @return
      */
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(graphics)
+            .include(getGraphics())
             .collect();
     }
 
@@ -66,4 +56,21 @@ public class Label implements Collectable, Defaults, Annotation {
             && getGraphics().isDefault();
     }
 
+    @XmlElement(name = "text", required = true)
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @XmlElement(name = "graphics")
+    public AnnotationGraphics getGraphics() {
+        return requireNonNullElseGet(graphics, () -> graphics = new AnnotationGraphics());
+    }
+
+    public void setGraphics(AnnotationGraphics graphics) {
+        this.graphics = graphics;
+    }
 }

@@ -1,183 +1,138 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-import lombok.experimental.Tolerate;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Singular;
+
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Represents an arc in a place/transition net
  */
-@Builder
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
 
-    /**
-     * -- GETTER --
-     * Gets the identifier
-     * @return The identifier
-     * --- SETTER --
-     * Sets the source of this arc
-     * @param source A string containing the identifier of the source of this arc
-     */
-    @NonNull
-    @Getter @Setter
-    @XmlAttribute(name = "id", required = true)
     private String id;
-
-    /**
-     * -- GETTER --
-     * Gets the identifier of the source of this arc
-     * @return A string containing the identifier
-     * -- SETTER --
-     * Sets the source of this arc
-     * @param source A string containing the identifier of the source of this arc
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "source", required = true)
     private String source = "";
-
-    /**
-     * -- GETTER --
-     * Gets the identifier of the target of this arc
-     * @return A string containing the identifier
-     * -- SETTER --
-     * Sets the target of this arc
-     * @param target A string containing the identifier of the target of this arc
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "target", required = true)
     private String target = "";
-
-    /**
-     * -- GETTER --
-     * Gets how to visualize this arc
-     * @return The graphics of this arc
-     * -- SETTER --
-     * Sets how to visualize this arc
-     * @param graphics The graphics of this arc
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private EdgeGraphics graphics = new EdgeGraphics();
-
-    /**
-     * -- GETTER --
-     * Gets the inscription of this arc
-     * @return A label containing the inscription
-     * -- SETTER --
-     * Sets the inscription of this arc
-     * @param inscription A label containing the inscription
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Label inscription = new Label();
-
-    /**
-     * -- GETTER --
-     * Gets a list containing tool-specific data
-     * @return A list of tool-specific data
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular("toolSpecific")
-    @XmlElement(name = "toolSpecific")
-    private List<ToolSpecific> toolSpecificData;
+    private EdgeGraphics graphics;
+    private Label inscription;
+    private List<ToolSpecific> toolSpecifics;
 
     /**
      * Creates a new arc using a random identifier
      */
-    public Arc() {
-        this(null);
-    }
+    public Arc() { }
 
     /**
      *
      * @param id
      */
     public Arc(String id) {
-        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
-        this.toolSpecificData = new ArrayList<>();
+        setId(id);
     }
 
-    // Internal constructor for builder
-    @SuppressWarnings("unused")
-    private Arc(String id, String source, String target, EdgeGraphics graphics, Label inscription, List<ToolSpecific> toolSpecificData) {
-        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+    @Builder
+    private Arc(String id, String source, String target, EdgeGraphics graphics,
+                Label inscription, @Singular List<ToolSpecific> toolSpecifics) {
+        this.id = id;
         this.source = source;
         this.target = target;
         this.graphics = graphics;
         this.inscription = inscription;
-        this.toolSpecificData = new ArrayList<>(toolSpecificData);
+        this.toolSpecifics = new ArrayList<>(toolSpecifics);
     }
 
-    /**
-     * Sets the source of this arc
-     * @param source The source element of this arc
-     */
-    @Tolerate
-    public void setSource(Connectable source) {
-        String sourceId = (source != null) ? source.getId() : null;
-        setSource(sourceId);
-    }
-
-    /**
-     * Sets the target of this arc
-     * @param target The target element of this arc
-     */
-    @Tolerate
-    public void setTarget(Connectable target) {
-        String targetId = (target != null) ? target.getId() : null;
-        setTarget(targetId);
-    }
-
-    @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(graphics)
-            .include(inscription)
-            .include(toolSpecificData)
+            .include(getGraphics())
+            .include(getInscription())
+            .include(getToolSpecifics())
             .collect();
     }
 
-    //region Internal serialization
+    @XmlAttribute(name = "id", required = true)
+    public String getId() {
+        return requireNonNullElseGet(id, () -> id = Identifiable.randomId());
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @XmlAttribute(name = "source", required = true)
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    @XmlAttribute(name = "target", required = true)
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public EdgeGraphics getGraphics() {
+        return requireNonNullElseGet(graphics, () -> graphics = new EdgeGraphics());
+    }
+
+    public void setGraphics(EdgeGraphics graphics) {
+        this.graphics = graphics;
+    }
+
+    public Label getInscription() {
+        return requireNonNullElseGet(inscription, () -> inscription = new Label());
+    }
+
+    public void setInscription(Label inscription) {
+        this.inscription = inscription;
+    }
+
+    @XmlElement(name = "toolspecific")
+    public List<ToolSpecific> getToolSpecifics() {
+        return requireNonNullElseGet(toolSpecifics, () -> toolSpecifics = new ArrayList<>());
+    }
+
+    public void setToolSpecifics(List<ToolSpecific> toolSpecificData) {
+        this.toolSpecifics = new ArrayList<>(toolSpecificData);
+    }
 
     @XmlElement(name = "graphics")
     @SuppressWarnings("unused")
     private EdgeGraphics getGraphicsXml() {
-        return Defaults.requireNonDefault(graphics);
+        return requireNonDefaultElseNull(getGraphics());
     }
 
     @SuppressWarnings("unused")
     private void setGraphicsXml(EdgeGraphics graphics) {
-        this.graphics = graphics;
+        setGraphics(graphics);
     }
 
     @SuppressWarnings("unused")
     @XmlElement(name = "inscription")
     private Label getInscriptionXml() {
-        return Defaults.requireNonDefault(inscription);
+        return requireNonDefaultElseNull(getInscription());
     }
 
     @SuppressWarnings("unused")
     private void setInscriptionXml(Label inscription) {
-        this.inscription = inscription;
+        setInscription(inscription);
     }
-
-    //endregion
 
 }

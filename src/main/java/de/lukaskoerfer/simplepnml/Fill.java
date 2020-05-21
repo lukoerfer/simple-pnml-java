@@ -1,77 +1,39 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.stream.Stream;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
 
 /**
  * Describes the fill of a graphical element
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Fill implements Collectable, Defaults {
 
-    /**
-     * -- GETTER --
-     * Gets the fill color
-     * @return A string describing a color
-     * -- SETTER --
-     * Sets the fill color
-     * @param color A string describing a color
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private String color = "";
-
-    /**
-     * -- GETTER --
-     * Gets the gradient color
-     * @return A string describing a color
-     * -- SETTER --
-     * Sets the gradient color
-     * @param gradientColor A string describing a color
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private String gradientColor = "";
-
-    /**
-     * -- GETTER --
-     * Gets the gradient rotation
-     * @return A gradient rotation
-     * -- SETTER --
-     * Sets the gradient rotation
-     * @param gradientRotation A gradient rotation
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private GradientRotation gradientRotation = GradientRotation.NONE;
-
-    /**
-     * -- GETTER --
-     * Gets the fill image
-     * @return An URI pointing to the fill image
-     * -- SETTER --
-     * Sets the fill image
-     * @param image An URI pointing to the fill image
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private String image = "";
 
     /**
      * Creates a new fill
      */
     public Fill() { }
+
+    @Builder
+    private Fill(String color, String gradientColor, GradientRotation gradientRotation, String image) {
+        this.color = color;
+        this.gradientColor = gradientColor;
+        this.gradientRotation = gradientRotation;
+        this.image = image;
+    }
 
     @Override
     public Stream<Collectable> collect() {
@@ -80,56 +42,90 @@ public class Fill implements Collectable, Defaults {
 
     @Override
     public boolean isDefault() {
-        return color.isEmpty()
-            && gradientColor.isEmpty()
-            && gradientRotation.isDefault()
-            && image.isEmpty();
+        return getColor().isEmpty()
+            && getGradientColor().isEmpty()
+            && getGradientRotation().isDefault()
+            && getImage().isEmpty();
     }
 
-    //region Internal serialization
+    /**
+     *
+     * @return
+     */
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getGradientColor() {
+        return gradientColor;
+    }
+
+    public void setGradientColor(String gradientColor) {
+        this.gradientColor = gradientColor;
+    }
+
+    public GradientRotation getGradientRotation() {
+        return gradientRotation;
+    }
+
+    public void setGradientRotation(GradientRotation gradientRotation) {
+        this.gradientRotation = gradientRotation;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @XmlAttribute(name = "color")
     @SuppressWarnings("unused")
     private String getColorXml() {
-        return Defaults.requireNonDefault(color);
+        return requireNonDefaultElseNull(getColor());
     }
 
     @SuppressWarnings("unused")
     private void setColorXml(String color) {
-        this.color = color;
+        setColor(color);
     }
 
     @XmlAttribute(name = "gradient-color")
     @SuppressWarnings("unused")
     private String getGradientColorXml() {
-        return Defaults.requireNonDefault(gradientColor);
+        return requireNonDefaultElseNull(getGradientColor());
     }
 
     @SuppressWarnings("unused")
     private void setGradientColorXml(String gradientColor) {
-        this.gradientColor = gradientColor;
+        setGradientColor(gradientColor);
     }
 
     @XmlAttribute(name = "gradient-rotation")
     @SuppressWarnings("unused")
     private GradientRotation getGradientRotationXml() {
-        return Defaults.requireNonDefault(gradientRotation);
+        return requireNonDefaultElseNull(getGradientRotation());
     }
 
     @SuppressWarnings("unused")
     private void setGradientRotationXml(GradientRotation gradientRotation) {
-        this.gradientRotation = gradientRotation;
+        setGradientRotation(gradientRotation);
     }
 
     @XmlAttribute(name = "image")
     @SuppressWarnings("unused")
     private String getImageXml() {
-        return Defaults.requireNonDefault(image);
+        return requireNonDefaultElseNull(getImage());
     }
 
     @SuppressWarnings("unused")
     private void setImageXml(String image) {
-        this.image = image;
+        setImage(image);
     }
 
     //endregion

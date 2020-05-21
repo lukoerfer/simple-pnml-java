@@ -5,135 +5,126 @@ import lombok.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import java.util.Objects;
 import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Specifies a font
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Font implements Collectable, Defaults {
 
-    /**
-     * -- GETTER --
-     * Gets the font family
-     * @return A string containing a font family in CSS
-     * -- SETTER --
-     * Sets the font family
-     * @param family A string containing a font family in CSS
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "family")
     private String family = "";
-
-    /**
-     * -- GETTER --
-     * Gets the font style
-     * @return A string containing a font style in CSS
-     * -- SETTER --
-     * Sets the font style
-     * @param style A string containing a font style in CSS
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "style")
     private String style = "";
-
-    /**
-     * -- GETTER --
-     * Gets the font weight
-     * @return A string containing a font weight in CSS
-     * -- SETTER --
-     * Sets the font weight
-     * @param weight A string containing a font weight in CSS
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "weight")
     private String weight = "";
-
-    /**
-     * -- GETTER --
-     * Gets the font size
-     * @return A string containing a font size in CSS
-     * -- SETTER --
-     * Sets the font size
-     * @param size A string containing a font size in CSS
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "size")
     private String size = "";
-
-    /**
-     * -- GETTER --
-     * Gets the font decoration
-     * @return A font decoration
-     * -- SETTER --
-     * Sets the font decoration
-     * @param decoration A font decoration
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "decoration")
     private FontDecoration decoration = FontDecoration.NONE;
-
-    /**
-     * -- GETTER --
-     * Gets the font alignment
-     * @return A font alignment
-     * -- SETTER --
-     * Sets the font alignment
-     * @param align A font alignment
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlAttribute(name = "align")
     private FontAlign align = FontAlign.LEFT;
-
-    /**
-     * -- GETTER --
-     * Gets the font rotation
-     * @return A font rotation
-     * -- SETTER --
-     * Sets the font rotation
-     * @param rotation A font rotation
-     */
-    @Getter @Setter
-    @XmlAttribute(name = "rotation")
-    private double rotation;
+    private double rotation = 0.0;
 
     /**
      * Creates a new font
      */
     public Font() { }
 
+    @Builder
+    private Font(String family, String style, String weight, String size,
+                FontDecoration decoration, FontAlign align, double rotation) {
+        this.family = family;
+        this.style = style;
+        this.weight = weight;
+        this.size = size;
+        this.decoration = decoration;
+        this.align = align;
+        this.rotation = rotation;
+    }
+
     /**
      *
      * @return
      */
-    @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
     }
 
-    @Override
+    /**
+     *
+     * @return
+     */
     public boolean isDefault() {
-        return family.isEmpty()
-            && style.isEmpty()
-            && weight.isEmpty()
-            && size.isEmpty()
-            && decoration.isDefault()
-            && align.isDefault()
-            && rotation == 0.0;
+        return getFamily().isEmpty()
+            && getStyle().isEmpty()
+            && getWeight().isEmpty()
+            && getSize().isEmpty()
+            && getDecoration().isDefault()
+            && getAlign().isDefault()
+            && getRotation() == 0.0;
+    }
+
+    @XmlAttribute(name = "family")
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    @XmlAttribute(name = "style")
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    @XmlAttribute(name = "weight")
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    @XmlAttribute(name = "size")
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @XmlAttribute(name = "decoration")
+    public FontDecoration getDecoration() {
+        return decoration;
+    }
+
+    public void setDecoration(FontDecoration decoration) {
+        this.decoration = decoration;
+    }
+
+    @XmlAttribute(name = "align")
+    public FontAlign getAlign() {
+        return align;
+    }
+
+    public void setAlign(FontAlign align) {
+        this.align = align;
+    }
+
+    @XmlAttribute(name = "rotation")
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
 }

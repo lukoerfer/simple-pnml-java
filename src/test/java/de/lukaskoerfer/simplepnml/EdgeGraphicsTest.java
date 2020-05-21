@@ -1,6 +1,7 @@
 package de.lukaskoerfer.simplepnml;
 
-class EdgeTest {
+class EdgeGraphicsTest {
+
 
 
 }

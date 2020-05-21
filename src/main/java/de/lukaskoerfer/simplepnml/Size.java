@@ -14,29 +14,8 @@ import java.util.stream.Stream;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Size implements Collectable, Defaults {
 
-    /**
-     * --- GETTER ---
-     * Gets the length in X direction
-     * @return The length in X direction
-     * --- SETTER ---
-     * Sets the length in X direction
-     * @param width The length in X direction
-     */
-    @Getter @Setter
-    @XmlAttribute(name = "x", required = true)
-    private double width;
-
-    /**
-     * --- GETTER ---
-     * Gets the length in Y direction
-     * @return The length in Y direction
-     * --- SETTER ---
-     * Sets the length in Y direction
-     * @param height The length in Y direction
-     */
-    @Getter @Setter
-    @XmlAttribute(name = "y", required = true)
-    private double height;
+    private double width = 0.0;
+    private double height = 0.0;
 
     /**
      * Creates an empty dimension information
@@ -64,4 +43,21 @@ public class Size implements Collectable, Defaults {
             && width == 0.0;
     }
 
+    @XmlAttribute(name = "width", required = true)
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    @XmlAttribute(name = "height", required = true)
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
 }

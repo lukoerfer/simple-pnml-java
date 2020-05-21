@@ -14,29 +14,8 @@ import java.util.stream.Stream;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Position implements Collectable, Defaults {
 
-    /**
-     * -- GETTER --
-     * Gets the position in X direction
-     * @return The position in X direction
-     * -- SETTER --
-     * Sets the position in X direction
-     * @param x The position in X direction
-     */
-    @Getter @Setter
-    @XmlAttribute(name = "x", required = true)
-    private double x;
-
-    /**
-     * -- GETTER --
-     * Gets the position in Y direction
-     * @return The position in Y direction
-     * -- SETTER --
-     * Sets the position in Y direction
-     * @param y The position in Y direction
-     */
-    @Getter @Setter
-    @XmlAttribute(name = "y", required = true)
-    private double y;
+    private double x = 0.0;
+    private double y = 0.0;
 
     /**
      * Creates an empty set of coordinates
@@ -64,4 +43,21 @@ public class Position implements Collectable, Defaults {
             && y == 0.0;
     }
 
+    @XmlAttribute(name = "x", required = true)
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    @XmlAttribute(name = "y", required = true)
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 }

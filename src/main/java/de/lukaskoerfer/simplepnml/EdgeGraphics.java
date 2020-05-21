@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static java.util.Objects.requireNonNullElseGet;
+
 /**
  * Describes the graphics of an edge element
  */
@@ -17,41 +20,18 @@ import java.util.stream.Stream;
 @XmlAccessorType(XmlAccessType.NONE)
 public class EdgeGraphics implements Collectable, Defaults, Lined  {
 
-    /**
-     * -- GETTER --
-     * Gets a list containing the points that define this edge
-     * @return A list of points
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular
-    @XmlElement(name = "position")
     private List<Position> positions;
-
-    /**
-     * -- GETTER --
-     * Gets the line style of this edge
-     * @return A line description
-     * -- SETTER --
-     * Sets the line style of this edge
-     * @param line A line description
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Line line = new Line();
+    private Line line;
 
     /**
      * Creates a new edge
      */
-    public EdgeGraphics() {
-        setPositions(new ArrayList<>());
-    }
+    public EdgeGraphics() { }
 
     // Internal constructor for builder
-    private EdgeGraphics(List<Position> positions, Line line) {
-        setPositions(new ArrayList<>(positions));
-        setLine(line);
+    private EdgeGraphics(@Singular List<Position> positions, Line line) {
+        this.positions = new ArrayList<>(positions);
+        this.line = line;
     }
 
     /**
@@ -61,23 +41,39 @@ public class EdgeGraphics implements Collectable, Defaults, Lined  {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(positions)
-            .include(line)
+            .include(getPositions())
+            .include(getLine())
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return positions.isEmpty()
-            && line.isDefault();
+        return getPositions().isEmpty()
+            && getLine().isDefault();
     }
 
-    //region Internal serialization
+    @XmlElement(name = "position")
+    public List<Position> getPositions() {
+        return requireNonNullElseGet(positions, () -> positions = new ArrayList<>());
+    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = new ArrayList<>(positions);
+    }
+
+    @Override
+    public Line getLine() {
+        return requireNonNullElseGet(line, () -> line = new Line());
+    }
+
+    public void setLine(Line line) {
+        this.line = line;
+    }
 
     @XmlElement(name = "line")
     @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Defaults.requireNonDefault(getLine());
+        return requireNonDefaultElseNull(getLine());
     }
 
     @SuppressWarnings("unused")
@@ -85,5 +81,4 @@ public class EdgeGraphics implements Collectable, Defaults, Lined  {
         setLine(line);
     }
 
-    //endregion
 }

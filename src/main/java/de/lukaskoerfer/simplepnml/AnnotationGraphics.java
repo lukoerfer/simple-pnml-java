@@ -5,74 +5,36 @@ import lombok.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.stream.Stream;
+
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphics of an annotation element
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined {
 
-    /**
-     * -- GETTER --
-     * Gets the offset of this annotation graphics
-     * @return A set of relative coordinates
-     * -- SETTER --
-     * Sets the offsets of this annotation graphics
-     * @param offset A set of relative coordinates
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlElement(name = "offset", required = true)
-    private Position offset = new Position();
-
-    /**
-     * -- GETTER --
-     * Gets the fill of this annotation graphics
-     * @return
-     * -- SETTER --
-     * Sets the fill of this annotation graphics
-     * @param fill
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Fill fill = new Fill();
-
-    /**
-     * -- GETTER --
-     * Gets the line of this annotation graphics
-     * @return
-     * -- SETTER --
-     * Sets the line of this annotation graphics
-     * @param line
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Line line = new Line();
-
-    /**
-     * -- GETTER --
-     * Gets the font of this annotation graphics
-     * @return
-     * -- SETTER --
-     * Sets the font of this annotation graphics
-     * @param font
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Font font = new Font();
+    private Offset offset;
+    private Fill fill;
+    private Line line;
+    private Font font;
 
     /**
      * Creates a new annotation graphics
      */
     public AnnotationGraphics() { }
+
+    @Builder
+    private AnnotationGraphics(Offset offset, Fill fill, Line line, Font font) {
+        this.offset = offset;
+        this.fill = fill;
+        this.line = line;
+        this.font = font;
+    }
 
     /**
      * Collects the child elements of this annotation recursively
@@ -81,38 +43,79 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(offset)
-            .include(fill)
-            .include(font)
-            .include(line)
+            .include(getOffset())
+            .include(getFill())
+            .include(getLine())
+            .include(getFont())
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return offset.isDefault()
-            && fill.isDefault()
-            && line.isDefault()
-            && font.isDefault();
+        return getOffset().isDefault()
+            && getFill().isDefault()
+            && getLine().isDefault()
+            && getFont().isDefault();
     }
 
-    //region Internal serialization
+    /**
+     * Gets the offset of this annotation graphics
+     * @return A set of relative coordinates
+     */
+    @XmlElement(name = "offset", required = true)
+    public Offset getOffset() {
+        return requireNonNullElseGet(offset, () -> offset = new Offset());
+    }
+
+    /**
+     * Sets the offsets of this annotation graphics
+     * @param offset A set of relative coordinates
+     */
+    public void setOffset(Offset offset) {
+        this.offset = offset;
+    }
+
+    public Fill getFill() {
+        return requireNonNullElseGet(fill, () -> fill = new Fill());
+    }
+
+    public void setFill(Fill fill) {
+        this.fill = fill;
+    }
+
+    @Override
+    public Line getLine() {
+        return requireNonNullElseGet(line, () -> line = new Line());
+    }
+
+    @Override
+    public void setLine(Line line) {
+        this.line = line;
+    }
+
+    public Font getFont() {
+        return requireNonNullElseGet(font, () -> font = new Font());
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
 
     @XmlElement(name = "fill")
     @SuppressWarnings("unused")
     private Fill getFillXml() {
-        return Defaults.requireNonDefault(fill);
+        return requireNonDefaultElseNull(getFill());
     }
 
     @SuppressWarnings("unused")
     private void setFillXml(Fill fill) {
-        this.fill = fill;
+        setFill(fill);
     }
 
     @XmlElement(name = "line")
     @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Defaults.requireNonDefault(line);
+        return requireNonDefaultElseNull(getLine());
     }
 
     @SuppressWarnings("unused")
@@ -123,14 +126,12 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
     @XmlElement(name = "font")
     @SuppressWarnings("unused")
     private Font getFontXml() {
-        return Defaults.requireNonDefault(font);
+        return requireNonDefaultElseNull(font);
     }
 
     @SuppressWarnings("unused")
     private void setFontXml(Font font) {
         this.font = font;
     }
-
-    //endregion
 
 }

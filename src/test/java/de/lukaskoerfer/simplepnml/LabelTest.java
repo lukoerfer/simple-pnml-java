@@ -14,6 +14,15 @@ class LabelTest {
     }
 
     @Test
+    void canCreateWithText() {
+        String text = "MyLabel";
+        Label label = new Label(text);
+        assertEquals(text, label.getText());
+        assertFalse(label.isDefault());
+        assertTrue(label.collect().count() > 1);
+    }
+
+    @Test
     void canCreateUsingBuilder() {
         String text = "MyLabel";
         Label label = Label.builder()

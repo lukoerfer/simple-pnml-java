@@ -5,75 +5,36 @@ import lombok.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.stream.Stream;
+
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphics of a node element
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
 
-    /**
-     * -- GETTER --
-     * Gets the position of this graphical node
-     * @return
-     * -- SETTER --
-     * Sets the position of this graphical node
-     * @param position
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    @XmlElement(name = "position", required = true)
-    private Position position = new Position();
-
-    /**
-     * -- GETTER --
-     * Gets the size of this graphical node
-     * @return
-     * -- SETTER --
-     * Sets the size of this graphical node
-     * @param size
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Size size = new Size();
-
-    /**
-     * -- GETTER --
-     * Gets the fill of this graphical node
-     * @return
-     * -- SETTER --
-     * Sets the fill of this graphical node
-     * @param fill
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Fill fill = new Fill();
-
-    /**
-     * -- GETTER --
-     * Gets the line of this graphical node
-     * @return
-     * -- SETTER --
-     * Se
-     * ts the line of this graphical node
-     * @param line
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Line line = new Line();
+    private Position position;
+    private Size size;
+    private Fill fill;
+    private Line line;
 
     /**
      * Creates a new graphical node
      */
-    public NodeGraphics() {}
+    public NodeGraphics() { }
+
+    @Builder
+    private NodeGraphics(Position position, Size size, Fill fill, Line line) {
+        this.position = position;
+        this.size = size;
+        this.fill = fill;
+        this.line = line;
+    }
 
     /**
      *
@@ -82,27 +43,60 @@ public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(position)
-            .include(size)
-            .include(fill)
-            .include(line)
+            .include(getPosition())
+            .include(getSize())
+            .include(getFill())
+            .include(getLine())
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return position.isDefault()
-            && size.isDefault()
-            && fill.isDefault()
-            && line.isDefault();
+        return getPosition().isDefault()
+            && getSize().isDefault()
+            && getFill().isDefault()
+            && getLine().isDefault();
     }
 
-    //region Internal serialization
+    @XmlElement(name = "position", required = true)
+    public Position getPosition() {
+        return requireNonNullElseGet(position, () -> position = new Position());
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Size getSize() {
+        return requireNonNullElseGet(size, () -> size = new Size());
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    @Override
+    public Fill getFill() {
+        return requireNonNullElseGet(fill, () -> fill = new Fill());
+    }
+
+    public void setFill(Fill fill) {
+        this.fill = fill;
+    }
+
+    @Override
+    public Line getLine() {
+        return requireNonNullElseGet(line, () -> line = new Line());
+    }
+
+    public void setLine(Line line) {
+        this.line = line;
+    }
 
     @XmlElement(name = "dimension")
     @SuppressWarnings("unused")
     private Size getSizeXml() {
-        return Defaults.requireNonDefault(size);
+        return requireNonDefaultElseNull(size);
     }
 
     @SuppressWarnings("unused")
@@ -113,7 +107,7 @@ public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
     @XmlElement(name = "fill")
     @SuppressWarnings("unused")
     private Fill getFillXml() {
-        return Defaults.requireNonDefault(fill);
+        return requireNonDefaultElseNull(fill);
     }
 
     @SuppressWarnings("unused")
@@ -124,14 +118,12 @@ public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
     @XmlElement(name = "line")
     @SuppressWarnings("unused")
     private Line getLineXml() {
-        return Defaults.requireNonDefault(line);
+        return requireNonDefaultElseNull(line);
     }
 
     @SuppressWarnings("unused")
     private void setLineXml(Line line) {
         this.line = line;
     }
-
-    //endregion
 
 }

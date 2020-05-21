@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface ToolExtendable {
 
-    List<ToolSpecific> getToolSpecificData();
+    List<ToolSpecific> getToolSpecifics();
 
-    void setToolSpecificData(List<ToolSpecific> toolSpecificData);
+    void setToolSpecifics(List<ToolSpecific> toolSpecificData);
 
 }

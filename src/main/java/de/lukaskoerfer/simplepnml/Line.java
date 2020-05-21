@@ -5,71 +5,36 @@ import lombok.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes a graphical line element
  */
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Line implements Collectable, Defaults {
 
-    /**
-     * -- GETTER --
-     * Gets the line color
-     * @return
-     * -- SETTER --
-     * Sets the line color
-     * @param color
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private String color = "";
-
-    /**
-     * -- GETTER --
-     * Gets the line width
-     * @return
-     * -- SETTER --
-     * Sets the line width
-     * @param width
-     */
-    @Getter @Setter
-    private double width;
-
-    /**
-     * -- GETTER --
-     * Gets the line shape
-     * @return
-     * -- SETTER --
-     * Sets the line shape
-     * @param shape
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
+    private double width = 0.0;
     private LineShape shape = LineShape.LINE;
-
-    /**
-     * -- GETTER --
-     * Gets the line style
-     * @return
-     * -- SETTER --
-     * Sets the line style
-     * @param style
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
     private LineStyle style = LineStyle.SOLID;
 
     /**
      * Creates a new line
      */
     public Line() { }
+
+    @Builder
+    private Line(String color, double width, LineShape shape, LineStyle style) {
+        this.color = color;
+        this.width = width;
+        this.shape = shape;
+        this.style = style;
+    }
 
     /**
      *
@@ -88,12 +53,42 @@ public class Line implements Collectable, Defaults {
             && getStyle() == LineStyle.SOLID;
     }
 
-    //region Internal serialization
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public LineShape getShape() {
+        return shape;
+    }
+
+    public void setShape(LineShape shape) {
+        this.shape = shape;
+    }
+
+    public LineStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(LineStyle style) {
+        this.style = style;
+    }
 
     @XmlAttribute(name = "color")
     @SuppressWarnings("unused")
     private String getColorXml() {
-        return Defaults.requireNonDefault(getColor());
+        return Defaults.requireNonDefaultElseNull(getColor());
     }
 
     @SuppressWarnings("unused")
@@ -104,7 +99,7 @@ public class Line implements Collectable, Defaults {
     @XmlAttribute(name = "width")
     @SuppressWarnings("unused")
     private Double getWidthXml() {
-        return Defaults.requireNonDefault(getWidth());
+        return Defaults.requireNonDefaultElseNull(getWidth());
     }
 
     @SuppressWarnings("unused")
@@ -115,7 +110,7 @@ public class Line implements Collectable, Defaults {
     @XmlAttribute(name = "shape")
     @SuppressWarnings("unused")
     private LineShape getShapeXml() {
-        return Defaults.requireNonDefault(getShape());
+        return Defaults.requireNonDefaultElseNull(getShape());
     }
 
     @SuppressWarnings("unused")
@@ -126,14 +121,12 @@ public class Line implements Collectable, Defaults {
     @XmlAttribute(name = "style")
     @SuppressWarnings("unused")
     private LineStyle getStyleXml() {
-        return Defaults.requireNonDefault(getStyle());
+        return Defaults.requireNonDefaultElseNull(getStyle());
     }
 
     @SuppressWarnings("unused")
     private void setStyleXml(LineStyle style) {
         setStyle(style);
     }
-
-    //endregion
 
 }

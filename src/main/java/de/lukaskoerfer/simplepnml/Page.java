@@ -1,132 +1,62 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Singular;
+
+import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Represents a page of a place/transition net
  */
-@Builder
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Page implements Identifiable, Collectable, Named, ToolExtendable {
 
-    /**
-     * -- GETTER --
-     * Gets the identifier
-     * @return The identifier
-     */
-    @NonNull
-    @Getter @Setter
-    @XmlAttribute(name = "id", required = true)
     private String id;
-
-    /**
-     * -- GETTER --
-     * Gets the name of the page
-     * @return A label containing the name
-     * -- SETTER --
-     * Sets the name of the page
-     * @param name A label containing the name
-     */
-    @NonNull
-    @Getter @Setter
-    @Builder.Default
-    private Label name = new Label();
-
-    /**
-     * -- GETTER --
-     * Gets the list of sub-pages of this page
-     * @return A list of pages
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular
-    @XmlElement(name = "page")
+    private Label name;
     private List<Page> pages;
-
-    /**
-     * -- GETTER --
-     * Gets the list of places on this page
-     * @return A list of places
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular
-    @XmlElement(name = "place")
     private List<Place> places;
-
-    /**
-     * -- GETTER --
-     * Gets the list of transitions on this page
-     * @return A list of transitions
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular
-    @XmlElement(name = "transition")
     private List<Transition> transitions;
-
-    /**
-     * -- GETTER --
-     * Gets the list of arcs on this page
-     * @return A list of arcs
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular
-    @XmlElement(name = "arc")
     private List<Arc> arcs;
-
-    /**
-     * -- GETTER --
-     * Gets the list of tool data related to this page
-     * @return A list of tool data definitions
-     */
-    @NonNull
-    @Getter @Setter
-    @Singular("toolSpecific")
-    @XmlElement(name = "toolspecific")
-    private List<ToolSpecific> toolSpecificData;
+    private List<ToolSpecific> toolSpecifics;
 
     /**
      * Creates a new page using a random identifier
      */
-    public Page() {
-        this(null);
-    }
+    public Page() { }
 
     /**
      * Creates a new page
      * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
      */
     public Page(String id) {
-        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
-        this.pages = new ArrayList<>();
-        this.places = new ArrayList<>();
-        this.transitions = new ArrayList<>();
-        this.arcs = new ArrayList<>();
-        this.toolSpecificData = new ArrayList<>();
+        this.id = id;
     }
 
-    // Internal constructor for builder
-    @SuppressWarnings("unused")
-    private Page(String id, Label name, List<Page> pages, List<Place> places, List<Transition> transitions, List<Arc> arcs, List<ToolSpecific> toolSpecificData) {
-        this.id = Objects.requireNonNullElseGet(id, Identifiable::randomId);
+    @Builder
+    private Page(String id, Label name,
+                 @Singular List<Page> pages,
+                 @Singular List<Place> places,
+                 @Singular List<Transition> transitions,
+                 @Singular List<Arc> arcs,
+                 @Singular List<ToolSpecific> toolSpecifics) {
+        this.id = id;
         this.name = name;
         this.pages = new ArrayList<>(pages);
         this.places = new ArrayList<>(places);
         this.transitions = new ArrayList<>(transitions);
         this.arcs = new ArrayList<>(arcs);
-        this.toolSpecificData = new ArrayList<>(toolSpecificData);
+        this.toolSpecifics = new ArrayList<>(toolSpecifics);
     }
 
     /**
@@ -136,28 +66,83 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(name)
-            .include(pages)
-            .include(places)
-            .include(transitions)
-            .include(arcs)
-            .include(toolSpecificData)
+            .include(getName())
+            .include(getPages())
+            .include(getPlaces())
+            .include(getTransitions())
+            .include(getArcs())
+            .include(getToolSpecifics())
             .collect();
     }
 
-    //region Internal serialization
+    @XmlAttribute(name = "id", required = true)
+    public String getId() {
+        return requireNonNullElseGet(id, () -> id = Identifiable.randomId());
+    }
 
-    @XmlAttribute(name = "name")
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Label getName() {
+        return requireNonNullElseGet(name, () -> name = new Label());
+    }
+
+    public void setName(Label name) {
+        this.name = name;
+    }
+
+    public List<Page> getPages() {
+        return requireNonNullElseGet(pages, () -> pages = new ArrayList<>());
+    }
+
+    public void setPages(List<Page> pages) {
+        this.pages = new ArrayList<>(pages);
+    }
+
+    public List<Place> getPlaces() {
+        return requireNonNullElseGet(places, () -> places = new ArrayList<>());
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = new ArrayList<>(places);
+    }
+
+    public List<Transition> getTransitions() {
+        return requireNonNullElseGet(transitions, () -> transitions = new ArrayList<>());
+    }
+
+    public void setTransitions(List<Transition> transitions) {
+        this.transitions = new ArrayList<>(transitions);
+    }
+
+    public List<Arc> getArcs() {
+        return requireNonNullElseGet(arcs, () -> arcs = new ArrayList<>());
+    }
+
+    public void setArcs(List<Arc> arcs) {
+        this.arcs = new ArrayList<>(arcs);
+    }
+
+    @Override
+    public List<ToolSpecific> getToolSpecifics() {
+        return requireNonNullElseGet(toolSpecifics, () -> toolSpecifics = new ArrayList<>());
+    }
+
+    @Override
+    public void setToolSpecifics(List<ToolSpecific> toolSpecificData) {
+        this.toolSpecifics = new ArrayList<>(toolSpecificData);
+    }
+
+    @XmlElement(name = "name")
     @SuppressWarnings("unused")
     private Label getNameXml() {
-        return Defaults.requireNonDefault(getName());
+        return requireNonDefaultElseNull(getName());
     }
 
     @SuppressWarnings("unused")
     private void setNameXml(Label name) {
         setName(name);
     }
-
-    //endregion
 
 }
