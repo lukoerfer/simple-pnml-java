@@ -12,7 +12,7 @@ import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
- * Describes the graphics of an annotation element
+ * Describes the graphical representation of an annotation element
  */
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
@@ -24,7 +24,7 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
     private Font font;
 
     /**
-     * Creates a new annotation graphics
+     * Creates a new graphical description for an annotation element
      */
     public AnnotationGraphics() { }
 
@@ -59,7 +59,7 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
     }
 
     /**
-     * Gets the offset of this annotation graphics
+     * Gets the offset of the described annotation
      * @return A set of relative coordinates
      */
     @XmlElement(name = "offset", required = true)
@@ -68,12 +68,13 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
     }
 
     /**
-     * Sets the offsets of this annotation graphics
+     * Sets the offset of the described annotation
      * @param offset A set of relative coordinates
      */
     public void setOffset(Offset offset) {
         this.offset = offset;
     }
+
 
     public Fill getFill() {
         return requireNonNullElseGet(fill, () -> fill = new Fill());
@@ -83,12 +84,10 @@ public class AnnotationGraphics implements Collectable, Defaults, Filled, Lined 
         this.fill = fill;
     }
 
-    @Override
     public Line getLine() {
         return requireNonNullElseGet(line, () -> line = new Line());
     }
 
-    @Override
     public void setLine(Line line) {
         this.line = line;
     }

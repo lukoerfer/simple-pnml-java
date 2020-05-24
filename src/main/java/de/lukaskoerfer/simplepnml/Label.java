@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
- * Describes a text at a specific position
+ * Describes a textual annotation
  */
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
@@ -26,8 +26,8 @@ public class Label implements Collectable, Defaults, Annotation {
     public Label() { }
 
     /**
-     *
-     * @param text
+     * Creates a new label
+     * @param text The label text
      */
     public Label(String text) {
         this.text = text;

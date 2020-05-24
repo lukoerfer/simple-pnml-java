@@ -53,34 +53,66 @@ public class Line implements Collectable, Defaults {
             && getStyle() == LineStyle.SOLID;
     }
 
+    /**
+     * Gets the line color
+     * @return
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Sets the line color
+     * @param color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Gets the width of the line in
+     * @return
+     */
     public double getWidth() {
         return width;
     }
 
+    /**
+     * Sets the width of the line in
+     * @param width
+     */
     public void setWidth(double width) {
         this.width = width;
     }
 
+    /**
+     * Gets the shape of the line
+     * @return
+     */
     public LineShape getShape() {
         return shape;
     }
 
+    /**
+     * Sets the shape of the line
+     * @param shape
+     */
     public void setShape(LineShape shape) {
         this.shape = shape;
     }
 
+    /**
+     * Gets the style of the line
+     * @return
+     */
     public LineStyle getStyle() {
         return style;
     }
 
+    /**
+     * Sets the style of the line
+     * @param style
+     */
     public void setStyle(LineStyle style) {
         this.style = style;
     }

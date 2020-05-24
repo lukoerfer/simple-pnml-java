@@ -15,7 +15,6 @@ import static java.util.Objects.requireNonNullElseGet;
 /**
  * Describes the graphics of an edge element
  */
-@Builder
 @EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class EdgeGraphics implements Collectable, Defaults, Lined  {
@@ -28,7 +27,7 @@ public class EdgeGraphics implements Collectable, Defaults, Lined  {
      */
     public EdgeGraphics() { }
 
-    // Internal constructor for builder
+    @Builder
     private EdgeGraphics(@Singular List<Position> positions, Line line) {
         this.positions = new ArrayList<>(positions);
         this.line = line;

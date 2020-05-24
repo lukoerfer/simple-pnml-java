@@ -5,6 +5,7 @@ plugins {
     id 'io.freefair.maven-jars' version '4.1.0'
     id 'io.freefair.maven-publish-java' version '4.1.0'
     id 'com.github.kt3k.coveralls' version '2.9.0'
+    id 'net.wooga.github' version '2.0.0-rc.3'
 }
 
 group 'de.lukaskoerfer'
@@ -15,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    compile 'javax.xml.bind:jaxb-api:2.3.1'
-    compile 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-    testCompile 'org.mockito:mockito-core:2.6.2'
-    testCompile 'org.jeasy:easy-random-core:4.0.0'
+    testImplementation 'org.xmlunit:xmlunit-core:2.7.0'
+    testImplementation 'org.jeasy:easy-random-core:4.2.0'
 }
 
 generateLombokConfig.enabled = false
@@ -32,10 +33,11 @@ test {
 
 jacocoTestReport {
     dependsOn test
-    reports.xml.enabled true
+    reports*.enabled true
 }
 
 javadoc {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.links 'https://docs.oracle.com/en/java/javase/11/docs/api'
 }
+

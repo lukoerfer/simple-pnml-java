@@ -18,7 +18,7 @@ public class PNML {
      * Creates an empty PNML document
      * @return An empty PNML document
      */
-    public static Document create() {
+    public Document create() {
         return new Document();
     }
 
@@ -28,7 +28,7 @@ public class PNML {
      * @return A PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document read(InputStream stream) {
+    public Document read(InputStream stream) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         return (Document) context.createUnmarshaller().unmarshal(stream);
     }
@@ -39,7 +39,7 @@ public class PNML {
      * @return A PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document read(String content) {
+    public Document read(String content) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         return (Document) context.createUnmarshaller().unmarshal(new StringReader(content));
     }
@@ -50,7 +50,7 @@ public class PNML {
      * @return A PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document read(File file) {
+    public Document read(File file) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         return (Document) context.createUnmarshaller().unmarshal(file);
     }
@@ -61,7 +61,7 @@ public class PNML {
      * @return A PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document read(URI uri) {
+    public Document read(URI uri) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         throw new UnsupportedOperationException();
     }
@@ -73,7 +73,7 @@ public class PNML {
      * @return A reference to the specified PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document write(Document document, OutputStream stream) {
+    public Document write(Document document, OutputStream stream) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         context.createMarshaller().marshal(document, stream);
         return document;
@@ -86,7 +86,7 @@ public class PNML {
      * @return A reference to the specified PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document write(Document document, StringWriter writer) {
+    public Document write(Document document, StringWriter writer) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         context.createMarshaller().marshal(document, writer);
         return document;
@@ -99,7 +99,7 @@ public class PNML {
      * @return A reference to the specified PNML document
      */
     @SneakyThrows(JAXBException.class)
-    public static Document write(Document document, File file) {
+    public Document write(Document document, File file) {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         context.createMarshaller().marshal(document, file);
         return document;

@@ -22,7 +22,7 @@ class PlaceTest {
 
     @Test
     void canCreateUsingBuilder() {
-        String id = "123";
+        String id = "my-place";
         Place place = Place.builder()
             .id(id)
             .build();

@@ -8,21 +8,23 @@ Simple JVM implementation of the Petri Net Markup Language (PNML), limited to Pl
 > Check out [SimplePNML for .NET](https://github.com/lukoerfer/simple-pnml-dotnet) to handle PNML files from .NET languages like C# and VB.NET!
 
 ## Motivation
-The [Petri Net Markup Language (PNML)](http://www.pnml.org/) was developed as an interchange format for petri nets and can describe the logical relations between the components as well as information required for visualization. It is highly extendable and provides support for a variety of different petri net types, which comes with the price of high complexity. Since most use cases and applications are focused on Place-Transition-(PT)-Nets, this library provides a simple way to access and modify this kind of petri nets programmatically.
+The [Petri Net Markup Language (PNML)](http://www.pnml.org/) was developed as an interchange format for petri nets.
+It can describe logical relations between petri net elements as well as visualization information.
+Its high expandability and conceptual support for a variety of different petri net types comes with the price of high complexity.
+Since most use cases and applications are focused on Place-Transition-(PT)-Nets, this library provides a simple way to access and modify this kind of petri nets programmatically.
 
 ## Installation
 
+
 ## Usage
 
-## Differences between .NET and JVM version
+## Differences to .NET version
 
-* The element relations are implemented via (auto-)properties in .NET and via fields with getters and optional setters in the JVM (with some help of Lombok).
-* Some names are changed to follow language-specific naming conventions:
-  * Methods are named using `PascalCase` in the .NET version, but using `camelCase` in the JVM version.
-  * Enum members are named using `PascalCase` in the .NET version, but using `UPPER_CASE` in the JVM version.
-* A lot more constructors and fluent methods are provided in the JVM version, because initialization blocks and optional or named parameters are not supported.
-* `Label` instances for element names, inscriptions and initial markings must be constructed manually when using the JVM version, because implicit type conversion is not supported.
-* The points of an `Edge` or the content of a `ToolData` element cannot be defined via tuples when using the JVM version.
+* The element relations are provided via getters and setters.
+* Naming conventions from the Java world are applied. This includes:
+  * Methods are named using `camelCase`.
+  * Enum members are named using `UPPER_CASE`.
+* The `Builder` pattern can be used to construct objects.
 
 ## License
 The software is licensed under the [MIT license](https://github.com/lukoerfer/simple-pnml-dotnet/blob/master/LICENSE).

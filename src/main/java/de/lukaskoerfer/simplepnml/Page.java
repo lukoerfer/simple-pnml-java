@@ -31,13 +31,13 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
     private List<ToolSpecific> toolSpecifics;
 
     /**
-     * Creates a new page using a random identifier
+     * Creates a new page
      */
     public Page() { }
 
     /**
      * Creates a new page
-     * @param id An unique identifier, defaults to a random UUID if null, empty or whitespace
+     * @param id
      */
     public Page(String id) {
         this.id = id;
@@ -92,6 +92,7 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
         this.name = name;
     }
 
+    @XmlElement(name = "page")
     public List<Page> getPages() {
         return requireNonNullElseGet(pages, () -> pages = new ArrayList<>());
     }
@@ -100,6 +101,7 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
         this.pages = new ArrayList<>(pages);
     }
 
+    @XmlElement(name = "place")
     public List<Place> getPlaces() {
         return requireNonNullElseGet(places, () -> places = new ArrayList<>());
     }
@@ -108,6 +110,7 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
         this.places = new ArrayList<>(places);
     }
 
+    @XmlElement(name = "transition")
     public List<Transition> getTransitions() {
         return requireNonNullElseGet(transitions, () -> transitions = new ArrayList<>());
     }
@@ -116,6 +119,7 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
         this.transitions = new ArrayList<>(transitions);
     }
 
+    @XmlElement(name = "arc")
     public List<Arc> getArcs() {
         return requireNonNullElseGet(arcs, () -> arcs = new ArrayList<>());
     }
@@ -124,12 +128,11 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
         this.arcs = new ArrayList<>(arcs);
     }
 
-    @Override
+    @XmlElement(name = "toolspecific")
     public List<ToolSpecific> getToolSpecifics() {
         return requireNonNullElseGet(toolSpecifics, () -> toolSpecifics = new ArrayList<>());
     }
 
-    @Override
     public void setToolSpecifics(List<ToolSpecific> toolSpecificData) {
         this.toolSpecifics = new ArrayList<>(toolSpecificData);
     }
