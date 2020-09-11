@@ -1,33 +1,35 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.stream.Stream;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- *
+ * Describes the offset of a graphical element
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class Offset implements Collectable, Defaults {
+public class Offset implements Collectable, Defaultable {
 
+    @XmlAttribute(name = "x", required = true)
     private double x = 0.0;
+
+    @XmlAttribute(name = "y", required = true)
     private double y = 0.0;
 
     /**
-     * Creates an empty set of coordinates
+     * Creates a new offset
      */
     public Offset() { }
 
     /**
-     * Creates a new set of coordinates
-     * @param x The position in X direction
-     * @param y The position in Y direction
+     * Creates a new offset
+     * @param x The offset in X direction
+     * @param y The offset in Y direction
      */
     public Offset(double x, double y) {
         this.x = x;
@@ -43,27 +45,14 @@ public class Offset implements Collectable, Defaults {
         return Stream.of(this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isDefault() {
         return x == 0.0
             && y == 0.0;
     }
 
-    @XmlAttribute(name = "x", required = true)
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    @XmlAttribute(name = "y", required = true)
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
 }

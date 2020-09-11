@@ -8,27 +8,48 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Singular;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
-import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
- * Represents a page of a place/transition net
+ * Represents a page of a petri net
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Page implements Identifiable, Collectable, Named, ToolExtendable {
 
+    @Setter
+    @NonNull
     private String id;
-    private Label name;
-    private List<Page> pages;
-    private List<Place> places;
-    private List<Transition> transitions;
-    private List<Arc> arcs;
-    private List<ToolSpecific> toolSpecifics;
+
+    @Getter @Setter
+    @NonNull
+    @XmlElement(name = "name")
+    private Label name = new Label();
+
+    @Getter
+    @XmlElement(name = "page")
+    private List<Page> pages = new ArrayList<>();
+
+    @Getter
+    @XmlElement(name = "place")
+    private List<Place> places = new ArrayList<>();
+
+    @Getter
+    @XmlElement(name = "transition")
+    private List<Transition> transitions  = new ArrayList<>();
+
+    @Getter
+    @XmlElement(name = "arc")
+    private List<Arc> arcs = new ArrayList<>();
+
+    @Getter
+    @XmlElement(name = "toolspecific")
+    private List<ToolSpecific> toolSpecifics = new ArrayList<>();
 
     /**
      * Creates a new page
@@ -37,19 +58,19 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
 
     /**
      * Creates a new page
-     * @param id
+     * @param id A unique page identifier
      */
     public Page(String id) {
         this.id = id;
     }
 
-    @Builder
+    @lombok.Builder
     private Page(String id, Label name,
-                 @Singular List<Page> pages,
-                 @Singular List<Place> places,
-                 @Singular List<Transition> transitions,
-                 @Singular List<Arc> arcs,
-                 @Singular List<ToolSpecific> toolSpecifics) {
+                 @lombok.Singular List<Page> pages,
+                 @lombok.Singular List<Place> places,
+                 @lombok.Singular List<Transition> transitions,
+                 @lombok.Singular List<Arc> arcs,
+                 @lombok.Singular List<ToolSpecific> toolSpecifics) {
         this.id = id;
         this.name = name;
         this.pages = new ArrayList<>(pages);
@@ -75,75 +96,60 @@ public class Page implements Identifiable, Collectable, Named, ToolExtendable {
             .collect();
     }
 
+    /**
+     * Gets the identifier of this page
+     * @return
+     */
     @XmlAttribute(name = "id", required = true)
     public String getId() {
         return requireNonNullElseGet(id, () -> id = Identifiable.randomId());
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Label getName() {
-        return requireNonNullElseGet(name, () -> name = new Label());
-    }
-
-    public void setName(Label name) {
-        this.name = name;
-    }
-
-    @XmlElement(name = "page")
-    public List<Page> getPages() {
-        return requireNonNullElseGet(pages, () -> pages = new ArrayList<>());
-    }
-
-    public void setPages(List<Page> pages) {
+    /**
+     * Sets the sub-pages of this page
+     * @param pages
+     */
+    public void setPages(@NonNull List<Page> pages) {
         this.pages = new ArrayList<>(pages);
     }
 
-    @XmlElement(name = "place")
-    public List<Place> getPlaces() {
-        return requireNonNullElseGet(places, () -> places = new ArrayList<>());
-    }
-
-    public void setPlaces(List<Place> places) {
+    /**
+     * Sets the places on this page
+     * @param places
+     */
+    public void setPlaces(@NonNull List<Place> places) {
         this.places = new ArrayList<>(places);
     }
 
-    @XmlElement(name = "transition")
-    public List<Transition> getTransitions() {
-        return requireNonNullElseGet(transitions, () -> transitions = new ArrayList<>());
-    }
-
-    public void setTransitions(List<Transition> transitions) {
+    /**
+     * Sets the transitions on this page
+     * @param transitions
+     */
+    public void setTransitions(@NonNull List<Transition> transitions) {
         this.transitions = new ArrayList<>(transitions);
     }
 
-    @XmlElement(name = "arc")
-    public List<Arc> getArcs() {
-        return requireNonNullElseGet(arcs, () -> arcs = new ArrayList<>());
-    }
-
-    public void setArcs(List<Arc> arcs) {
+    /**
+     * Sets the arcs on this page
+     * @param arcs
+     */
+    public void setArcs(@NonNull List<Arc> arcs) {
         this.arcs = new ArrayList<>(arcs);
     }
 
-    @XmlElement(name = "toolspecific")
-    public List<ToolSpecific> getToolSpecifics() {
-        return requireNonNullElseGet(toolSpecifics, () -> toolSpecifics = new ArrayList<>());
-    }
-
-    public void setToolSpecifics(List<ToolSpecific> toolSpecificData) {
+    /**
+     * Sets the tool-specific elements related to this page
+     * @param toolSpecificData
+     */
+    public void setToolSpecifics(@NonNull List<ToolSpecific> toolSpecificData) {
         this.toolSpecifics = new ArrayList<>(toolSpecificData);
     }
 
     @XmlElement(name = "name")
-    @SuppressWarnings("unused")
     private Label getNameXml() {
         return requireNonDefaultElseNull(getName());
     }
 
-    @SuppressWarnings("unused")
     private void setNameXml(Label name) {
         setName(name);
     }

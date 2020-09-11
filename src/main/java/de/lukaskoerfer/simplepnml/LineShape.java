@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported line shapes
  */
 @XmlEnum
-public enum LineShape implements Defaults {
+public enum LineShape implements Defaultable {
     /**
      * Straight line
      */

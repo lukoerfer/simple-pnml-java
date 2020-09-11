@@ -1,21 +1,24 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
- * Represents a place/transition net
+ * Represents a petri net
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class Net implements Identifiable, Named, Collectable, ToolExtendable {
 
@@ -24,11 +27,23 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
      */
     public static final String PLACE_TRANSITION_TYPE = "http://www.pnml.org/version-2009/grammar/ptnet";
 
+    @Setter
+    @NonNull
     private String id;
+
+    @Setter
+    @NonNull
     private String type;
-    private Label name;
-    private List<Page> pages;
-    private List<ToolSpecific> toolSpecifics;
+
+    @Getter @Setter
+    @NonNull
+    private Label name = new Label();
+
+    @Getter
+    private List<Page> pages = new ArrayList<>();
+
+    @Getter
+    private List<ToolSpecific> toolSpecifics = new ArrayList<>();
 
     /**
      * Creates a new net using a random identifier
@@ -53,10 +68,10 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
         this.type = type;
     }
 
-    @Builder
+    @lombok.Builder
     private Net(String id, String type, Label name,
-                @Singular List<Page> pages,
-                @Singular List<ToolSpecific> toolSpecifics) {
+                @lombok.Singular List<Page> pages,
+                @lombok.Singular List<ToolSpecific> toolSpecifics) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -77,51 +92,47 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
             .collect();
     }
 
+    /**
+     * Gets the identifier of this net
+     * @return
+     */
     @XmlAttribute(name = "id", required = true)
     public String getId() {
         return requireNonNullElseGet(id, () -> id = Identifiable.randomId());
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    /**
+     * Gets the type identifier of this net
+     * @return
+     */
     @XmlAttribute(name = "type", required = true)
     public String getType() {
         return requireNonNullElseGet(type, () -> type = PLACE_TRANSITION_TYPE);
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     /**
-     * Gets the label containing the name
-     * @return A label containing the name
+     * Sets the pages of this net
+     * @param pages
      */
-    @Override
-    public Label getName() {
-        return requireNonNullElseGet(name, () -> name = new Label());
-    }
-
-    public void setName(Label name) {
-        this.name = name;
-    }
-
-    public List<Page> getPages() {
-        return requireNonNullElseGet(pages, () -> pages = new ArrayList<>());
-    }
-
-    public void setPages(List<Page> pages) {
+    public void setPages(@NonNull List<Page> pages) {
         this.pages = new ArrayList<>(pages);
     }
 
-    public List<ToolSpecific> getToolSpecifics() {
-        return requireNonNullElseGet(toolSpecifics, () -> toolSpecifics = new ArrayList<>());
+    /**
+     *
+     * @param toolSpecificData
+     */
+    public void setToolSpecifics(@NonNull List<ToolSpecific> toolSpecificData) {
+        this.toolSpecifics = new ArrayList<>(toolSpecificData);
     }
 
-    public void setToolSpecifics(List<ToolSpecific> toolSpecifics) {
-        this.toolSpecifics = new ArrayList<>(toolSpecifics);
+    @XmlElement(name = "name")
+    private Label getNameXml() {
+        return requireNonDefaultElseNull(name);
+    }
+
+    private void setNameXml(Label name) {
+        this.name = name;
     }
 
 }

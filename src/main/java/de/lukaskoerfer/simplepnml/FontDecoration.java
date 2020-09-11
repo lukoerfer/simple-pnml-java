@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported font decorations
  */
 @XmlEnum
-public enum FontDecoration implements Defaults {
+public enum FontDecoration implements Defaultable {
     /**
-     *
+     * Undecorated text
      */
     NONE,
     /**

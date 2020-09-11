@@ -8,41 +8,48 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Singular;
+import lombok.Getter;
+import lombok.Setter;
 
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes tool-specific data
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
 public class ToolSpecific implements Collectable {
 
+    @Getter @Setter
+    @XmlAttribute(name = "tool", required = true)
     private String tool = "";
+
+    @Getter @Setter
+    @XmlAttribute(name = "version", required = true)
     private String version = "";
-    private List<Object> contents;
+
+    @Getter @Setter
+    @XmlAnyElement(lax = true)
+    private List<Object> contents = new ArrayList<>();
 
     /**
-     * Creates new tool-specific data
+     * Creates a new tool-specific element
      */
     public ToolSpecific(String tool, String version) {
         this.tool = tool;
         this.version = version;
     }
 
-    @Builder
+    @lombok.Builder
     private ToolSpecific(String tool, String version,
-                         @Singular List<Object> contents) {
+                         @lombok.Singular List<Object> contents) {
         this.tool = tool;
         this.version = version;
         this.contents = new ArrayList<>(contents);
     }
 
     /**
-     * Collects the child elements of this tool data element recursively
+     *
      * @return
      */
     @Override
@@ -50,29 +57,10 @@ public class ToolSpecific implements Collectable {
         return Stream.of(this);
     }
 
-    @XmlAttribute(name = "tool", required = true)
-    public String getTool() {
-        return tool;
-    }
-
-    public void setTool(String tool) {
-        this.tool = tool;
-    }
-
-    @XmlAttribute(name = "version", required = true)
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @XmlAnyElement
-    public List<Object> getContents() {
-        return requireNonNullElseGet(contents, () -> contents = new ArrayList<>());
-    }
-
+    /**
+     * Sets the contents of this element
+     * @param contents
+     */
     public void setContents(List<Object> contents) {
         this.contents = new ArrayList<>(contents);
     }

@@ -1,26 +1,34 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.stream.Stream;
 
-import static java.util.Objects.requireNonNullElse;
-import static java.util.Objects.requireNonNullElseGet;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Describes a graphical line element
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class Line implements Collectable, Defaults {
+public class Line implements Collectable, Defaultable {
 
+    @Getter @Setter
+    @NonNull
     private String color = "";
+
+    @Getter @Setter
     private double width = 0.0;
+
+    @Getter @Setter
+    @NonNull
     private LineShape shape = LineShape.LINE;
+
+    @Getter @Setter
+    @NonNull
     private LineStyle style = LineStyle.SOLID;
 
     /**
@@ -28,7 +36,7 @@ public class Line implements Collectable, Defaults {
      */
     public Line() { }
 
-    @Builder
+    @lombok.Builder
     private Line(String color, double width, LineShape shape, LineStyle style) {
         this.color = color;
         this.width = width;
@@ -53,110 +61,38 @@ public class Line implements Collectable, Defaults {
             && getStyle() == LineStyle.SOLID;
     }
 
-    /**
-     * Gets the line color
-     * @return
-     */
-    public String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the line color
-     * @param color
-     */
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    /**
-     * Gets the width of the line in
-     * @return
-     */
-    public double getWidth() {
-        return width;
-    }
-
-    /**
-     * Sets the width of the line in
-     * @param width
-     */
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    /**
-     * Gets the shape of the line
-     * @return
-     */
-    public LineShape getShape() {
-        return shape;
-    }
-
-    /**
-     * Sets the shape of the line
-     * @param shape
-     */
-    public void setShape(LineShape shape) {
-        this.shape = shape;
-    }
-
-    /**
-     * Gets the style of the line
-     * @return
-     */
-    public LineStyle getStyle() {
-        return style;
-    }
-
-    /**
-     * Sets the style of the line
-     * @param style
-     */
-    public void setStyle(LineStyle style) {
-        this.style = style;
-    }
-
     @XmlAttribute(name = "color")
-    @SuppressWarnings("unused")
     private String getColorXml() {
-        return Defaults.requireNonDefaultElseNull(getColor());
+        return Defaultable.requireNonDefaultElseNull(getColor());
     }
 
-    @SuppressWarnings("unused")
     private void setColorXml(String color) {
         setColor(color);
     }
 
     @XmlAttribute(name = "width")
-    @SuppressWarnings("unused")
     private Double getWidthXml() {
-        return Defaults.requireNonDefaultElseNull(getWidth());
+        return Defaultable.requireNonDefaultElseNull(getWidth());
     }
 
-    @SuppressWarnings("unused")
     private void setWidthXml(Double value) {
         setWidth(value);
     }
 
     @XmlAttribute(name = "shape")
-    @SuppressWarnings("unused")
     private LineShape getShapeXml() {
-        return Defaults.requireNonDefaultElseNull(getShape());
+        return Defaultable.requireNonDefaultElseNull(getShape());
     }
 
-    @SuppressWarnings("unused")
     private void setShapeXml(LineShape shape) {
         setShape(shape);
     }
 
     @XmlAttribute(name = "style")
-    @SuppressWarnings("unused")
     private LineStyle getStyleXml() {
-        return Defaults.requireNonDefaultElseNull(getStyle());
+        return Defaultable.requireNonDefaultElseNull(getStyle());
     }
 
-    @SuppressWarnings("unused")
     private void setStyleXml(LineStyle style) {
         setStyle(style);
     }

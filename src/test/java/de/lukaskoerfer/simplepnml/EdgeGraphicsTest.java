@@ -1,25 +1,49 @@
 package de.lukaskoerfer.simplepnml;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class EdgeGraphicsTest {
 
-    @Test
-    void canCreate() {
-        EdgeGraphics graphics = new EdgeGraphics();
-        assertTrue(graphics.isDefault());
-        assertTrue(graphics.collect().count() > 1);
+    private EdgeGraphics graphics;
+
+    @BeforeEach
+    void setup() {
+        graphics = new EdgeGraphics();
     }
 
     @Test
-    void canCreateUsingBuilder() {
-        EdgeGraphics graphics = EdgeGraphics.builder()
-            .position(new Position(2.3, 5.1))
-            .build();
+    void setPositions_nullValue_fails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           graphics.setPositions(null);
+        });
+    }
+
+    @Test
+    void setLine_nullValue_fails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            graphics.setLine(null);
+        });
+    }
+
+    @Test
+    void isDefault_newInstance_true() {
+        assertTrue(graphics.isDefault());
+    }
+
+    @Test
+    void isDefault_positionsNotEmpty_false() {
+        graphics.getPositions().add(new Position(1.2, 2.3));
+
         assertFalse(graphics.isDefault());
-        assertTrue(graphics.collect().count() > 1);
+    }
+
+    @Test
+    void isDefault_lineNotDefault_false() {
+        graphics.getLine().setColor("green");
+
+        assertFalse(graphics.isDefault());
     }
 
 }

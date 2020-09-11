@@ -18,9 +18,34 @@ Since most use cases and applications are focused on Place-Transition-(PT)-Nets,
 
 ## Usage
 
+``` java
+// Create a place, a transition and an arc
+Place place = Place.builder()
+	.id("my-place")
+	.initialMarking(new Label("1"))
+	.build();
+Transition transition = Transition.builder()
+	.id("my-transition")
+	.build();
+Arc arc = Arc.builder()
+	// no explicit identifier
+	.inscription(new Label("1"))
+	.build();
+
+// Let the arc connect the place and the transition
+arc.connect(place, transition);
+
+// Add all the elements to a new page
+Page page = new Page();
+page.getPlaces().add(page);
+page.getTransitions().add(transition);
+page.getArcs().add(arc);
+```
+
+
 ## Differences to .NET version
 
-* The element relations are provided via getters and setters.
+* The element relations can be accessed via getters and setters.
 * Naming conventions from the Java world are applied. This includes:
   * Methods are named using `camelCase`.
   * Enum members are named using `UPPER_CASE`.

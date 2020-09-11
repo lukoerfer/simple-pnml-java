@@ -1,7 +1,7 @@
 package de.lukaskoerfer.simplepnml;
 
 /**
- * Marks all elements that serve as an annotation
+ * Marks elements that are graphically represented by an annotation
  */
 public interface Annotation {
 

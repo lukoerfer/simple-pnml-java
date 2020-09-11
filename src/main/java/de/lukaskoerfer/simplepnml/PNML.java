@@ -1,26 +1,21 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.URI;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import java.io.*;
-import java.net.URI;
+
+import lombok.SneakyThrows;
 
 /**
- * Provides utility functions to work with PNML documents in a fluent style
+ * Provides utility functions to work with PNML documents
  */
-@UtilityClass
+@lombok.experimental.UtilityClass
 public class PNML {
-
-    /**
-     * Creates an empty PNML document
-     * @return An empty PNML document
-     */
-    public Document create() {
-        return new Document();
-    }
 
     /**
      * Reads a PNML document from a stream

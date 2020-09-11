@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * Defines the supported gradient rotations
  */
 @XmlEnum
-public enum GradientRotation implements Defaults {
+public enum GradientRotation implements Defaultable {
     /**
      *
      */

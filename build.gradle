@@ -1,15 +1,13 @@
 plugins {
     id 'java-library'
+    id 'io.freefair.lombok' version '5.1.0'
     id 'jacoco'
-    id 'io.freefair.lombok' version '4.1.0'
-    id 'io.freefair.maven-jars' version '4.1.0'
-    id 'io.freefair.maven-publish-java' version '4.1.0'
-    id 'com.github.kt3k.coveralls' version '2.9.0'
-    id 'net.wooga.github' version '2.0.0-rc.3'
+    id 'maven-publish'
 }
 
 group 'de.lukaskoerfer'
 version '1.0.0'
+description 'Simple JVM implementation of the Petri Net Markup Language (PNML), limited to Place-Transition-(PT)-Nets'
 
 repositories {
     jcenter()
@@ -17,15 +15,20 @@ repositories {
 
 dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testImplementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
     testImplementation 'org.xmlunit:xmlunit-core:2.7.0'
-    testImplementation 'org.jeasy:easy-random-core:4.2.0'
+    // testImplementation 'org.jeasy:easy-random-core:4.2.0'
 }
 
-generateLombokConfig.enabled = false
+java {
+    withSourcesJar()
+    withJavadocJar()
+    lombok.version = '1.18.12'
+    generateLombokConfig.enabled = false
+}
 
 test {
     useJUnitPlatform()
@@ -37,7 +40,57 @@ jacocoTestReport {
 }
 
 javadoc {
-    options.addStringOption('Xdoclint:none', '-quiet')
     options.links 'https://docs.oracle.com/en/java/javase/11/docs/api'
+    options.addStringOption 'Xdoclint:none', '-quiet'
+    options.addBooleanOption 'html5', true
+}
+
+publishing {
+    repositories {
+        maven {
+            name 'bintray'
+            url "https://api.bintray.com/maven/lukoerfer/maven-release-remote/${project.group}/;publish=1"
+            credentials {
+                username = System.getenv('BINTRAY_USER')
+                password = System.getenv('BINTRAY_API_KEY')
+            }
+        }
+        maven {
+            name = 'github'
+            url 'https://maven.pkg.github.com/lukoerfer/simple-pnml-jvm'
+            credentials {
+                username = System.getenv('GITHUB_USER')
+                password = System.getenv('GITHUB_TOKEN')
+            }
+        }
+    }
+    publications {
+        library(MavenPublication) {
+            from components.java
+            pom {
+                name = project.name
+                description = project.description
+                url = 'https://github.com/lukoerfer/simple-pnml-java'
+                licenses {
+                    license {
+                        name = 'MIT license'
+                        url = 'https://github.com/lukoerfer/simple-pnml-java/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'lukoerfer'
+                        name = 'Lukas Körfer'
+                        email = 'lu.koerfer@googlemail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/lukoerfer/simple-pnml-java.git'
+                    developerConnection = 'scm:git:ssh://github.com:lukoerfer/simple-pnml-java.git'
+                    url = 'https://github.com/lukoerfer/simple-pnml-java'
+                }
+            }
+        }
+    }
 }
 

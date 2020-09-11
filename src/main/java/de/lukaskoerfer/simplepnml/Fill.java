@@ -5,21 +5,33 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
-import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 
 /**
  * Describes the fill of a graphical element
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class Fill implements Collectable, Defaults {
+public class Fill implements Collectable, Defaultable {
 
+    @Getter @Setter
+    @NonNull
     private String color = "";
+
+    @Getter @Setter
+    @NonNull
     private String gradientColor = "";
+
+    @Getter @Setter
+    @NonNull
     private GradientRotation gradientRotation = GradientRotation.NONE;
+
+    @Getter @Setter
+    @NonNull
     private String image = "";
 
     /**
@@ -27,7 +39,7 @@ public class Fill implements Collectable, Defaults {
      */
     public Fill() { }
 
-    @Builder
+    @lombok.Builder
     private Fill(String color, String gradientColor, GradientRotation gradientRotation, String image) {
         this.color = color;
         this.gradientColor = gradientColor;
@@ -48,85 +60,40 @@ public class Fill implements Collectable, Defaults {
             && getImage().isEmpty();
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getColor() {
-        return color;
+    @XmlAttribute(name = "color")
+    private String getColorXml() {
+        return requireNonDefaultElseNull(color);
     }
 
-    public void setColor(String color) {
+    private void setColorXml(String color) {
         this.color = color;
     }
 
-    public String getGradientColor() {
-        return gradientColor;
+    @XmlAttribute(name = "gradient-color")
+    private String getGradientColorXml() {
+        return requireNonDefaultElseNull(gradientColor);
     }
 
-    public void setGradientColor(String gradientColor) {
+    private void setGradientColorXml(String gradientColor) {
         this.gradientColor = gradientColor;
     }
 
-    public GradientRotation getGradientRotation() {
-        return gradientRotation;
+    @XmlAttribute(name = "gradient-rotation")
+    private GradientRotation getGradientRotationXml() {
+        return requireNonDefaultElseNull(gradientRotation);
     }
 
-    public void setGradientRotation(GradientRotation gradientRotation) {
+    private void setGradientRotationXml(GradientRotation gradientRotation) {
         this.gradientRotation = gradientRotation;
     }
 
-    public String getImage() {
-        return image;
+    @XmlAttribute(name = "image")
+    private String getImageXml() {
+        return requireNonDefaultElseNull(image);
     }
 
-    public void setImage(String image) {
+    private void setImageXml(String image) {
         this.image = image;
     }
 
-    @XmlAttribute(name = "color")
-    @SuppressWarnings("unused")
-    private String getColorXml() {
-        return requireNonDefaultElseNull(getColor());
-    }
-
-    @SuppressWarnings("unused")
-    private void setColorXml(String color) {
-        setColor(color);
-    }
-
-    @XmlAttribute(name = "gradient-color")
-    @SuppressWarnings("unused")
-    private String getGradientColorXml() {
-        return requireNonDefaultElseNull(getGradientColor());
-    }
-
-    @SuppressWarnings("unused")
-    private void setGradientColorXml(String gradientColor) {
-        setGradientColor(gradientColor);
-    }
-
-    @XmlAttribute(name = "gradient-rotation")
-    @SuppressWarnings("unused")
-    private GradientRotation getGradientRotationXml() {
-        return requireNonDefaultElseNull(getGradientRotation());
-    }
-
-    @SuppressWarnings("unused")
-    private void setGradientRotationXml(GradientRotation gradientRotation) {
-        setGradientRotation(gradientRotation);
-    }
-
-    @XmlAttribute(name = "image")
-    @SuppressWarnings("unused")
-    private String getImageXml() {
-        return requireNonDefaultElseNull(getImage());
-    }
-
-    @SuppressWarnings("unused")
-    private void setImageXml(String image) {
-        setImage(image);
-    }
-
-    //endregion
 }

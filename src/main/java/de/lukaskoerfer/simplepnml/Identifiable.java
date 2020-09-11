@@ -7,10 +7,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import java.util.UUID;
 
 /**
- * Encapsulates elements in place/transition nets that can be identified
+ * Encapsulates petri net elements that can be identified
  */
 public interface Identifiable {
 
+    /**
+     * Gets the element identifier
+     * @return
+     */
     String getId();
 
     void setId(String id);

@@ -6,15 +6,12 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-/**
- *
- */
 class Collector {
 
-    private final Stream.Builder<Collectable> builder = Stream.builder();
+    private final Stream.Builder<Collectable> builder;
 
     public Collector(@NonNull Collectable parent) {
-        builder.add(parent);
+        builder = Stream.<Collectable>builder().add(parent);
     }
 
     public Collector include(@NonNull Collectable child) {

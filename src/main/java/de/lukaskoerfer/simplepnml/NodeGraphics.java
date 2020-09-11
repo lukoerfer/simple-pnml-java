@@ -1,34 +1,47 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.stream.Stream;
 
-import static de.lukaskoerfer.simplepnml.Defaults.requireNonDefaultElseNull;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphics of a node element
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
+public class NodeGraphics implements Collectable, Defaultable, Lined, Filled {
 
-    private Position position;
-    private Size size;
-    private Fill fill;
-    private Line line;
+    @Getter @Setter
+    @NonNull
+    @XmlElement(name = "position", required = true)
+    private Position position = new Position();
+
+    @Getter @Setter
+    @NonNull
+    private Size size = new Size();
+
+    @Getter @Setter
+    @NonNull
+    private Fill fill = new Fill();
+
+    @Getter @Setter
+    @NonNull
+    private Line line = new Line();
 
     /**
-     * Creates a new graphical node
+     * Creates a new graphical representation for a node element
      */
     public NodeGraphics() { }
 
-    @Builder
+    @lombok.Builder
     private NodeGraphics(Position position, Size size, Fill fill, Line line) {
         this.position = position;
         this.size = size;
@@ -58,70 +71,29 @@ public class NodeGraphics implements Collectable, Defaults, Lined, Filled {
             && getLine().isDefault();
     }
 
-    @XmlElement(name = "position", required = true)
-    public Position getPosition() {
-        return requireNonNullElseGet(position, () -> position = new Position());
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Size getSize() {
-        return requireNonNullElseGet(size, () -> size = new Size());
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    @Override
-    public Fill getFill() {
-        return requireNonNullElseGet(fill, () -> fill = new Fill());
-    }
-
-    public void setFill(Fill fill) {
-        this.fill = fill;
-    }
-
-    @Override
-    public Line getLine() {
-        return requireNonNullElseGet(line, () -> line = new Line());
-    }
-
-    public void setLine(Line line) {
-        this.line = line;
-    }
-
     @XmlElement(name = "dimension")
-    @SuppressWarnings("unused")
     private Size getSizeXml() {
         return requireNonDefaultElseNull(size);
     }
 
-    @SuppressWarnings("unused")
     private void setSizeXml(Size size) {
         this.size = size;
     }
 
     @XmlElement(name = "fill")
-    @SuppressWarnings("unused")
     private Fill getFillXml() {
         return requireNonDefaultElseNull(fill);
     }
 
-    @SuppressWarnings("unused")
     private void setFillXml(Fill fill) {
         this.fill = fill;
     }
 
     @XmlElement(name = "line")
-    @SuppressWarnings("unused")
     private Line getLineXml() {
         return requireNonDefaultElseNull(line);
     }
 
-    @SuppressWarnings("unused")
     private void setLineXml(Line line) {
         this.line = line;
     }

@@ -1,29 +1,48 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.Objects;
-import java.util.stream.Stream;
 
-import static java.util.Objects.requireNonNullElse;
-import static java.util.Objects.requireNonNullElseGet;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 
 /**
- * Specifies a font
+ * Specifies a font in PNML
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class Font implements Collectable, Defaults {
+public class Font implements Collectable, Defaultable {
 
+    @Getter @Setter
+    @NonNull
     private String family = "";
+
+    @Getter @Setter
+    @NonNull
     private String style = "";
+
+    @Getter @Setter
+    @NonNull
     private String weight = "";
+
+    @Getter @Setter
+    @NonNull
     private String size = "";
+
+    @Getter @Setter
+    @NonNull
     private FontDecoration decoration = FontDecoration.NONE;
+
+    @Getter @Setter
+    @NonNull
     private FontAlign align = FontAlign.LEFT;
+
+    @Getter @Setter
     private double rotation = 0.0;
 
     /**
@@ -31,7 +50,7 @@ public class Font implements Collectable, Defaults {
      */
     public Font() { }
 
-    @Builder
+    @lombok.Builder
     private Font(String family, String style, String weight, String size,
                 FontDecoration decoration, FontAlign align, double rotation) {
         this.family = family;
@@ -66,65 +85,65 @@ public class Font implements Collectable, Defaults {
     }
 
     @XmlAttribute(name = "family")
-    public String getFamily() {
-        return family;
+    private String getFamilyXml() {
+        return requireNonDefaultElseNull(family);
     }
 
-    public void setFamily(String family) {
+    private void setFamilyXml(String family) {
         this.family = family;
     }
 
     @XmlAttribute(name = "style")
-    public String getStyle() {
-        return style;
+    private String getStyleXml() {
+        return requireNonDefaultElseNull(style);
     }
 
-    public void setStyle(String style) {
+    private void setStyleXml(String style) {
         this.style = style;
     }
 
     @XmlAttribute(name = "weight")
-    public String getWeight() {
-        return weight;
+    private String getWeightXml() {
+        return requireNonDefaultElseNull(weight);
     }
 
-    public void setWeight(String weight) {
+    private void setWeightXml(String weight) {
         this.weight = weight;
     }
 
     @XmlAttribute(name = "size")
-    public String getSize() {
-        return size;
+    private String getSizeXml() {
+        return requireNonDefaultElseNull(size);
     }
 
-    public void setSize(String size) {
+    private void setSizeXml(String size) {
         this.size = size;
     }
 
     @XmlAttribute(name = "decoration")
-    public FontDecoration getDecoration() {
-        return decoration;
+    private FontDecoration getDecorationXml() {
+        return requireNonDefaultElseNull(decoration);
     }
 
-    public void setDecoration(FontDecoration decoration) {
+    private void setDecorationXml(FontDecoration decoration) {
         this.decoration = decoration;
     }
 
     @XmlAttribute(name = "align")
-    public FontAlign getAlign() {
-        return align;
+    private FontAlign getAlignXml() {
+        return requireNonDefaultElseNull(align);
     }
 
-    public void setAlign(FontAlign align) {
+    private void setAlignXml(FontAlign align) {
         this.align = align;
     }
 
     @XmlAttribute(name = "rotation")
-    public double getRotation() {
-        return rotation;
+    private Double getRotationXml() {
+        return requireNonDefaultElseNull(rotation);
     }
 
-    public void setRotation(double rotation) {
+    private void setRotationXml(Double rotation) {
         this.rotation = rotation;
     }
 }

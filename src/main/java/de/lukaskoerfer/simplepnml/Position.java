@@ -1,29 +1,35 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.*;
-
+import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.stream.Stream;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Describes the position of a graphical element in two dimensions
+ * Describes the position of a graphical element
  */
-@EqualsAndHashCode
+@lombok.EqualsAndHashCode
 @XmlAccessorType(XmlAccessType.NONE)
-public class Position implements Collectable, Defaults {
+public class Position implements Collectable, Defaultable {
 
+    @Getter @Setter
+    @XmlAttribute(name = "x", required = true)
     private double x = 0.0;
+
+    @Getter @Setter
+    @XmlAttribute(name = "y", required = true)
     private double y = 0.0;
 
     /**
-     * Creates an empty set of coordinates
+     * Creates a new position located in the origin (0.0, 0.0)
      */
     public Position() { }
 
     /**
-     * Creates a new set of coordinates
+     * Creates a new position
      * @param x The position in X direction
      * @param y The position in Y direction
      */
@@ -32,32 +38,23 @@ public class Position implements Collectable, Defaults {
         this.y = y;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isDefault() {
         return x == 0.0
             && y == 0.0;
     }
 
-    @XmlAttribute(name = "x", required = true)
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    @XmlAttribute(name = "y", required = true)
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
 }
