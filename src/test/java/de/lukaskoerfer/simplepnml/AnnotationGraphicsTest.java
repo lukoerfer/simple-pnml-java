@@ -50,7 +50,7 @@ class AnnotationGraphicsTest {
 
     @Test
     void isDefault_offsetNotDefault_false() {
-        graphics.setOffset(new Offset(1.2, 4.2));
+        graphics.setOffset(new Offset(1.2f, 4.2f));
 
         assertFalse(graphics.isDefault());
     }

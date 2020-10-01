@@ -9,7 +9,7 @@ public interface Collectable {
 
     /**
      * Recursively collects all sub-elements of this element
-     * @return
+     * @return All PNML elements inside this element
      */
     Stream<Collectable> collect();
 

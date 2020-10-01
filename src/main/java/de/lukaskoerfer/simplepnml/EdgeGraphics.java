@@ -1,24 +1,24 @@
 package de.lukaskoerfer.simplepnml;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.Singular;
 
 import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
-import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphics of an edge element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
+@XmlType(propOrder = { "positions", "lineXml" })
 public class EdgeGraphics implements Collectable, Defaultable, Lined  {
 
     @Getter
@@ -35,7 +35,7 @@ public class EdgeGraphics implements Collectable, Defaultable, Lined  {
     public EdgeGraphics() { }
 
     @lombok.Builder
-    private EdgeGraphics(@lombok.Singular List<Position> positions, Line line) {
+    private EdgeGraphics(@Singular List<Position> positions, Line line) {
         this.positions = new ArrayList<>(positions);
         this.line = line;
     }
@@ -48,22 +48,18 @@ public class EdgeGraphics implements Collectable, Defaultable, Lined  {
         this.positions = new ArrayList<>(positions);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getPositions())
-            .include(getLine())
+            .include(positions)
+            .include(line)
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return getPositions().isEmpty()
-            && getLine().isDefault();
+        return positions.isEmpty()
+            && line.isDefault();
     }
 
     @XmlElement(name = "line")

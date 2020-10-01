@@ -1,18 +1,14 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 /**
  * Describes the offset of a graphical element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Offset implements Collectable, Defaultable {
 
     @XmlAttribute(name = "x", required = true)

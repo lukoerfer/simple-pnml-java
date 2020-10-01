@@ -3,32 +3,32 @@ package de.lukaskoerfer.simplepnml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
-
-import static java.util.Objects.requireNonNullElseGet;
+import lombok.Singular;
 
 /**
  * Describes tool-specific data
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class ToolSpecific implements Collectable {
 
     @Getter @Setter
+    @NonNull
     @XmlAttribute(name = "tool", required = true)
     private String tool = "";
 
     @Getter @Setter
+    @NonNull
     @XmlAttribute(name = "version", required = true)
     private String version = "";
 
-    @Getter @Setter
+    @Getter
     @XmlAnyElement(lax = true)
     private List<Object> contents = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class ToolSpecific implements Collectable {
 
     @lombok.Builder
     private ToolSpecific(String tool, String version,
-                         @lombok.Singular List<Object> contents) {
+                         @Singular List<Object> contents) {
         this.tool = tool;
         this.version = version;
         this.contents = new ArrayList<>(contents);
@@ -61,7 +61,7 @@ public class ToolSpecific implements Collectable {
      * Sets the contents of this element
      * @param contents
      */
-    public void setContents(List<Object> contents) {
+    public void setContents(@NonNull List<Object> contents) {
         this.contents = new ArrayList<>(contents);
     }
 

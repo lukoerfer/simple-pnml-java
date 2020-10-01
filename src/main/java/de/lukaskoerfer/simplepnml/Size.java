@@ -1,26 +1,24 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Describes the size of a graphical element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Size implements Collectable, Defaultable {
 
     @Getter @Setter
-    @XmlAttribute(name = "width", required = true)
+    @XmlAttribute(name = "x", required = true)
     private double width = 0.0;
 
     @Getter @Setter
-    @XmlAttribute(name = "height", required = true)
+    @XmlAttribute(name = "y", required = true)
     private double height = 0.0;
 
     /**

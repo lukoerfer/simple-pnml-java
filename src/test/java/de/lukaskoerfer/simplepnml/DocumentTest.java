@@ -22,8 +22,6 @@ class DocumentTest {
 
     @Test
     void collect_newInstance_containsOneElement() {
-        var elements = document.collect();
-
-        assertEquals(1, elements.count());
+        assertEquals(1, document.collect().count());
     }
 }

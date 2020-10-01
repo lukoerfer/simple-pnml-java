@@ -3,14 +3,15 @@ package de.lukaskoerfer.simplepnml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.Singular;
 
 import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
@@ -18,8 +19,8 @@ import static java.util.Objects.requireNonNullElseGet;
 /**
  * Represents a petri net
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
+@XmlType(propOrder = { "nameXml", "pages", "toolSpecifics" })
 public class Net implements Identifiable, Named, Collectable, ToolExtendable {
 
     /**
@@ -40,9 +41,11 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
     private Label name = new Label();
 
     @Getter
+    @XmlElement(name = "page")
     private List<Page> pages = new ArrayList<>();
 
     @Getter
+    @XmlElement(name = "toolspecific")
     private List<ToolSpecific> toolSpecifics = new ArrayList<>();
 
     /**
@@ -70,8 +73,8 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
 
     @lombok.Builder
     private Net(String id, String type, Label name,
-                @lombok.Singular List<Page> pages,
-                @lombok.Singular List<ToolSpecific> toolSpecifics) {
+                @Singular List<Page> pages,
+                @Singular List<ToolSpecific> toolSpecifics) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -86,9 +89,9 @@ public class Net implements Identifiable, Named, Collectable, ToolExtendable {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getName())
-            .include(getPages())
-            .include(getToolSpecifics())
+            .include(name)
+            .include(pages)
+            .include(toolSpecifics)
             .collect();
     }
 

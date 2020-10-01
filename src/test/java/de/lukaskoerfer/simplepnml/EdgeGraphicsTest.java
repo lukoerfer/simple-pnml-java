@@ -34,7 +34,7 @@ class EdgeGraphicsTest {
 
     @Test
     void isDefault_positionsNotEmpty_false() {
-        graphics.getPositions().add(new Position(1.2, 2.3));
+        graphics.getPositions().add(new Position(1.2f, 2.3f));
 
         assertFalse(graphics.isDefault());
     }

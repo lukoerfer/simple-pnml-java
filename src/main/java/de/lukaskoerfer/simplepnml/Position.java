@@ -1,18 +1,16 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Describes the position of a graphical element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Position implements Collectable, Defaultable {
 
     @Getter @Setter
@@ -38,19 +36,11 @@ public class Position implements Collectable, Defaultable {
         this.y = y;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Stream<Collectable> collect() {
         return Stream.of(this);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean isDefault() {
         return x == 0.0

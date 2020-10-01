@@ -1,19 +1,21 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
+
 /**
  * Describes a textual annotation
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
+@XmlType(propOrder = { "text", "graphicsXml" })
 public class Label implements Collectable, Defaultable, Annotation {
 
     @Getter @Setter
@@ -23,7 +25,6 @@ public class Label implements Collectable, Defaultable, Annotation {
 
     @Getter @Setter
     @NonNull
-    @XmlElement(name = "graphics")
     private AnnotationGraphics graphics = new AnnotationGraphics();
 
     /**
@@ -52,13 +53,22 @@ public class Label implements Collectable, Defaultable, Annotation {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getGraphics())
+            .include(graphics)
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return getText().isEmpty()
-            && getGraphics().isDefault();
+        return text.isEmpty()
+            && graphics.isDefault();
+    }
+
+    @XmlElement(name = "graphics")
+    private AnnotationGraphics getGraphicsXml() {
+        return requireNonDefaultElseNull(graphics);
+    }
+
+    private void setGraphicsXml(AnnotationGraphics graphics) {
+        this.graphics = graphics;
     }
 }

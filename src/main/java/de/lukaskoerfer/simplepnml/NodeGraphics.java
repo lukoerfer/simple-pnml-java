@@ -1,22 +1,21 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
 import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
-import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphics of a node element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
+@XmlType(propOrder = { "position", "sizeXml", "fillXml", "lineXml" })
 public class NodeGraphics implements Collectable, Defaultable, Lined, Filled {
 
     @Getter @Setter
@@ -56,19 +55,19 @@ public class NodeGraphics implements Collectable, Defaultable, Lined, Filled {
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getPosition())
-            .include(getSize())
-            .include(getFill())
-            .include(getLine())
+            .include(position)
+            .include(size)
+            .include(fill)
+            .include(line)
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return getPosition().isDefault()
-            && getSize().isDefault()
-            && getFill().isDefault()
-            && getLine().isDefault();
+        return position.isDefault()
+            && size.isDefault()
+            && fill.isDefault()
+            && line.isDefault();
     }
 
     @XmlElement(name = "dimension")

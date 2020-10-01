@@ -1,22 +1,21 @@
 package de.lukaskoerfer.simplepnml;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.stream.Stream;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
 import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
-import static java.util.Objects.requireNonNullElseGet;
 
 /**
  * Describes the graphical representation of an annotation element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
+@XmlType(propOrder = { "offset", "fillXml", "lineXml", "fontXml" })
 public class AnnotationGraphics implements Collectable, Defaultable, Filled, Lined {
 
     @Getter @Setter
@@ -49,40 +48,36 @@ public class AnnotationGraphics implements Collectable, Defaultable, Filled, Lin
         this.font = font;
     }
 
-    /**
-     * Collects the child elements
-     * @return
-     */
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getOffset())
-            .include(getFill())
-            .include(getLine())
-            .include(getFont())
+            .include(offset)
+            .include(fill)
+            .include(line)
+            .include(font)
             .collect();
     }
 
     @Override
     public boolean isDefault() {
-        return getOffset().isDefault()
-            && getFill().isDefault()
-            && getLine().isDefault()
-            && getFont().isDefault();
+        return offset.isDefault()
+            && fill.isDefault()
+            && line.isDefault()
+            && font.isDefault();
     }
 
     @XmlElement(name = "fill")
     private Fill getFillXml() {
-        return requireNonDefaultElseNull(getFill());
+        return requireNonDefaultElseNull(fill);
     }
 
     private void setFillXml(Fill fill) {
-        setFill(fill);
+        this.fill = fill;
     }
 
     @XmlElement(name = "line")
     private Line getLineXml() {
-        return requireNonDefaultElseNull(getLine());
+        return requireNonDefaultElseNull(line);
     }
 
     private void setLineXml(Line line) {

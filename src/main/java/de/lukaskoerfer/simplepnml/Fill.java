@@ -1,10 +1,9 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -14,8 +13,7 @@ import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 /**
  * Describes the fill of a graphical element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Fill implements Collectable, Defaultable {
 
     @Getter @Setter
@@ -54,10 +52,10 @@ public class Fill implements Collectable, Defaultable {
 
     @Override
     public boolean isDefault() {
-        return getColor().isEmpty()
-            && getGradientColor().isEmpty()
-            && getGradientRotation().isDefault()
-            && getImage().isEmpty();
+        return color.isEmpty()
+            && gradientColor.isEmpty()
+            && gradientRotation.isDefault()
+            && image.isEmpty();
     }
 
     @XmlAttribute(name = "color")

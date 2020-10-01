@@ -15,9 +15,7 @@ class ArcTest {
 
     @Test
     void getId_newInstance_notNull() {
-        String id = arc.getId();
-
-        assertNotNull(id);
+        assertNotNull(arc.getId());
     }
 
     @Test

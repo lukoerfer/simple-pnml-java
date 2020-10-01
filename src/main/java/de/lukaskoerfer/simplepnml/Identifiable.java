@@ -1,9 +1,5 @@
 package de.lukaskoerfer.simplepnml;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-
-import javax.xml.bind.annotation.XmlAttribute;
 import java.util.UUID;
 
 /**

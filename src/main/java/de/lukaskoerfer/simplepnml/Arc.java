@@ -3,14 +3,14 @@ package de.lukaskoerfer.simplepnml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.Singular;
 
 import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 import static java.util.Objects.requireNonNullElseGet;
@@ -18,8 +18,7 @@ import static java.util.Objects.requireNonNullElseGet;
 /**
  * Represents an arc in a petri net
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
 
     @Setter
@@ -55,15 +54,15 @@ public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
 
     /**
      * Creates a new arc
-     * @param id
+     * @param id An identifier, should be unique
      */
     public Arc(String id) {
-        setId(id);
+        this.id = id;
     }
 
     @lombok.Builder
     private Arc(String id, String source, String target, EdgeGraphics graphics,
-                Label inscription, @lombok.Singular List<ToolSpecific> toolSpecifics) {
+                Label inscription, @Singular List<ToolSpecific> toolSpecifics) {
         this.id = id;
         this.source = source;
         this.target = target;
@@ -72,17 +71,18 @@ public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
         this.toolSpecifics = new ArrayList<>(toolSpecifics);
     }
 
+    @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getGraphics())
-            .include(getInscription())
-            .include(getToolSpecifics())
+            .include(graphics)
+            .include(inscription)
+            .include(toolSpecifics)
             .collect();
     }
 
     /**
      * Gets the identifier of this arc
-     * @return
+     * @return An identifier, either defined or a generated UUID
      */
     @XmlAttribute(name = "id", required = true)
     public String getId() {
@@ -90,11 +90,11 @@ public class Arc implements Identifiable, Collectable, Edge, ToolExtendable {
     }
 
     /**
-     * Sets the tool-specific elements related to this arc
-     * @param toolSpecificData
+     * Sets the tool-specific elements describing this arc
+     * @param toolSpecifics A list of tool-specific elements
      */
-    public void setToolSpecifics(@NonNull List<ToolSpecific> toolSpecificData) {
-        this.toolSpecifics = new ArrayList<>(toolSpecificData);
+    public void setToolSpecifics(@NonNull List<ToolSpecific> toolSpecifics) {
+        this.toolSpecifics = new ArrayList<>(toolSpecifics);
     }
 
     @XmlElement(name = "graphics")

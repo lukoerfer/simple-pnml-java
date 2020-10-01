@@ -1,10 +1,9 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -14,8 +13,7 @@ import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
 /**
  * Specifies a font in PNML
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Font implements Collectable, Defaultable {
 
     @Getter @Setter
@@ -75,13 +73,13 @@ public class Font implements Collectable, Defaultable {
      * @return
      */
     public boolean isDefault() {
-        return getFamily().isEmpty()
-            && getStyle().isEmpty()
-            && getWeight().isEmpty()
-            && getSize().isEmpty()
-            && getDecoration().isDefault()
-            && getAlign().isDefault()
-            && getRotation() == 0.0;
+        return family.isEmpty()
+            && style.isEmpty()
+            && weight.isEmpty()
+            && size.isEmpty()
+            && decoration.isDefault()
+            && align.isDefault()
+            && rotation == 0.0;
     }
 
     @XmlAttribute(name = "family")

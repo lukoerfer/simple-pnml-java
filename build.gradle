@@ -15,12 +15,13 @@ repositories {
 
 dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-    testImplementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+    testImplementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.jeasy:easy-random-core:4.2.0'
     testImplementation 'org.xmlunit:xmlunit-core:2.7.0'
-    // testImplementation 'org.jeasy:easy-random-core:4.2.0'
+    testImplementation 'com.thaiopensource:jing:20091111'
 }
 
 java {

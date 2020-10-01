@@ -3,21 +3,22 @@ package de.lukaskoerfer.simplepnml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Singular;
 
 /**
  * Provides a container for petri nets
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "pnml", namespace = "http://www.pnml.org/version-2009/grammar/pnml")
+@EqualsAndHashCode
+@XmlRootElement(name = "pnml")
 public class Document implements Collectable {
+
+    public static final String PNML_NAMESPACE = "http://www.pnml.org/version-2009/grammar/pnml";
 
     @Getter
     @XmlElement(name = "net")
@@ -29,26 +30,22 @@ public class Document implements Collectable {
     public Document() { }
 
     @lombok.Builder
-    private Document(@lombok.Singular List<Net> nets) {
+    private Document(@Singular List<Net> nets) {
         this.nets = new ArrayList<>(nets);
     }
 
     /**
      * Sets the petri nets in this document
-     * @param nets
+     * @param nets A list of petri nets
      */
     public void setNets(@NonNull List<Net> nets) {
         this.nets = new ArrayList<>(nets);
     }
 
-    /**
-     * Recursively collects all elements in this document
-     * @return
-     */
     @Override
     public Stream<Collectable> collect() {
         return new Collector(this)
-            .include(getNets())
+            .include(nets)
             .collect();
     }
 

@@ -1,19 +1,19 @@
 package de.lukaskoerfer.simplepnml;
 
 import java.util.stream.Stream;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import static de.lukaskoerfer.simplepnml.Defaultable.requireNonDefaultElseNull;
+
 /**
  * Describes a graphical line element
  */
-@lombok.EqualsAndHashCode
-@XmlAccessorType(XmlAccessType.NONE)
+@EqualsAndHashCode
 public class Line implements Collectable, Defaultable {
 
     @Getter @Setter
@@ -55,46 +55,46 @@ public class Line implements Collectable, Defaultable {
 
     @Override
     public boolean isDefault() {
-        return getColor().isEmpty()
-            && getWidth() == 0.0
-            && getShape() == LineShape.LINE
-            && getStyle() == LineStyle.SOLID;
+        return color.isEmpty()
+            && width == 0.0
+            && shape == LineShape.LINE
+            && style == LineStyle.SOLID;
     }
 
     @XmlAttribute(name = "color")
     private String getColorXml() {
-        return Defaultable.requireNonDefaultElseNull(getColor());
+        return requireNonDefaultElseNull(color);
     }
 
     private void setColorXml(String color) {
-        setColor(color);
+        this.color = color;
     }
 
     @XmlAttribute(name = "width")
     private Double getWidthXml() {
-        return Defaultable.requireNonDefaultElseNull(getWidth());
+        return requireNonDefaultElseNull(width);
     }
 
-    private void setWidthXml(Double value) {
-        setWidth(value);
+    private void setWidthXml(Double width) {
+        this.width = width;
     }
 
     @XmlAttribute(name = "shape")
     private LineShape getShapeXml() {
-        return Defaultable.requireNonDefaultElseNull(getShape());
+        return requireNonDefaultElseNull(shape);
     }
 
     private void setShapeXml(LineShape shape) {
-        setShape(shape);
+        this.shape = shape;
     }
 
     @XmlAttribute(name = "style")
     private LineStyle getStyleXml() {
-        return Defaultable.requireNonDefaultElseNull(getStyle());
+        return requireNonDefaultElseNull(style);
     }
 
     private void setStyleXml(LineStyle style) {
-        setStyle(style);
+        this.style = style;
     }
 
 }
